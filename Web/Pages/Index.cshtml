@@ -1,0 +1,18 @@
+﻿@page
+@model Web.Pages.IndexModel
+
+<div class="text-center">
+    <h1>Værtshuset</h1>
+
+    <p>@Model.BeerCount</p>
+
+    <div>
+        <form method="post">
+            <button type="submit">Drik en øl</button>
+        </form>
+    </div>
+
+    <div>
+        <a href="/hulen">Gå på eventyr</a>
+    </div>
+</div>
