@@ -4,13 +4,15 @@ namespace Web.Logic
 {
     public static class CombatHandler
     {
-        private const int MAX_DAMAGE = 3;
+        private const int MAX_DAMAGE = 2;
 
         private const int MAX_GOLD = 5;
 
         public static void HandleAttackAction(GameState state)
         {
-            int battleDamage = RandomNumberGenerator.GetInt32(MAX_DAMAGE);
+            int adjustedMaxDamage = MAX_DAMAGE + state.MaxHealth / 2;
+
+            int battleDamage = RandomNumberGenerator.GetInt32(adjustedMaxDamage);
 
             state.Health -= battleDamage;
 
