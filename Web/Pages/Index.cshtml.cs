@@ -1,32 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using Web.Data;
+using Web.Logic;
 
 namespace Web.Pages
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public class IndexModel : PageModel
+    public class IndexModel : GameModel
     {
-        private const string BEER_COUNT_KEY = "BeerCount";
-
-        public int BeerCount;
-
         public void OnGet()
         {
-            BeerCount = HttpContext.Session.GetInt32(BEER_COUNT_KEY) ?? 0;
+            ReadGameStateFromSession();
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(IFormCollection data)
         {
-            BeerCount = HttpContext.Session.GetInt32(BEER_COUNT_KEY) ?? 0;
+            ReadGameStateFromSession();
 
-            BeerCount += 1;
+            GameAction formAction = Enum.Parse<GameAction>(data["action"]);
 
-            HttpContext.Session.SetInt32(BEER_COUNT_KEY, BeerCount);
+            GameActionHandler.HandleGameAction(ref GameState, formAction);
 
-            System.Console.WriteLine("{0} BeerCount: {1}", HttpContext.Session.Id, BeerCount);
+            WriteGameStateToSession();
 
-            return RedirectToPage("Index");
+            return RedirectToPage();
         }
     }
 }

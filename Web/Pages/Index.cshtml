@@ -1,18 +1,12 @@
 ﻿@page
-@model Web.Pages.IndexModel
+@model IndexModel
 
 <div class="text-center">
-    <h1>Værtshuset</h1>
+    <h1>@Model.GameState.Location.ToString()</h1>
 
-    <p>@Model.BeerCount</p>
+    @await Html.PartialAsync("_GameStatus", Model.GameState)
 
-    <div>
-        <form method="post">
-            <button type="submit">Drik en øl</button>
-        </form>
-    </div>
+    @await Html.PartialAsync($"_{Model.GameState.Location.ToString()}", Model.GameState)
 
-    <div>
-        <a href="/hulen">Gå på eventyr</a>
-    </div>
+    @await Html.PartialAsync("_GameLog", Model.GameState)
 </div>

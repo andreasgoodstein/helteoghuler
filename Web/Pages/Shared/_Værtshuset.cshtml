@@ -1,0 +1,17 @@
+﻿@model GameState
+
+<div>
+    <div class="action-group">
+        <form method="post">
+            <input type="hidden" name="action" value="@GameAction.Drink" />
+            <button type="submit">Drik en øl</button>
+        </form>
+    </div>
+
+    <div class="action-group">
+        <form method="post">
+            <input type="hidden" name="action" value="@GameAction.GoToCave" />
+            <button type="submit">Gå på eventyr</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@model GameState
+@{
+    List<string> SortedLog = Model.Log;
+
+    SortedLog.Reverse();
+}
+
+<div>
+    <ul class="game-log">
+        @foreach (string entry in SortedLog)
+        {
+            <li>@entry</li>
+        }
+    </ul>
+</div>
