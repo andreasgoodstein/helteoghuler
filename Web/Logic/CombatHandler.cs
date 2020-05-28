@@ -9,8 +9,6 @@ namespace Web.Logic
 
         private const int MAX_GOLD = 5;
 
-        private const int MAX_HIGHSCORE_SPOTS = 15;
-
         public static void HandleAttackAction(GameState state)
         {
             HandleDamage(state);
@@ -49,7 +47,7 @@ namespace Web.Logic
             int minHighscore = state.Highscore.Min(hero => hero.BeerCount);
 
             bool heroReplacesOldHero = state.BeerCount > minHighscore;
-            bool beerhallaNeedsHeroes = state.Highscore.Count < MAX_HIGHSCORE_SPOTS;
+            bool beerhallaNeedsHeroes = state.Highscore.Count < ConfigVariables.MAX_HIGHSCORE_SPOTS;
             bool heroHasBeer = state.BeerCount > 0;
             bool addHeroToHighscore = heroReplacesOldHero || (beerhallaNeedsHeroes && heroHasBeer);
             if (addHeroToHighscore)

@@ -36,5 +36,11 @@ namespace Web.Storage
             var collection = GetHeroCollection();
             collection.InsertOne(hero);
         }
+
+        public static void RemoveHeroFromHighscore(Hero hero)
+        {
+            var collection = GetHeroCollection();
+            collection.DeleteOne(oldHero => oldHero.Id == hero.Id);
+        }
     }
 }
