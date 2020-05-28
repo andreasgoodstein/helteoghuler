@@ -4,6 +4,7 @@
     {
         Attack,
         Drink,
+        EnterBeerhalla,
         GoToCave,
         GoToInn,
         Restart

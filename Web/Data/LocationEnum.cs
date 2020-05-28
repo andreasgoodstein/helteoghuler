@@ -4,6 +4,7 @@
     {
         Værtshuset,
         Hulen,
-        Graven
+        Graven,
+        Ølhalla
     }
 }

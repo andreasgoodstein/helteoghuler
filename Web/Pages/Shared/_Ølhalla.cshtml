@@ -1,0 +1,16 @@
+﻿@model GameState
+
+<div>
+    @await Html.PartialAsync("_Highscore", Model.Highscore)
+
+    <p>Hurra! Til trods for dit nederlag, har du været sej nok til at komme ind i Ølhalla.</p>
+    <p>Ølhallas vogtere spørger hvad der skal stå på dit mægtige ølkrus?</p>
+
+    <form method="post">
+        <input type="hidden" name="action" value="@GameAction.EnterBeerhalla" />
+
+        <input type="text" name="hero-name" placeholder="Dit navn" minlength="1" maxlength="80" />
+
+        <button type="submit">Træd indenfor</button>
+    </form>
+</div>

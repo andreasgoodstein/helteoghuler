@@ -1,0 +1,12 @@
+﻿@model List<Hero>
+
+<div>
+    <h3>De mest legendariske helte i hele Ølhalla</h3>
+
+    <ul class="highscore-list">
+        @foreach (Hero hero in Model)
+        {
+            <li><b>@hero.Name</b> har drukket <b>@hero.BeerCount</b> øl</li>
+        }
+    </ul>
+</div>

@@ -1,5 +1,9 @@
-﻿<div>
-    <p>Du klarede den sgu ikke. Men bare rolig. Der er masser af øl på den anden side af Graven</p>
+﻿@model GameState
+
+<div>
+    @await Html.PartialAsync("_Highscore", Model.Highscore)
+
+    <p>Du kom sgu ikke ind i Ølhalla denne gang...</p>
 
     <form method="post">
         <input type="hidden" name="action" value="@GameAction.Restart" />

@@ -20,6 +20,13 @@ namespace Web.Logic
                         break;
                     }
 
+                case GameAction.EnterBeerhalla:
+                    {
+                        BeerhallaHandler.HandleEntryInBeerhalla(state);
+                        RestartGame(ref state);
+                        break;
+                    }
+
                 case GameAction.GoToCave:
                     {
                         state.Location = GameLocation.Hulen;
@@ -34,7 +41,7 @@ namespace Web.Logic
 
                 case GameAction.Restart:
                     {
-                        state = new GameState();
+                        RestartGame(ref state);
                         break;
                     }
 
@@ -43,6 +50,11 @@ namespace Web.Logic
                         break;
                     }
             }
+        }
+
+        private static void RestartGame(ref GameState state)
+        {
+            state = new GameState();
         }
     }
 }
