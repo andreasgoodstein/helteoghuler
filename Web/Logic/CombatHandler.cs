@@ -44,7 +44,9 @@ namespace Web.Logic
         {
             state.UpdateLog("Det er for meget for en helt som dig. Du har drukket din sidste øl!");
 
-            int minHighscore = state.Highscore.Min(hero => hero.BeerCount);
+            int minHighscore = state.Highscore.Count > 0
+                ? state.Highscore.Min(hero => hero.BeerCount)
+                : 0;
 
             bool heroReplacesOldHero = state.BeerCount > minHighscore;
             bool beerhallaNeedsHeroes = state.Highscore.Count < ConfigVariables.MAX_HIGHSCORE_SPOTS;

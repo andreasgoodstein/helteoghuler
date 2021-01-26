@@ -15,6 +15,11 @@ namespace Web.Storage
         {
             string databaseUrl = Environment.GetEnvironmentVariable("MONGODB_URI");
 
+            if (!string.IsNullOrWhiteSpace(databaseUrl))
+            {
+                return null;
+            }
+
             var client = new MongoClient($"{databaseUrl}?retryWrites=false");
 
             var database = client.GetDatabase(DATABASE_KEY);
@@ -26,21 +31,23 @@ namespace Web.Storage
         {
             var collection = GetHeroCollection();
 
-            var heroList = collection.Find(doc => true);
+            var heroList = collection?.Find(doc => true);
 
-            return heroList.ToList();
+            return heroList?.ToList() ?? new List<Hero>();
         }
 
         public static void AddHeroToHighscore(Hero hero)
         {
             var collection = GetHeroCollection();
-            collection.InsertOne(hero);
+
+            collection?.InsertOne(hero);
         }
 
         public static void RemoveHeroFromHighscore(Hero hero)
         {
             var collection = GetHeroCollection();
-            collection.DeleteOne(oldHero => oldHero.Id == hero.Id);
+
+            collection?.DeleteOne(oldHero => oldHero.Id == hero.Id);
         }
     }
 }
