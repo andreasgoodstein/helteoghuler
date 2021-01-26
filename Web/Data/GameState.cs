@@ -17,14 +17,14 @@ namespace Web
 
         public Data.GameLocation Location { get; set; } = Data.GameLocation.Værtshuset;
 
-        public List<string> Log { get; set; } = new List<string>();
+        public List<string> GameLog { get; set; } = new List<string>();
 
         [NonSerialized]
         public List<Hero> Highscore = new List<Hero>();
 
         public void UpdateLog(string entry)
         {
-            Log.Add($"{DateTime.UtcNow.ToLongTimeString()}: {entry}");
+            GameLog.Add($"{DateTime.UtcNow.ToLongTimeString()}: {entry}");
         }
     }
 }
