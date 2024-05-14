@@ -1,11 +1,13 @@
-namespace HelteOgHulerShared;
-
-public class GameState
+namespace HelteOgHulerShared
 {
-    public WorldState World { get; init; } = new WorldState { };
-}
 
-public class WorldState
-{
-    public string WorldName { get; init; } = "default";
+    public class GameState
+    {
+        public WorldState World { get; set; } = new WorldState { };
+    }
+
+    public class WorldState
+    {
+        public string WorldName { get; set; } = "default";
+    }
 }

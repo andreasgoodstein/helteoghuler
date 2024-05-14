@@ -2,6 +2,8 @@ using Godot;
 using System;
 using System.Text;
 
+using HelteOgHulerShared;
+
 public class Menu : Control
 {
 	public override void _Ready()
@@ -14,7 +16,11 @@ public class Menu : Control
 
 	public void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
 	{
-		JSONParseResult json = JSON.Parse(Encoding.UTF8.GetString(body));
-		GD.Print(json.Result);
+
+		GameState gameState = HHJsonSerializer.Deserialize<GameState>(body);
+
+		RichTextLabel worldNameNode = GetNode<RichTextLabel>("WorldName");
+
+		worldNameNode.Text = gameState.World.WorldName;
 	}
 }

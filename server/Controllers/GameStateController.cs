@@ -8,8 +8,8 @@ namespace HelteOgHulerServer.Controllers;
 public class GameStateController : ControllerBase
 {
     [HttpGet(Name = "GetGameState")]
-    public GameState Get()
+    public string Get()
     {
-        return new GameState { World = new WorldState { WorldName = "Konia" } };
+        return HHJsonSerializer.Serialize(new GameState { World = new WorldState { WorldName = "Konia" } });
     }
 }

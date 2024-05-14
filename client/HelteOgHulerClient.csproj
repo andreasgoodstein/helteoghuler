@@ -1,4 +1,7 @@
 <Project Sdk="Godot.NET.Sdk/3.3.0">
+  <ItemGroup>
+    <ProjectReference Include="..\shared\HelteOgHulerShared.csproj" />
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
