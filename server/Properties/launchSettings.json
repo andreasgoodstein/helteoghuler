@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "server": {
+    "HelteOgHulerServer": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
