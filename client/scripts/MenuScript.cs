@@ -4,18 +4,22 @@ using System.Text;
 
 using HelteOgHulerShared;
 
-public class Menu : Control
+public class MenuScript : Control
 {
 	public override void _Ready()
 	{
-		GetNode("HTTPGetGameState").Connect("request_completed", this, "OnRequestCompleted");
-
 		HTTPRequest httpGetGameState = GetNode<HTTPRequest>("HTTPGetGameState");
+
+		httpGetGameState.Connect("request_completed", this, "OnRequestCompleted");
 		httpGetGameState.Request("https://localhost:7111/GameState");
 	}
 
-	public void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
+	private void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
 	{
+		if (response_code < 200 || response_code > 299)
+		{
+			return;
+		}
 
 		GameState gameState = HHJsonSerializer.Deserialize<GameState>(body);
 
