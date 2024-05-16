@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://font.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Menu.cs" type="Script" id=2]
+[ext_resource path="res://assets/fonts/font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scripts/Menu.cs" type="Script" id=2]
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -33,3 +33,14 @@ margin_right = 48.0
 margin_bottom = 60.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
+
+[node name="StartAdventure" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -55.5
+margin_top = -200.0
+margin_right = 55.5
+margin_bottom = -180.0
+text = "Start Adventure"
