@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  helteoghuler_database:
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - helteoghuler:/data/db
+
+  helteoghuler_server:
+    build:
+      context: ../
+      dockerfile: server/Dockerfile
+    depends_on:
+      - helteoghuler_database
+    image: helteoghulerserver
+    ports:
+      - 7111:7111
+
+volumes:
+  helteoghuler:
