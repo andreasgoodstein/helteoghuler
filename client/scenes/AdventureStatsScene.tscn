@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://scripts/AdventureStatsScript.cs" type="Script" id=2]
+
+[node name="AdventureScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="TotalAdventures" type="Label" parent="."]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 1 )
+text = "Total Adventures: "
+
+[node name="Value" type="Label" parent="TotalAdventures"]
+margin_left = 220.0
+margin_right = 260.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 1 )

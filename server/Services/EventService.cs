@@ -25,7 +25,7 @@ public class EventService
     public Task<List<Event>> GetAsync() =>
          _eventsCollection.Find(_ => true).ToListAsync();
 
-    public Task<Event?> GetAsync(string id) =>
+    public Task<Event> GetAsync(string id) =>
          _eventsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
     public Task<long> GetCount() => _eventsCollection.CountDocumentsAsync(new BsonDocument());

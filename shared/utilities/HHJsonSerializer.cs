@@ -2,7 +2,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 
-namespace HelteOgHulerShared
+namespace HelteOgHulerShared.Utilities
 {
     public static class HHJsonSerializer
     {

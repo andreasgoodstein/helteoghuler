@@ -2,7 +2,8 @@ using Godot;
 using System;
 using System.Text;
 
-using HelteOgHulerShared;
+using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 public class MenuScript : Control
 {

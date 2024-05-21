@@ -1,4 +1,4 @@
-namespace HelteOgHulerShared
+namespace HelteOgHulerShared.Models
 {
 
     public class GameState
@@ -9,5 +9,7 @@ namespace HelteOgHulerShared
     public class WorldState
     {
         public string WorldName { get; set; } = "default";
+
+        public ulong TotalAdventures { get; set; }
     }
 }

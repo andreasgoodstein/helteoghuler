@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using HelteOgHulerShared;
+using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
 
 namespace HelteOgHulerServer.Controllers;
@@ -24,7 +24,7 @@ public class AdventureController : ControllerBase
     [HttpGet(Name = "Start")]
     public async Task<string> Start()
     {
-        await _eventService.CreateAsync(new Models.Event());
+        await _eventService.CreateAsync(new Event());
         return "OK";
     }
 }
