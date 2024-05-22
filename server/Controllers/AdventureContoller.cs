@@ -24,7 +24,7 @@ public class AdventureController : ControllerBase
     [HttpGet(Name = "Start")]
     public async Task<string> Start()
     {
-        await _eventService.CreateAsync(new Event());
+        await _eventService.CreateAsync(new AdventureEvent() { Gold = 1 });
         return "OK";
     }
 }

@@ -1,15 +1,15 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace HelteOgHulerServer.Models;
+namespace HelteOgHulerServer.Models.Interfaces;
 
-public class Event
+public interface IEvent
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+    public string? Id { get; init; }
 
-    public EventType Type { get; set; } = EventType.Adventure;
+    public EventType Type { get; }
 }
 
 public enum EventType
