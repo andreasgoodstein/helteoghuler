@@ -13,6 +13,8 @@ public class MenuScript : Control
 
 		httpGetGameState.Connect("request_completed", this, "OnRequestCompleted");
 		httpGetGameState.Request("https://localhost:7111/GameState");
+
+		GetNode<Button>("GoToAdventure").Connect("pressed", this, "GoToAdventurePressed");
 	}
 
 	private void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
@@ -27,5 +29,10 @@ public class MenuScript : Control
 		RichTextLabel worldNameNode = GetNode<RichTextLabel>("WorldName");
 
 		worldNameNode.Text = gameState.World.WorldName;
+	}
+
+	private void GoToAdventurePressed()
+	{
+		GetTree().ChangeScene("res://scenes/AdventureStatsScene.tscn");
 	}
 }
