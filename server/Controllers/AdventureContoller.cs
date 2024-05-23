@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
+using HelteOgHulerShared.Models;
+using HelteOgHulerServer.Logic;
+using HelteOgHulerServer.Models.Interfaces;
 
 namespace HelteOgHulerServer.Controllers;
 
@@ -8,10 +11,14 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class AdventureController : ControllerBase
 {
+    private readonly AdventureLogic _adventureLogic;
+    private readonly GameStateLogic _gameStateLogic;
     private readonly EventService _eventService;
 
-    public AdventureController(EventService eventService)
+    public AdventureController(AdventureLogic adventureLogic, GameStateLogic gameStateLogic, EventService eventService)
     {
+        _adventureLogic = adventureLogic;
+        _gameStateLogic = gameStateLogic;
         _eventService = eventService;
     }
 
@@ -22,9 +29,23 @@ public class AdventureController : ControllerBase
     }
 
     [HttpGet(Name = "Start")]
-    public async Task<string> Start()
+    public async Task<ActionResult<GameState>> Start()
     {
-        await _eventService.CreateAsync(new AdventureEvent() { Gold = 1 });
-        return "OK";
+        if (!_adventureLogic.CanPlayerGenerateAdventure())
+        {
+            return new ContentResult() { StatusCode = 400, Content = "Your party cannot venture forth" };
+        }
+
+        Adventure adventure = _adventureLogic.GenerateAdventure();
+
+        await _eventService.CreateAsync(new AdventureEvent()
+        {
+            Adventure = adventure,
+            PlayerId = _gameStateLogic.GetGameState().Player.Id
+        });
+
+        GameState newGameState = _gameStateLogic.UpdateGameState(new AdventureEvent { Adventure = adventure });
+
+        return newGameState;
     }
 }

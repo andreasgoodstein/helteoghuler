@@ -1,13 +1,15 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace HelteOgHulerServer.Models.Interfaces;
 
 public interface IEvent
 {
-    [BsonId]
+    [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; init; }
+    [BsonIgnoreIfDefault]
+    public string? Id { get; set; }
 
     public EventType Type { get; }
 }

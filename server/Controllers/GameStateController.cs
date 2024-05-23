@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
+using HelteOgHulerServer.Logic;
 
 namespace HelteOgHulerServer.Controllers;
 
@@ -8,9 +9,16 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]")]
 public class GameStateController : ControllerBase
 {
+    private readonly GameStateLogic _gameStateLogic;
+
+    public GameStateController(GameStateLogic gameStateLogic)
+    {
+        _gameStateLogic = gameStateLogic;
+    }
+
     [HttpGet(Name = "GetGameState")]
     public string Get()
     {
-        return HHJsonSerializer.Serialize(new GameState { World = new WorldState { WorldName = "Konia" }, Player = new Player { Name = "TestPlayer" } });
+        return HHJsonSerializer.Serialize(_gameStateLogic.GetGameState());
     }
 }

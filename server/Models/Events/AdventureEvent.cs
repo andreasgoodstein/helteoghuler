@@ -1,19 +1,22 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using HelteOgHulerServer.Models.Interfaces;
+using HelteOgHulerShared.Models;
+using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace HelteOgHulerServer.Models;
 
 public class AdventureEvent : IEvent
 {
 
-    [BsonId]
+    [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; init; }
+    [BsonIgnoreIfDefault]
+    public string? Id { get; set; }
 
-    public ulong Gold { get; init; }
+    public Guid PlayerId { get; init; }
 
-    public string PlayerId { get; init; } = "Unknown";
+    public Adventure Adventure { get; init; }
 
     public EventType Type => EventType.Adventure;
 }
