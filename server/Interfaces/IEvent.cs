@@ -1,8 +1,9 @@
+using HelteOgHulerShared.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
-namespace HelteOgHulerServer.Models.Interfaces;
+namespace HelteOgHulerServer.Interfaces;
 
 public interface IEvent
 {
@@ -12,6 +13,10 @@ public interface IEvent
     public string? Id { get; set; }
 
     public EventType Type { get; }
+
+    public void ApplyToGameState(GameState gameState);
+
+    public void RemoveFromGameState(GameState gameState);
 }
 
 public enum EventType

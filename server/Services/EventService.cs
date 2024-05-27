@@ -1,5 +1,5 @@
 using HelteOgHulerServer.Models;
-using HelteOgHulerServer.Models.Interfaces;
+using HelteOgHulerServer.Interfaces;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;

@@ -1,5 +1,5 @@
 using HelteOgHulerServer.Models;
-using HelteOgHulerServer.Models.Interfaces;
+using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerServer.Logic;
@@ -41,17 +41,8 @@ public class GameStateLogic()
 
     public GameState UpdateGameState(IEvent gameEvent)
     {
-        if (gameEvent.Type == EventType.Adventure)
-        {
-            UpdateWithAdventure(gameEvent as AdventureEvent);
-        }
+        gameEvent.ApplyToGameState(_globalGameState);
 
         return _globalGameState;
-    }
-
-    private void UpdateWithAdventure(AdventureEvent adventureEvent)
-    {
-        _globalGameState.World.TotalAdventures += 1;
-        _globalGameState.Player.Inn.Chest.Gold += adventureEvent.Adventure.Gold;
     }
 }

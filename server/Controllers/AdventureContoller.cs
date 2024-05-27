@@ -3,7 +3,6 @@ using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
 using HelteOgHulerServer.Logic;
-using HelteOgHulerServer.Models.Interfaces;
 
 namespace HelteOgHulerServer.Controllers;
 
