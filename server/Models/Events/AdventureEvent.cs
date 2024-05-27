@@ -6,17 +6,20 @@ using MongoDB.Bson.Serialization.IdGenerators;
 
 namespace HelteOgHulerServer.Models;
 
+[BsonDiscriminator("AdventureEvent")]
 public class AdventureEvent : IEvent
 {
 
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
-    public string? Id { get; set; }
-
-    public Guid PlayerId { get; init; }
+    public string? Id { get; init; }
 
     public Adventure Adventure { get; init; }
+
+    public DateTime CreatedAt { get; init; }
+
+    public Guid PlayerId { get; init; }
 
     public EventType Type => EventType.Adventure;
 

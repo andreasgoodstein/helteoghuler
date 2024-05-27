@@ -10,7 +10,9 @@ public interface IEvent
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
-    public string? Id { get; set; }
+    public string? Id { get; init; }
+
+    public DateTime CreatedAt { get; init; }
 
     public EventType Type { get; }
 

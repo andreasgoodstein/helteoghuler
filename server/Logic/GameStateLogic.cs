@@ -1,12 +1,14 @@
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Models;
+using HelteOgHulerServer.Services;
 
 namespace HelteOgHulerServer.Logic;
 
 
-public class GameStateLogic()
+public class GameStateLogic
 {
+
     private GameState _globalGameState = new GameState
     {
         Player = new Player
@@ -30,12 +32,24 @@ public class GameStateLogic()
         }
     };
 
+    private EventService _eventService;
+
+    public GameStateLogic(EventService eventService)
+    {
+        _eventService = eventService;
+
+        _globalGameState = RegenerateGameState().Result;
+    }
+
     public GameState GetGameState() => _globalGameState;
 
-    public GameState RegenerateGameState()
+    public async Task<GameState> RegenerateGameState()
     {
-        // TODO: Read all events from database to reconstruct state
-        // TODO: Store gamestate in database at intervals to only read new events when regenerating
+        (await _eventService.GetAsyncAsc()).ForEach(gameEvent =>
+        {
+            gameEvent.ApplyToGameState(_globalGameState);
+        });
+
         return _globalGameState;
     }
 

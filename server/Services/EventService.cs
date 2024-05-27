@@ -29,6 +29,9 @@ public class EventService
     public Task<IEvent> GetAsync(string id) =>
          _eventsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
+    public Task<List<IEvent>> GetAsyncAsc() =>
+        _eventsCollection.Find(_ => true).Sort(Builders<IEvent>.Sort.Ascending("CreatedAt")).ToListAsync();
+
     public Task<long> GetCount() => _eventsCollection.CountDocumentsAsync(new BsonDocument());
 
     public Task CreateAsync(IEvent newEvent) =>

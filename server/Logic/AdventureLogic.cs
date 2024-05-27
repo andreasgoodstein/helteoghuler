@@ -3,7 +3,7 @@ using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerServer.Logic;
 
-public class AdventureLogic()
+public class AdventureLogic
 {
     public bool CanPlayerGenerateAdventure()
     {

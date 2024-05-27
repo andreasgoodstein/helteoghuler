@@ -40,6 +40,7 @@ public class AdventureController : ControllerBase
         await _eventService.CreateAsync(new AdventureEvent()
         {
             Adventure = adventure,
+            CreatedAt = DateTime.UtcNow,
             PlayerId = _gameStateLogic.GetGameState().Player.Id
         });
 

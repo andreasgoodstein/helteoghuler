@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.Serializers;
 // Allow all mongodb serialization
 ObjectSerializer objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
 BsonSerializer.RegisterSerializer(objectSerializer);
+BsonClassMap.RegisterClassMap<AdventureEvent>();
 
 var builder = WebApplication.CreateBuilder(args);
 
