@@ -3,21 +3,21 @@ using System;
 
 public class StartAdventureScript : Button
 {
-	private HTTPRequest request;
+	// private HTTPRequest request;
 
 	public override void _Ready()
 	{
 
 		Button button = GetNode<Button>("../StartAdventureButton");
-		request = GetNode<HTTPRequest>("/root/Network");
+		// request = GetNode<HTTPRequest>("/root/Network");
 
-		request.Connect("request_completed", this, "OnRequestCompleted");
+		// request.Connect("request_completed", this, "OnRequestCompleted");
 		button.Connect("pressed", this, "StartAdventurePressed");
 	}
 
 	private void StartAdventurePressed()
 	{
-		request.Request("http://localhost:7111/Adventure/Start");
+		// request.Request("http://localhost:7111/Adventure/Start");
 	}
 
 	private void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)

@@ -3,36 +3,26 @@ using System;
 using System.Text;
 
 using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 
-public class MenuScript : Control
+public class MenuScript : Control, ISubscriber<GameState>
 {
+	private Server server;
+
 	public override void _Ready()
 	{
-		HTTPRequest httpGetGameState = GetNode<HTTPRequest>("/root/Network");
-
-		httpGetGameState.Connect("request_completed", this, "OnRequestCompleted");
-		httpGetGameState.Request("http://localhost:7111/GameState");
+		GlobalGameState.Listen(this);
 
 		GetNode<Button>("GoToAdventure").Connect("pressed", this, "GoToAdventurePressed");
+
+		GetNode<Server>("/root/Server").RefreshGameState(this);
 	}
 
-	private void OnRequestCompleted(int result, int response_code, string[] headers, byte[] body)
+	public void Message(GameState gameState)
 	{
-		if (response_code < 200 || response_code > 299)
-		{
-			GD.Print("Network: Could not get GameState");
-			return;
-		}
-
-		GameState gameState = HHJsonSerializer.Deserialize<GameState>(body);
-
-		GlobalGameState.Update(gameState);
-
-		RichTextLabel worldNameNode = GetNode<RichTextLabel>("WorldName");
-
-		worldNameNode.Text = gameState.World.WorldName;
+		GetNode<RichTextLabel>("WorldName").Text = gameState.World.WorldName;
 	}
 
 	private void GoToAdventurePressed()

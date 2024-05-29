@@ -1,5 +1,6 @@
 using AutoMapper;
 using Godot;
+using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient;
@@ -24,6 +25,11 @@ public class GlobalGameState : Node
     public static GameState Get()
     {
         return _gameState;
+    }
+
+    public static void Listen(ISubscriber<GameState> subscriber)
+    {
+        _gameStateChannel.Register(subscriber);
     }
 
     public static GameState Update(GameState newGameState)

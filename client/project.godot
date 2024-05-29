@@ -16,8 +16,8 @@ config/icon="res://assets/icon.png"
 
 [autoload]
 
-Network="*res://scenes/Network.tscn"
 GlobalGameState="*res://scripts/autoloads/GlobalGameState.cs"
+Server="res://scripts/autoloads/Server.cs"
 
 [gui]
 
