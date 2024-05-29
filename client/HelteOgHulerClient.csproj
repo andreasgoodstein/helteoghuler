@@ -2,6 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="..\shared\HelteOgHulerShared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
   <PropertyGroup>
     <LangVersion>12.0</LangVersion>
     <TargetFramework>net472</TargetFramework>
