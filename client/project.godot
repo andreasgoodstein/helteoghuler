@@ -14,6 +14,11 @@ config/name="HelteOgHulerClient"
 run/main_scene="res://scenes/Menu.tscn"
 config/icon="res://assets/icon.png"
 
+[autoload]
+
+Network="*res://scenes/Network.tscn"
+GlobalGameState="*res://scripts/autoloads/GlobalGameState.cs"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

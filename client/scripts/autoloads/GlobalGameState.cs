@@ -1,17 +1,18 @@
 using AutoMapper;
+using Godot;
 using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient;
 
-public class GameStateStore
+public class GlobalGameState : Node
 {
-    private Mapper _mapper;
+    private static Mapper _mapper;
 
-    private GameState _gameState;
+    private static GameState _gameState;
 
-    private PubSub<GameState> _gameStateChannel;
+    private static PubSub<GameState> _gameStateChannel;
 
-    public GameStateStore()
+    public GlobalGameState()
     {
         _gameState = new GameState() { };
 
@@ -20,15 +21,17 @@ public class GameStateStore
         _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<GameState, GameState>()));
     }
 
-    public GameState Get()
+    public static GameState Get()
     {
         return _gameState;
     }
 
-    public void Set(GameState newGameState)
+    public static GameState Update(GameState newGameState)
     {
         _gameStateChannel.Publish(newGameState);
 
         _gameState = _mapper.Map<GameState, GameState>(newGameState, _gameState);
+
+        return _gameState;
     }
 }

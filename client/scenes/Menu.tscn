@@ -32,8 +32,6 @@ margin_bottom = 60.0
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
 
-[node name="HTTPGetGameState" type="HTTPRequest" parent="."]
-
 [node name="GoToAdventure" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
