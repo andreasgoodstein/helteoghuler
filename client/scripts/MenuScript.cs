@@ -1,23 +1,24 @@
 using Godot;
 using System;
-using System.Text;
 
 using HelteOgHulerClient;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
-using HelteOgHulerShared.Utilities;
 
 public class MenuScript : Control, ISubscriber<GameState>
 {
-	private Server server;
-
 	public override void _Ready()
 	{
-		GlobalGameState.Listen(this);
+		GlobalGameState.Register(this);
 
 		GetNode<Button>("GoToAdventure").Connect("pressed", this, "GoToAdventurePressed");
 
 		GetNode<Server>("/root/Server").RefreshGameState(this);
+	}
+
+	public override void _ExitTree()
+	{
+		GlobalGameState.Unregister(this);
 	}
 
 	public void Message(GameState gameState)
@@ -31,5 +32,10 @@ public class MenuScript : Control, ISubscriber<GameState>
 	private void GoToAdventurePressed()
 	{
 		GetTree().ChangeScene("res://scenes/AdventureStatsScene.tscn");
+	}
+
+	public string GetId()
+	{
+		return Filename + Name;
 	}
 }

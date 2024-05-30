@@ -1,10 +1,9 @@
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Interfaces;
-using HelteOgHulerShared.Models;
 using HelteOgHulerServer.Services;
+using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerServer.Logic;
-
 
 public class GameStateLogic
 {

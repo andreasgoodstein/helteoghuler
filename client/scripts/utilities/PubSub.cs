@@ -1,3 +1,4 @@
+using Godot;
 using System.Collections.Generic;
 using HelteOgHulerClient.Interfaces;
 
@@ -5,23 +6,28 @@ namespace HelteOgHulerClient.Utilities;
 
 public class PubSub<T>
 {
-    private List<ISubscriber<T>> subscriberList;
+	private Dictionary<string, ISubscriber<T>> subscriberMap;
 
-    public PubSub()
-    {
-        subscriberList = new List<ISubscriber<T>>();
-    }
+	public PubSub()
+	{
+		subscriberMap = new Dictionary<string, ISubscriber<T>>();
+	}
 
-    public void Register(ISubscriber<T> subscriber)
-    {
-        subscriberList.Add(subscriber);
-    }
+	public void Register(ISubscriber<T> subscriber)
+	{
+		subscriberMap.Add(subscriber.GetId(), subscriber);
+	}
 
-    public void Publish(T message)
-    {
-        subscriberList.ForEach(subscriber =>
-        {
-            subscriber.Message(message);
-        });
-    }
+	public void Publish(T message)
+	{
+		foreach (var entry in subscriberMap)
+		{
+			entry.Value.Message(message);
+		}
+	}
+
+	public void Unregister(ISubscriber<T> subscriber)
+	{
+		subscriberMap.Remove(subscriber.GetId());
+	}
 }

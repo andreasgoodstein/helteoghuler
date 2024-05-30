@@ -4,5 +4,7 @@ namespace HelteOgHulerClient.Interfaces;
 
 public interface ISubscriber<T>
 {
+    string GetId();
+
     void Message(T message);
 }

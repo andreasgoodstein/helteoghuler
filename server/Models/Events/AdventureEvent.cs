@@ -15,7 +15,7 @@ public class AdventureEvent : IEvent
     [BsonIgnoreIfDefault]
     public string? Id { get; init; }
 
-    public Adventure Adventure { get; init; }
+    public Adventure? Adventure { get; init; }
 
     public DateTime CreatedAt { get; init; }
 
@@ -26,12 +26,12 @@ public class AdventureEvent : IEvent
     public void ApplyToGameState(GameState gameState)
     {
         gameState.World.TotalAdventures += 1;
-        gameState.Player.Inn.Chest.Gold += this.Adventure.Gold;
+        gameState.Player.Inn.Chest.Gold += this.Adventure?.Gold ?? 0;
     }
 
     public void RemoveFromGameState(GameState gameState)
     {
         gameState.World.TotalAdventures -= 1;
-        gameState.Player.Inn.Chest.Gold -= this.Adventure.Gold;
+        gameState.Player.Inn.Chest.Gold -= this.Adventure?.Gold ?? 0;
     }
 }

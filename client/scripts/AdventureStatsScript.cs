@@ -1,21 +1,35 @@
 using Godot;
-using System;
+using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
+using HelteOgHulerShared.Models;
 
-public class AdventureStatsScript : Control
+public class AdventureStatsScript : Control, ISubscriber<GameState>
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+	private Label TotalAdventures;
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		GlobalGameState.Register(this);
 
+		TotalAdventures = GetNode<Label>("TotalAdventures/Value");
+		TotalAdventures.Text = (GlobalGameState.Get()?.World?.TotalAdventures ?? 0).ToString();
 	}
 
-	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
-	//  {
-	//      
-	//  }
+	public override void _ExitTree()
+	{
+		GlobalGameState.Unregister(this);
+	}
+
+	public void Message(GameState gameState)
+	{
+		if (gameState?.World?.TotalAdventures != null)
+		{
+			TotalAdventures.Text = gameState.World.TotalAdventures.ToString();
+		}
+	}
+
+	public string GetId()
+	{
+		return Filename + Name;
+	}
 }

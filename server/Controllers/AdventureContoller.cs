@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using HelteOgHulerServer.Models;
+using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
-using HelteOgHulerServer.Logic;
+using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerServer.Controllers;
 
@@ -21,14 +22,8 @@ public class AdventureController : ControllerBase
         _eventService = eventService;
     }
 
-    [HttpGet(Name = "Count")]
-    public Task<long> Count()
-    {
-        return _eventService.GetCount();
-    }
-
     [HttpGet(Name = "Start")]
-    public async Task<ActionResult<GameState>> Start()
+    public async Task<ActionResult<string>> Start()
     {
         if (!_adventureLogic.CanPlayerGenerateAdventure())
         {
@@ -46,6 +41,6 @@ public class AdventureController : ControllerBase
 
         GameState newGameState = _gameStateLogic.UpdateGameState(new AdventureEvent { Adventure = adventure });
 
-        return newGameState;
+        return HHJsonSerializer.Serialize(newGameState);
     }
 }
