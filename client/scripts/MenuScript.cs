@@ -22,7 +22,10 @@ public class MenuScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		GetNode<RichTextLabel>("WorldName").Text = gameState.World.WorldName;
+		if (!String.IsNullOrWhiteSpace(gameState?.World?.WorldName))
+		{
+			GetNode<RichTextLabel>("WorldName").Text = gameState.World.WorldName;
+		}
 	}
 
 	private void GoToAdventurePressed()

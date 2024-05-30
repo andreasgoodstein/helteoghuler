@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using HelteOgHulerClient.Interfaces;
 
-namespace HelteOgHulerClient;
+namespace HelteOgHulerClient.Utilities;
 
 public class PubSub<T>
 {

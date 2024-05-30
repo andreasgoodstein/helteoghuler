@@ -1,6 +1,7 @@
 using AutoMapper;
 using Godot;
 using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient;
