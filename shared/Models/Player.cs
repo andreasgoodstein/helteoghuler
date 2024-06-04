@@ -5,7 +5,7 @@ namespace HelteOgHulerShared.Models;
 
 public class Player
 {
-    public Guid Id { get; set; }
+    public Nullable<Guid> Id { get; set; }
 
     public Inn Inn { get; set; }
 

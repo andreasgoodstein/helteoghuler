@@ -25,9 +25,9 @@ public class GameStateLogic
             },
             Name = "TestPlayer"
         },
-        World = new WorldState
+        World = new World
         {
-            WorldName = "Konia"
+            Name = "Konia"
         }
     };
 

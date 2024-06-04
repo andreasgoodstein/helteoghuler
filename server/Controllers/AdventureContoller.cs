@@ -32,15 +32,18 @@ public class AdventureController : ControllerBase
 
         Adventure adventure = _adventureLogic.GenerateAdventure();
 
-        await _eventService.CreateAsync(new AdventureEvent()
+        AdventureEvent adventureEvent = new AdventureEvent()
         {
             Adventure = adventure,
             CreatedAt = DateTime.UtcNow,
             PlayerId = _gameStateLogic.GetGameState().Player.Id
-        });
+        };
 
-        GameState newGameState = _gameStateLogic.UpdateGameState(new AdventureEvent { Adventure = adventure });
+        await _eventService.CreateAsync(adventureEvent);
 
-        return HHJsonSerializer.Serialize(newGameState);
+        GameState gameStateDiff = new GameState { };
+        adventureEvent.ApplyToGameState(gameStateDiff);
+
+        return HHJsonSerializer.Serialize(gameStateDiff);
     }
 }

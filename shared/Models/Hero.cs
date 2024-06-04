@@ -5,7 +5,7 @@ namespace HelteOgHulerShared.Models;
 
 public class Hero
 {
-    public Guid Id { get; set; }
+    public Nullable<Guid> Id { get; set; }
 
     public string Name { get; set; }
 }

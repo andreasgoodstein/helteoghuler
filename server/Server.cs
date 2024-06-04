@@ -28,6 +28,8 @@ builder.Services.AddSingleton<EventService>();
 
 var app = builder.Build();
 
+app.Services.GetService<GameStateLogic>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
