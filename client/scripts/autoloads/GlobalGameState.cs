@@ -3,6 +3,7 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Interfaces;
 
 namespace HelteOgHulerClient;
 
@@ -38,12 +39,17 @@ public class GlobalGameState : Node
 		_gameStateChannel.Unregister(subscriber);
 	}
 
-	public static GameState Update(GameState newGameState)
+	public static void Update(GameState newGameState)
 	{
-		_gameStateChannel.Publish(newGameState);
-
 		_gameState = _mapper.Map(newGameState, _gameState);
 
-		return _gameState;
+		_gameStateChannel.Publish(_gameState);
+	}
+
+	public static void Update(IApplicable applicable)
+	{
+		applicable.ApplyToGameState(ref _gameState);
+
+		_gameStateChannel.Publish(_gameState);
 	}
 }

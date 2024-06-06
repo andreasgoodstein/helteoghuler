@@ -46,7 +46,7 @@ public class GameStateLogic
     {
         (await _eventService.GetAsyncAsc()).ForEach(gameEvent =>
         {
-            gameEvent.ApplyToGameState(_globalGameState);
+            gameEvent.ApplyToGameState(ref _globalGameState);
         });
 
         return _globalGameState;
@@ -54,7 +54,7 @@ public class GameStateLogic
 
     public GameState UpdateGameState(IEvent gameEvent)
     {
-        gameEvent.ApplyToGameState(_globalGameState);
+        gameEvent.ApplyToGameState(ref _globalGameState);
 
         return _globalGameState;
     }

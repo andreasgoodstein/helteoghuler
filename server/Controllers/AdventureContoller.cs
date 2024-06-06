@@ -41,9 +41,6 @@ public class AdventureController : ControllerBase
 
         await _eventService.CreateAsync(adventureEvent);
 
-        GameState gameStateDiff = new GameState { };
-        adventureEvent.ApplyToGameState(gameStateDiff);
-
-        return HHJsonSerializer.Serialize(gameStateDiff);
+        return HHJsonSerializer.Serialize(adventure);
     }
 }

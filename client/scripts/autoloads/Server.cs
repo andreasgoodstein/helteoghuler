@@ -1,6 +1,7 @@
 using Godot;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerClient;
@@ -55,14 +56,24 @@ public class Server : Node
 			return;
 		}
 
-		HandleGameStateResponse(body, startAdventureNode);
+		HandleGameStateResponse<Adventure>(body, startAdventureNode);
 	}
 
 	private void HandleGameStateResponse(byte[] body, RequestNode usedNode)
 	{
-		GameState gameState = HHJsonSerializer.Deserialize<GameState>(body);
+		GameState newGameState = HHJsonSerializer.Deserialize<GameState>(body);
 
-		GlobalGameState.Update(gameState);
+		GlobalGameState.Update(newGameState);
+
+		usedNode.Clean();
+		usedNode = null;
+	}
+
+	private void HandleGameStateResponse<T>(byte[] body, RequestNode usedNode) where T : IApplicable
+	{
+		T responseObject = HHJsonSerializer.Deserialize<T>(body);
+
+		GlobalGameState.Update(responseObject);
 
 		usedNode.Clean();
 		usedNode = null;
