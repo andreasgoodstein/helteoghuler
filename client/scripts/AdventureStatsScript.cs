@@ -5,14 +5,20 @@ using HelteOgHulerShared.Models;
 
 public class AdventureStatsScript : Control, ISubscriber<GameState>
 {
-	private Label TotalAdventures;
+	private KeyValueLabel TotalAdventures;
+	private KeyValueLabel GoldTracker;
 
 	public override void _Ready()
 	{
 		GlobalGameState.Register(this);
 
-		TotalAdventures = GetNode<Label>("TotalAdventures/Value");
-		TotalAdventures.Text = (GlobalGameState.Get()?.World?.TotalAdventures ?? 0).ToString();
+		GameState gameState = GlobalGameState.Get();
+
+		GoldTracker = GetNode<KeyValueLabel>("Container/GoldTracker");
+		GoldTracker.Set(gameState?.Player?.Inn?.Chest?.Gold ?? 0);
+
+		TotalAdventures = GetNode<KeyValueLabel>("Container/TotalAdventuresTracker");
+		TotalAdventures.Set(gameState?.World?.TotalAdventures ?? 0);
 	}
 
 	public override void _ExitTree()
@@ -24,7 +30,12 @@ public class AdventureStatsScript : Control, ISubscriber<GameState>
 	{
 		if (gameState?.World?.TotalAdventures != null)
 		{
-			TotalAdventures.Text = gameState.World.TotalAdventures.ToString();
+			TotalAdventures.Set(gameState.World.TotalAdventures);
+		}
+
+		if (gameState?.Player?.Inn?.Chest?.Gold != null)
+		{
+			GoldTracker.Set(gameState.Player.Inn.Chest.Gold);
 		}
 	}
 

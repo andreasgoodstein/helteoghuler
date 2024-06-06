@@ -23,9 +23,9 @@ public class MenuScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		if (!String.IsNullOrWhiteSpace(gameState?.World?.WorldName))
+		if (!String.IsNullOrWhiteSpace(gameState?.World?.Name))
 		{
-			GetNode<RichTextLabel>("WorldName").Text = gameState.World.WorldName;
+			GetNode<RichTextLabel>("WorldName").Text = gameState.World.Name;
 		}
 	}
 
