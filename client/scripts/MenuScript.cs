@@ -1,9 +1,8 @@
 using Godot;
-using System;
-
-using HelteOgHulerClient;
 using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using System;
 
 public class MenuScript : Control, ISubscriber<GameState>
 {

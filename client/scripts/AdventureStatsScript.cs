@@ -1,6 +1,6 @@
 using Godot;
-using HelteOgHulerClient;
 using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 
 public class AdventureStatsScript : Control, ISubscriber<GameState>

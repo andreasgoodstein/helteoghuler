@@ -1,7 +1,7 @@
 using Godot;
 using HelteOgHulerClient.Utilities;
-using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Interfaces;
+using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerClient;

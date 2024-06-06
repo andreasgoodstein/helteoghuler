@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+using HelteOgHulerServer.Logic;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using HelteOgHulerServer.Logic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HelteOgHulerServer.Controllers;
 

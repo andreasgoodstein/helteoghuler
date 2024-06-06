@@ -1,8 +1,8 @@
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson.Serialization;
 
 // Allow all mongodb serialization
 ObjectSerializer objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);

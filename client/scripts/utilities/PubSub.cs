@@ -1,6 +1,6 @@
 using Godot;
-using System.Collections.Generic;
 using HelteOgHulerClient.Interfaces;
+using System.Collections.Generic;
 
 namespace HelteOgHulerClient.Utilities;
 

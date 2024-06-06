@@ -2,8 +2,8 @@ using AutoMapper;
 using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
-using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Interfaces;
+using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient;
 

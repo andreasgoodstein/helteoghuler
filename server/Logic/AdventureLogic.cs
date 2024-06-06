@@ -1,5 +1,5 @@
-using System;
 using HelteOgHulerShared.Models;
+using System;
 
 namespace HelteOgHulerServer.Logic;
 
