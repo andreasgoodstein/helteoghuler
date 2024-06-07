@@ -3,7 +3,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 
-public class AdventureStatsScript : Control, ISubscriber<GameState>
+public class AdventureScript : Control, ISubscriber<GameState>
 {
 	private KeyValueLabel TotalAdventures;
 	private KeyValueLabel GoldTracker;

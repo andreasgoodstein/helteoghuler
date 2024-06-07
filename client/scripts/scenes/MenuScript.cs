@@ -30,7 +30,7 @@ public class MenuScript : Control, ISubscriber<GameState>
 
 	private void GoToAdventurePressed()
 	{
-		GetTree().ChangeScene("res://scenes/AdventureStatsScene.tscn");
+		GetTree().ChangeScene("res://scenes/AdventureScene.tscn");
 	}
 
 	public string GetId()
