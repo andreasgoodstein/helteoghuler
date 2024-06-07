@@ -5,7 +5,6 @@ using HelteOgHulerShared.Models;
 
 public class AdventureScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabel TotalAdventures;
 	private KeyValueLabel GoldTracker;
 
 	public override void _Ready()
@@ -16,9 +15,6 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 		GoldTracker = GetNode<KeyValueLabel>("Container/GoldTracker");
 		GoldTracker.Set(gameState?.Player?.Inn?.Chest?.Gold ?? 0);
-
-		TotalAdventures = GetNode<KeyValueLabel>("Container/TotalAdventuresTracker");
-		TotalAdventures.Set(gameState?.World?.TotalAdventures ?? 0);
 	}
 
 	public override void _ExitTree()
@@ -28,11 +24,6 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		if (gameState?.World?.TotalAdventures != null)
-		{
-			TotalAdventures.Set(gameState.World.TotalAdventures);
-		}
-
 		if (gameState?.Player?.Inn?.Chest?.Gold != null)
 		{
 			GoldTracker.Set(gameState.Player.Inn.Chest.Gold);

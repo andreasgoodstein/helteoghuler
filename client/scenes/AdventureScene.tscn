@@ -39,25 +39,6 @@ margin_top = 0.0
 margin_right = 74.0
 margin_bottom = 16.0
 
-[node name="TotalAdventuresTracker" parent="Container" instance=ExtResource( 4 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 78.0
-margin_right = 1024.0
-margin_bottom = 94.0
-
-[node name="Key" parent="Container/TotalAdventuresTracker" index="0"]
-margin_top = 0.0
-margin_right = 228.0
-margin_bottom = 16.0
-text = "Total Adventures: "
-
-[node name="Value" parent="Container/TotalAdventuresTracker" index="1"]
-margin_left = 232.0
-margin_top = 0.0
-margin_right = 232.0
-margin_bottom = 16.0
-
 [node name="StartAdventureButton" parent="." instance=ExtResource( 3 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -66,4 +47,3 @@ margin_right = 213.0
 margin_bottom = 0.0
 
 [editable path="Container/GoldTracker"]
-[editable path="Container/TotalAdventuresTracker"]
