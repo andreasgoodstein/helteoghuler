@@ -22,14 +22,11 @@ Server="res://scripts/autoloads/Server.cs"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+theme/custom="res://themes/theme.tres"
 
 [mono]
 
 project/assembly_name="HelteOgHulerClient"
-
-[network]
-
-ssl/certificates="res://secrets/dev.crt"
 
 [physics]
 
