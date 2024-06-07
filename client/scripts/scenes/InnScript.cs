@@ -3,9 +3,9 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 
-public class WorldScript : Control, ISubscriber<GameState>
+public class InnScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabel TotalAdventures;
+	private KeyValueLabel InnKeeper;
 
 	public override void _Ready()
 	{
@@ -13,8 +13,8 @@ public class WorldScript : Control, ISubscriber<GameState>
 
 		GameState gameState = GlobalGameState.Get();
 
-		TotalAdventures = GetNode<KeyValueLabel>("TotalAdventuresTracker");
-		TotalAdventures.Set(gameState?.World?.TotalAdventures ?? 0);
+		InnKeeper = GetNode<KeyValueLabel>("InnKeeper");
+		InnKeeper.Set(gameState?.Player?.Name);
 	}
 
 	public override void _ExitTree()
@@ -24,9 +24,9 @@ public class WorldScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		if (gameState?.World?.TotalAdventures != null)
+		if (gameState?.Player?.Name != null)
 		{
-			TotalAdventures.Set(gameState.World.TotalAdventures);
+			InnKeeper.Set(gameState.Player.Name);
 		}
 	}
 

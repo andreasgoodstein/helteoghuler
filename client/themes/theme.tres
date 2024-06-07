@@ -4,3 +4,5 @@
 
 [resource]
 default_font = ExtResource( 1 )
+HBoxContainer/constants/separation = 8
+VBoxContainer/constants/separation = 8
