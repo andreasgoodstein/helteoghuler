@@ -41,6 +41,8 @@ public class AdventureController : ControllerBase
 
         await _eventService.CreateAsync(adventureEvent);
 
+        _gameStateLogic.UpdateGameState(adventureEvent);
+
         return HHJsonSerializer.Serialize(adventure);
     }
 }
