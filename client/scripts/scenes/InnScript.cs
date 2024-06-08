@@ -9,12 +9,11 @@ public class InnScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		GlobalGameState.Register(this);
-
-		GameState gameState = GlobalGameState.Get();
-
 		InnKeeper = GetNode<KeyValueLabel>("InnKeeper");
-		InnKeeper.Set(gameState?.Player?.Name);
+
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()

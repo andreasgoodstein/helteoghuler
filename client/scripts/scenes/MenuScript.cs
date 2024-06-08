@@ -8,11 +8,13 @@ public class MenuScript : Control, ISubscriber<GameState>
 {
 	public override void _Ready()
 	{
-		GlobalGameState.Register(this);
-
 		GetNode<Button>("GoToAdventure").Connect("pressed", this, "GoToAdventurePressed");
 
 		GetNode<Server>("/root/Server").RefreshGameState(this);
+
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()

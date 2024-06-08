@@ -18,8 +18,6 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		GlobalGameState.Register(this);
-
 		StartAdventure = GetNode<Button>("../StartAdventureButton");
 
 		StartAdventureDefaultText = StartAdventure.Text;
@@ -27,6 +25,8 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 		StartAdventure.Connect("pressed", this, "StartAdventurePressed");
 
 		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()
@@ -51,8 +51,8 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 		RestUntil = null;
 
-		WaitUntilRestedTimer.Stop();
-		WaitUntilRestedTimer.QueueFree();
+		WaitUntilRestedTimer?.Stop();
+		WaitUntilRestedTimer?.QueueFree();
 		WaitUntilRestedTimer = null;
 
 		StartAdventure.Disabled = false;

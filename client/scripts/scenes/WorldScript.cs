@@ -9,12 +9,11 @@ public class WorldScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		GlobalGameState.Register(this);
-
-		GameState gameState = GlobalGameState.Get();
-
 		TotalAdventures = GetNode<KeyValueLabel>("TotalAdventuresTracker");
-		TotalAdventures.Set(gameState?.World?.TotalAdventures ?? 0);
+
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()

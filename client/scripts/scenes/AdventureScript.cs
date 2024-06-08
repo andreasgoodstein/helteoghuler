@@ -10,14 +10,12 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		GlobalGameState.Register(this);
-
-		GameState gameState = GlobalGameState.Get();
-
 		GoldTracker = GetNode<KeyValueLabel>("Container/GoldTracker");
-		GoldTracker.Set(gameState?.Player?.Inn?.Chest?.Gold ?? 0);
-
 		MessageTracker = GetNode<KeyValueLabel>("Container/MessageTracker");
+
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()
