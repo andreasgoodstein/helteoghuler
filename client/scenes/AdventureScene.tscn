@@ -38,6 +38,25 @@ margin_top = 0.0
 margin_right = 70.0
 margin_bottom = 16.0
 
+[node name="MessageTracker" parent="Container" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 78.0
+margin_right = 1024.0
+margin_bottom = 94.0
+
+[node name="Key" parent="Container/MessageTracker" index="0"]
+margin_top = 0.0
+margin_right = 112.0
+margin_bottom = 16.0
+text = "Message:"
+
+[node name="Value" parent="Container/MessageTracker" index="1"]
+margin_left = 120.0
+margin_top = 0.0
+margin_right = 120.0
+margin_bottom = 16.0
+
 [node name="StartAdventureButton" parent="." instance=ExtResource( 3 )]
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -46,3 +65,4 @@ margin_right = 213.0
 margin_bottom = 0.0
 
 [editable path="Container/GoldTracker"]
+[editable path="Container/MessageTracker"]
