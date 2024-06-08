@@ -25,6 +25,8 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 		StartAdventureDefaultText = StartAdventure.Text;
 
 		StartAdventure.Connect("pressed", this, "StartAdventurePressed");
+
+		Message(GlobalGameState.Get());
 	}
 
 	public override void _ExitTree()
