@@ -25,9 +25,18 @@ public class AdventureController : ControllerBase
     [HttpGet(Name = "Start")]
     public async Task<ActionResult<string>> Start()
     {
-        if (!_adventureLogic.CanPlayerGenerateAdventure())
+        if (!_adventureLogic.CanPlayerAdventureForth())
         {
-            return new ContentResult() { StatusCode = 400, Content = "Your party cannot venture forth" };
+            var error = new HHError
+            {
+                Message = "Your party cannot venture forth yet"
+            };
+
+            return new ContentResult
+            {
+                Content = HHJsonSerializer.Serialize(error),
+                StatusCode = 400,
+            };
         }
 
         Adventure adventure = _adventureLogic.GenerateAdventure();
@@ -36,7 +45,7 @@ public class AdventureController : ControllerBase
         {
             Adventure = adventure,
             CreatedAt = DateTime.UtcNow,
-            PlayerId = _gameStateLogic.GetGameState().Player.Id
+            PlayerId = _gameStateLogic.Get().Player.Id
         };
 
         await _eventService.CreateAsync(adventureEvent);

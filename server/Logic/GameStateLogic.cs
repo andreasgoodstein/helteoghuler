@@ -10,6 +10,7 @@ public class GameStateLogic
 
     private GameState _globalGameState = new GameState
     {
+        CurrentTime = DateTime.UtcNow,
         Player = new Player
         {
             Id = Guid.NewGuid(),
@@ -40,7 +41,12 @@ public class GameStateLogic
         _globalGameState = RegenerateGameState().Result;
     }
 
-    public GameState GetGameState() => _globalGameState;
+    public GameState Get()
+    {
+        _globalGameState.CurrentTime = DateTime.UtcNow;
+
+        return _globalGameState;
+    }
 
     public async Task<GameState> RegenerateGameState()
     {
@@ -49,12 +55,16 @@ public class GameStateLogic
             gameEvent.ApplyToGameState(ref _globalGameState);
         });
 
+        _globalGameState.CurrentTime = DateTime.UtcNow;
+
         return _globalGameState;
     }
 
     public GameState UpdateGameState(IEvent gameEvent)
     {
         gameEvent.ApplyToGameState(ref _globalGameState);
+
+        _globalGameState.CurrentTime = DateTime.UtcNow;
 
         return _globalGameState;
     }

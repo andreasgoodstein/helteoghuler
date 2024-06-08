@@ -19,6 +19,6 @@ public class GameStateController : ControllerBase
     [HttpGet(Name = "GetGameState")]
     public string Get()
     {
-        return HHJsonSerializer.Serialize(_gameStateLogic.GetGameState());
+        return HHJsonSerializer.Serialize(_gameStateLogic.Get());
     }
 }

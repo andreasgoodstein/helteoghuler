@@ -10,4 +10,6 @@ public class Player
     public Inn Inn { get; set; }
 
     public string Name { get; set; }
+
+    public Nullable<DateTime> RestUntil { get; set; }
 }

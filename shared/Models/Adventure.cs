@@ -9,18 +9,21 @@ public class Adventure : IApplicable
 
     public ulong Gold { get; set; }
 
+    public string Status { get; set; }
+
+    public DateTime RestUntil { get; set; }
+
     public void ApplyToGameState(ref GameState gameState)
     {
         gameState.World.TotalAdventures += 1;
         gameState.Player.Inn.Chest.Gold += Gold;
+        gameState.Player.RestUntil = RestUntil;
     }
 
     public void RemoveFromGameState(ref GameState gameState)
     {
-        if (gameState?.World?.TotalAdventures > 0 && gameState?.Player?.Inn?.Chest?.Gold >= Gold)
-        {
-            gameState.World.TotalAdventures -= 1;
-            gameState.Player.Inn.Chest.Gold -= Gold;
-        }
+        gameState.World.TotalAdventures -= 1;
+        gameState.Player.Inn.Chest.Gold -= Gold;
+        gameState.Player.RestUntil = null;
     }
 }

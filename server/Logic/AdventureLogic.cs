@@ -5,13 +5,41 @@ namespace HelteOgHulerServer.Logic;
 
 public class AdventureLogic
 {
-    public bool CanPlayerGenerateAdventure()
+    private Random Random;
+    private GameStateLogic _gameStateLogic;
+
+    public AdventureLogic(GameStateLogic gameStateLogic)
     {
-        return true;
+        Random = new Random();
+        _gameStateLogic = gameStateLogic;
+    }
+
+    public bool CanPlayerAdventureForth()
+    {
+        return (_gameStateLogic.Get()?.Player?.RestUntil ?? DateTime.UtcNow) <= DateTime.UtcNow;
     }
 
     public Adventure GenerateAdventure()
     {
-        return new Adventure() { Gold = 1, Id = Guid.NewGuid() };
+        // Failure
+        if (Random.NextSingle() < .5)
+        {
+            return new Adventure
+            {
+                Gold = 0,
+                Id = Guid.NewGuid(),
+                RestUntil = DateTime.UtcNow.AddSeconds(10),
+                Status = "Alas... Your party returns empty handed.",
+            };
+        }
+
+        //Success
+        return new Adventure
+        {
+            Gold = (ulong)Random.NextInt64(1, 10),
+            Id = Guid.NewGuid(),
+            RestUntil = DateTime.UtcNow.AddSeconds(10),
+            Status = "Forsooth! Your party was victorious."
+        };
     }
 }

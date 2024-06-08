@@ -50,6 +50,14 @@ public class Server : Node
 
 	private void OnStartAdventureResponse(int result, int response_code, string[] headers, byte[] body)
 	{
+		// Expected Errors
+		if (response_code == 400)
+		{
+			HandleGameStateResponse<HHError>(body, startAdventureNode);
+			return;
+		}
+
+		// Unexpected Errors
 		if (response_code < 200 || response_code > 299)
 		{
 			GD.PrintErr("Network: Could not start Adventure");
