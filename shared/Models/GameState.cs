@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 
 namespace HelteOgHulerShared.Models;
@@ -8,7 +9,9 @@ public class GameState
 
     public string ErrorMessage { get; set; }
 
-    public Player Player { get; set; }
+    public Dictionary<Guid, Player> PrivatePlayerDict { get; set; }
+
+    public Dictionary<Guid, PlayerPublic> PublicPlayerDict { get; set; }
 
     public World World { get; set; }
 }

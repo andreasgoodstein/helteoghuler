@@ -22,13 +22,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<DatabaseSettings>(
     builder.Configuration.GetSection("Database"));
 
+builder.Services.AddSingleton<EventService>();
+builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<AdventureLogic>();
 builder.Services.AddSingleton<GameStateLogic>();
-builder.Services.AddSingleton<EventService>();
+builder.Services.AddSingleton<UserLogic>();
 
 var app = builder.Build();
 
 app.Services.GetService<GameStateLogic>();
+var userLogic = app.Services.GetService<UserLogic>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -36,6 +39,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.Use(async (context, next) =>
+{
+    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
+
+    await next();
+});
 
 app.MapControllers();
 

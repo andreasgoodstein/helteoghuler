@@ -11,21 +11,8 @@ public class GameStateLogic
     private GameState _globalGameState = new GameState
     {
         CurrentTime = DateTime.UtcNow,
-        Player = new Player
-        {
-            Id = Guid.NewGuid(),
-            Inn = new Inn
-            {
-                Chest = new Chest()
-                {
-                    Gold = 0,
-                    Id = Guid.NewGuid()
-                },
-                Id = Guid.NewGuid(),
-                Name = "Jagtstuen"
-            },
-            Name = "TestPlayer"
-        },
+        PrivatePlayerDict = new Dictionary<Guid, Player>(),
+        PublicPlayerDict = new Dictionary<Guid, PlayerPublic>(),
         World = new World
         {
             Name = "Konia"
@@ -52,7 +39,7 @@ public class GameStateLogic
     {
         (await _eventService.GetAsyncAsc()).ForEach(gameEvent =>
         {
-            gameEvent.ApplyToGameState(ref _globalGameState);
+            gameEvent.ApplyToGameState(ref _globalGameState, null);
         });
 
         _globalGameState.CurrentTime = DateTime.UtcNow;
@@ -62,7 +49,7 @@ public class GameStateLogic
 
     public GameState UpdateGameState(IEvent gameEvent)
     {
-        gameEvent.ApplyToGameState(ref _globalGameState);
+        gameEvent.ApplyToGameState(ref _globalGameState, null);
 
         _globalGameState.CurrentTime = DateTime.UtcNow;
 

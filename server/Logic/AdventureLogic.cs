@@ -14,9 +14,9 @@ public class AdventureLogic
         _gameStateLogic = gameStateLogic;
     }
 
-    public bool CanPlayerAdventureForth()
+    public bool CanPlayerAdventureForth(Guid playerId)
     {
-        return (_gameStateLogic.Get()?.Player?.RestUntil ?? DateTime.UtcNow) <= DateTime.UtcNow;
+        return (_gameStateLogic.Get()?.PrivatePlayerDict[playerId]?.RestUntil ?? DateTime.UtcNow) <= DateTime.UtcNow;
     }
 
     public Adventure GenerateAdventure()
@@ -33,7 +33,7 @@ public class AdventureLogic
             };
         }
 
-        //Success
+        // Success
         return new Adventure
         {
             Gold = (ulong)Random.NextInt64(1, 10),

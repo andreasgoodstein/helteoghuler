@@ -13,17 +13,31 @@ public class Adventure : IApplicable
 
     public DateTime RestUntil { get; set; }
 
-    public void ApplyToGameState(ref GameState gameState)
+    public void ApplyToGameState(ref GameState gameState, Nullable<Guid> id)
     {
+        if (id == null)
+        {
+            return;
+        }
+
+        var playerId = (Guid)id;
+
         gameState.World.TotalAdventures += 1;
-        gameState.Player.Inn.Chest.Gold += Gold;
-        gameState.Player.RestUntil = RestUntil;
+        gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
+        gameState.PrivatePlayerDict[playerId].RestUntil = RestUntil;
     }
 
-    public void RemoveFromGameState(ref GameState gameState)
+    public void RemoveFromGameState(ref GameState gameState, Nullable<Guid> id)
     {
+        if (id == null)
+        {
+            return;
+        }
+
+        var playerId = (Guid)id;
+
         gameState.World.TotalAdventures -= 1;
-        gameState.Player.Inn.Chest.Gold -= Gold;
-        gameState.Player.RestUntil = null;
+        gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;
+        gameState.PrivatePlayerDict[playerId].RestUntil = null;
     }
 }

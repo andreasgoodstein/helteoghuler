@@ -13,3 +13,14 @@ public class Player
 
     public Nullable<DateTime> RestUntil { get; set; }
 }
+
+public class PlayerPublic
+{
+    public Guid Id { get; set; }
+
+    public string Name { get; set; }
+
+    public string InnName { get; set; }
+
+    public ulong TotalTribute { get; set; }
+}

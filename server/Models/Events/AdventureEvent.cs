@@ -25,19 +25,19 @@ public class AdventureEvent : IEvent, IApplicable
 
     public EventType Type => EventType.Adventure;
 
-    public void ApplyToGameState(ref GameState gameState)
+    public void ApplyToGameState(ref GameState gameState, Nullable<Guid> _)
     {
         if (Adventure != null)
         {
-            Adventure.ApplyToGameState(ref gameState);
+            Adventure.ApplyToGameState(ref gameState, PlayerId);
         }
     }
 
-    public void RemoveFromGameState(ref GameState gameState)
+    public void RemoveFromGameState(ref GameState gameState, Nullable<Guid> _)
     {
         if (Adventure != null)
         {
-            Adventure.RemoveFromGameState(ref gameState);
+            Adventure.RemoveFromGameState(ref gameState, PlayerId);
         }
     }
 }
