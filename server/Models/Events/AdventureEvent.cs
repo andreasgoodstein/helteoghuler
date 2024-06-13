@@ -1,4 +1,3 @@
-using AutoMapper;
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
@@ -21,11 +20,11 @@ public class AdventureEvent : IEvent, IApplicable
 
     public DateTime CreatedAt { get; init; }
 
-    public Nullable<Guid> PlayerId { get; init; }
+    public Guid? PlayerId { get; init; }
 
     public EventType Type => EventType.Adventure;
 
-    public void ApplyToGameState(ref GameState gameState, Nullable<Guid> _)
+    public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
         if (Adventure != null)
         {
@@ -33,7 +32,7 @@ public class AdventureEvent : IEvent, IApplicable
         }
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Nullable<Guid> _)
+    public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
         if (Adventure != null)
         {

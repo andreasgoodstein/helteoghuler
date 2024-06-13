@@ -1,30 +1,47 @@
+using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Services;
+using HelteOgHulerShared.Models;
 
 public class UserLogic
 {
-    UserService _userService;
+    private EventService _eventService;
+
+    private GameStateLogic _gameStateLogic;
+
+    private UserService _userService;
+
 
     private Dictionary<string, User> userDictionary;
 
-    public UserLogic(UserService userService)
+    public UserLogic(GameStateLogic gameStateLogic, EventService eventService, UserService userService)
     {
+        _gameStateLogic = gameStateLogic;
+        _eventService = eventService;
         _userService = userService;
 
         userDictionary = new Dictionary<string, User>();
 
-        GetAllUsers().ForEach(user =>
+        var allUsers = _userService.GetAsync().Result;
+
+        if (allUsers.Count < 1)
+        {
+            CreateAdminUser();
+        }
+
+        allUsers.ForEach(user =>
         {
             userDictionary[user.LoginName] = user;
         });
     }
 
+    // TODO: Refactor to be event driven
     public void AddUser(string loginName)
     {
         var newUser = new User
         {
             CreatedAt = DateTime.UtcNow,
             LoginName = loginName,
-            PlayerId = new Guid()
+            PlayerId = Guid.NewGuid()
         };
 
         _userService.CreateAsync(newUser);
@@ -32,13 +49,57 @@ public class UserLogic
         userDictionary[loginName] = newUser;
     }
 
-    public List<User> GetAllUsers()
+    // TODO: Refactor to be event driven
+    private void CreateAdminUser()
     {
-        return _userService.GetAsync().Result;
+        var adminUser = new User
+        {
+            CreatedAt = DateTime.UtcNow,
+            LoginName = Guid.NewGuid().ToString(),
+            PlayerId = Guid.NewGuid()
+        };
+
+        _userService.CreateAsync(adminUser);
+
+        userDictionary[adminUser.LoginName] = adminUser;
+
+        var newPlayerEvent = new NewPlayerEvent
+        {
+            CreatedAt = DateTime.UtcNow,
+            Player = new Player
+            {
+                Id = adminUser.PlayerId,
+                Inn = new Inn
+                {
+                    Chest = new Chest
+                    {
+                        Gold = 0,
+                        Id = Guid.NewGuid(),
+                    },
+                    Id = Guid.NewGuid(),
+                    Name = "Admin Inn",
+                },
+                Name = "Admin",
+            },
+        };
+
+        _eventService.CreateAsync(newPlayerEvent);
+
+        _gameStateLogic.UpdateGameState(newPlayerEvent);
     }
 
-    public User GetUser(string loginName)
+    public User? GetUser(string loginName)
     {
+        if (String.IsNullOrWhiteSpace(loginName))
+        {
+            return null;
+        }
+
+        if (!userDictionary.ContainsKey(loginName))
+        {
+            return null;
+        }
+
         return userDictionary[loginName];
     }
 }

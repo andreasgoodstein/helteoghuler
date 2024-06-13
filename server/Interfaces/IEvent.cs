@@ -20,5 +20,6 @@ public interface IEvent : IApplicable
 
 public enum EventType
 {
-    Adventure = 0
+    Adventure = 0,
+    NewPlayer = 1,
 }

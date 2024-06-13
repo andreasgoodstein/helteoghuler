@@ -23,9 +23,11 @@ public class InnScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		if (gameState?.Player?.Name != null)
+		var player = gameState?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
+
+		if (player?.Name != null)
 		{
-			InnKeeper.Set(gameState.Player.Name);
+			InnKeeper.Set(player.Name);
 		}
 	}
 

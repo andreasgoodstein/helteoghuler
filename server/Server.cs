@@ -1,13 +1,21 @@
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
+using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
+
+var unauthorizedError = new HHError
+{
+    Message = "Your Innkeeper license could not be verified"
+};
 
 // Allow all mongodb serialization
 ObjectSerializer objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
 BsonSerializer.RegisterSerializer(objectSerializer);
 BsonClassMap.RegisterClassMap<AdventureEvent>();
+BsonClassMap.RegisterClassMap<NewPlayerEvent>();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,9 +50,18 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
+    context.Items["Player"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
 
-    await next();
+    if (context.Items["Player"] == null)
+    {
+        context.Response.StatusCode = 401;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(HHJsonSerializer.Serialize(unauthorizedError));
+    }
+    else
+    {
+        await next();
+    }
 });
 
 app.MapControllers();

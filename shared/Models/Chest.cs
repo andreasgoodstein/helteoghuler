@@ -6,7 +6,7 @@ namespace HelteOgHulerShared.Models;
 
 public class Chest
 {
-    public Nullable<Guid> Id { get; set; }
+    public Guid? Id { get; set; }
 
     public ulong Gold { get; set; }
 

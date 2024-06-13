@@ -5,7 +5,7 @@ namespace HelteOgHulerShared.Models;
 
 public class Inn
 {
-    public Nullable<Guid> Id { get; set; }
+    public Guid? Id { get; set; }
 
     public Chest Chest { get; set; }
 

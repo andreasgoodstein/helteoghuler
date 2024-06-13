@@ -25,22 +25,9 @@ public class AdventureController : ControllerBase
     [HttpGet(Name = "Start")]
     public async Task<ActionResult<string>> Start()
     {
-        User user = (User)HttpContext.Items["User"]!;
-        if (user == null)
-        {
-            var error = new HHError
-            {
-                Message = "Your Innkeeper license could not be verified"
-            };
+        User player = (User)HttpContext.Items["Player"]!;
 
-            return new ContentResult
-            {
-                Content = HHJsonSerializer.Serialize(error),
-                StatusCode = 401,
-            };
-        }
-
-        if (!_adventureLogic.CanPlayerAdventureForth(user.PlayerId))
+        if (!_adventureLogic.CanPlayerAdventureForth(player.PlayerId))
         {
             var error = new HHError
             {
@@ -60,7 +47,7 @@ public class AdventureController : ControllerBase
         {
             Adventure = adventure,
             CreatedAt = DateTime.UtcNow,
-            PlayerId = user.PlayerId
+            PlayerId = player.PlayerId
         };
 
         await _eventService.CreateAsync(adventureEvent);

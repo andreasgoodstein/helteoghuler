@@ -1,5 +1,4 @@
 using HelteOgHulerServer.Logic;
-using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 using Microsoft.AspNetCore.Mvc;
 

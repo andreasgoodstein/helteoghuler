@@ -1,4 +1,3 @@
-using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;

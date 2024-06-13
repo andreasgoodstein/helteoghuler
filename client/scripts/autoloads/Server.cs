@@ -8,6 +8,7 @@ namespace HelteOgHulerClient;
 
 public class Server : Node
 {
+	private readonly string[] headers = ["HHPlayerName: "];
 	private RequestNode refreshGameStateNode;
 	private RequestNode startAdventureNode;
 
@@ -21,7 +22,7 @@ public class Server : Node
 		refreshGameStateNode = new RequestNode(httpRequestParent);
 
 		refreshGameStateNode.Request.Connect("request_completed", this, "OnRefreshGameStateResponse");
-		refreshGameStateNode.Request.Request("http://localhost:7111/GameState");
+		refreshGameStateNode.Request.Request("http://localhost:7111/GameState", headers);
 	}
 
 	private void OnRefreshGameStateResponse(int result, int response_code, string[] headers, byte[] body)
@@ -45,7 +46,7 @@ public class Server : Node
 		startAdventureNode = new RequestNode(httpRequestParent);
 
 		startAdventureNode.Request.Connect("request_completed", this, "OnStartAdventureResponse");
-		startAdventureNode.Request.Request("http://localhost:7111/Adventure/Start");
+		startAdventureNode.Request.Request("http://localhost:7111/Adventure/Start", headers);
 	}
 
 	private void OnStartAdventureResponse(int result, int response_code, string[] headers, byte[] body)

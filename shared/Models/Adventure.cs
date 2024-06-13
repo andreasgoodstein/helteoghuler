@@ -5,7 +5,7 @@ namespace HelteOgHulerShared.Models;
 
 public class Adventure : IApplicable
 {
-    public Nullable<Guid> Id { get; set; }
+    public Guid? Id { get; set; }
 
     public ulong Gold { get; set; }
 
@@ -13,7 +13,7 @@ public class Adventure : IApplicable
 
     public DateTime RestUntil { get; set; }
 
-    public void ApplyToGameState(ref GameState gameState, Nullable<Guid> id)
+    public void ApplyToGameState(ref GameState gameState, Guid? id)
     {
         if (id == null)
         {
@@ -27,7 +27,7 @@ public class Adventure : IApplicable
         gameState.PrivatePlayerDict[playerId].RestUntil = RestUntil;
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Nullable<Guid> id)
+    public void RemoveFromGameState(ref GameState gameState, Guid? id)
     {
         if (id == null)
         {

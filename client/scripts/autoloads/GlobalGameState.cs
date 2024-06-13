@@ -48,7 +48,9 @@ public class GlobalGameState : Node
 
 	public static void Update(IApplicable applicable)
 	{
-		applicable.ApplyToGameState(ref _gameState);
+		var playerId = _gameState?.PrivatePlayerDict?.Values?.GetEnumerator().Current?.Id;
+
+		applicable.ApplyToGameState(ref _gameState, playerId);
 
 		_gameStateChannel.Publish(_gameState);
 	}

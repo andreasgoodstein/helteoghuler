@@ -6,7 +6,7 @@ using System;
 
 public class StartAdventureScript : Button, ISubscriber<GameState>
 {
-	private Nullable<DateTime> RestUntil;
+	private DateTime? RestUntil;
 
 	private Button StartAdventure;
 
@@ -66,9 +66,11 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 	public void Message(GameState message)
 	{
-		if (message?.Player?.RestUntil != null)
+		var player = message?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
+
+		if (player?.RestUntil != null)
 		{
-			RestUntil = message?.Player?.RestUntil;
+			RestUntil = player.RestUntil;
 
 			WaitUntilRested();
 

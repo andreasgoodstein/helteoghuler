@@ -7,12 +7,12 @@ public class HHError : IApplicable
 {
     public string Message { get; set; }
 
-    public void ApplyToGameState(ref GameState gameState, Nullable<Guid> playerId)
+    public void ApplyToGameState(ref GameState gameState, Guid? playerId)
     {
         gameState.ErrorMessage = Message;
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Nullable<Guid> playerId)
+    public void RemoveFromGameState(ref GameState gameState, Guid? playerId)
     {
         gameState.ErrorMessage = null;
     }

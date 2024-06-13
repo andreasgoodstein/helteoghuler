@@ -25,9 +25,11 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		if (gameState?.Player?.Inn?.Chest?.Gold != null)
+		var player = gameState?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
+
+		if (player?.Inn?.Chest?.Gold != null)
 		{
-			GoldTracker.Set(gameState.Player.Inn.Chest.Gold);
+			GoldTracker.Set(player.Inn.Chest.Gold);
 		}
 
 		MessageTracker.Set(gameState.ErrorMessage);
