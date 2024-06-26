@@ -19,5 +19,4 @@ public class KeyValueLabel : HBoxContainer
 	{
 		Value.Text = value.ToString();
 	}
-
 }

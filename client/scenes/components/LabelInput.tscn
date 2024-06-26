@@ -1,0 +1,17 @@
+[gd_scene format=2]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -688.0
+
+[node name="Key" type="Label" parent="."]
+margin_top = 8.0
+margin_bottom = 24.0
+valign = 3
+
+[node name="Value" type="LineEdit" parent="."]
+margin_left = 8.0
+margin_right = 264.0
+margin_bottom = 32.0
+max_length = 255

@@ -1,42 +1,16 @@
 using Godot;
-using HelteOgHulerClient.Interfaces;
-using HelteOgHulerClient;
-using HelteOgHulerShared.Models;
-using System;
 
-public class MenuScript : Control, ISubscriber<GameState>
+public class MenuScript : Control
 {
 	public override void _Ready()
 	{
-		GetNode<Button>("GoToAdventure").Connect("pressed", this, "GoToAdventurePressed");
-
-		GetNode<Server>("/root/Server").RefreshGameState(this);
-
-		Message(GlobalGameState.Get());
-
-		GlobalGameState.Register(this);
+		GetNode<Button>("StartAdventure").Connect("pressed", this, "StartAdventurePressed");
 	}
 
-	public override void _ExitTree()
+	private void StartAdventurePressed()
 	{
-		GlobalGameState.Unregister(this);
-	}
-
-	public void Message(GameState gameState)
-	{
-		if (!String.IsNullOrWhiteSpace(gameState?.World?.Name))
-		{
-			GetNode<Label>("Title/WorldName").Text = gameState.World.Name;
-		}
-	}
-
-	private void GoToAdventurePressed()
-	{
-		GetTree().ChangeScene("res://scenes/AdventureScene.tscn");
-	}
-
-	public string GetId()
-	{
-		return Filename + Name;
+		// TODO: Try login and choose scene
+		// GetNode<Server>("/root/Server").RefreshGameState(this);
+		GetTree().ChangeScene("res://scenes/NewPlayerScene.tscn");
 	}
 }

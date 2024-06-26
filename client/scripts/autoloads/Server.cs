@@ -65,7 +65,6 @@ public class Server : Node
 			return;
 		}
 
-		// TODO: Figure out better message handling
 		HandleGameStateResponse<Adventure>(body, startAdventureNode);
 	}
 
