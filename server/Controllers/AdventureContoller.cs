@@ -25,9 +25,9 @@ public class AdventureController : ControllerBase
     [HttpGet(Name = "Start")]
     public async Task<ActionResult<string>> Start()
     {
-        User player = (User)HttpContext.Items["Player"]!;
+        User user = (User)HttpContext.Items["User"]!;
 
-        if (!_adventureLogic.CanPlayerAdventureForth(player.PlayerId))
+        if (!_adventureLogic.CanPlayerAdventureForth(user.PlayerId))
         {
             var error = new HHError
             {
@@ -47,7 +47,7 @@ public class AdventureController : ControllerBase
         {
             Adventure = adventure,
             CreatedAt = DateTime.UtcNow,
-            PlayerId = player.PlayerId
+            PlayerId = user.PlayerId
         };
 
         await _eventService.CreateAsync(adventureEvent);

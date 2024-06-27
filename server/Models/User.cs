@@ -15,4 +15,6 @@ public class User
     public string LoginName { get; init; } = null!;
 
     public Guid PlayerId { get; init; }
+
+    public bool IsAdmin { get; init; }
 }

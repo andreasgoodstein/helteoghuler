@@ -14,7 +14,7 @@ public class GameStateLogic
         PublicPlayerDict = new Dictionary<Guid, PlayerPublic>(),
         World = new World
         {
-            Name = "Konia"
+            Name = "East Island"
         }
     };
 

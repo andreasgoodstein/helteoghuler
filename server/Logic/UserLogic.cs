@@ -35,18 +35,21 @@ public class UserLogic
     }
 
     // TODO: Refactor to be event driven
-    public void AddUser(string loginName)
+    public User AddUser(string loginName)
     {
         var newUser = new User
         {
             CreatedAt = DateTime.UtcNow,
             LoginName = loginName,
-            PlayerId = Guid.NewGuid()
+            IsAdmin = false,
+            PlayerId = Guid.NewGuid(),
         };
 
         _userService.CreateAsync(newUser);
 
         userDictionary[loginName] = newUser;
+
+        return newUser;
     }
 
     // TODO: Refactor to be event driven
@@ -56,7 +59,8 @@ public class UserLogic
         {
             CreatedAt = DateTime.UtcNow,
             LoginName = Guid.NewGuid().ToString(),
-            PlayerId = Guid.NewGuid()
+            IsAdmin = true,
+            PlayerId = Guid.NewGuid(),
         };
 
         _userService.CreateAsync(adminUser);

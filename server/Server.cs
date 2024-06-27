@@ -50,9 +50,9 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    context.Items["Player"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
+    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
 
-    if (context.Items["Player"] == null)
+    if (context.Items["User"] == null)
     {
         context.Response.StatusCode = 401;
         context.Response.ContentType = "application/json";
