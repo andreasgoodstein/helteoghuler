@@ -6,6 +6,7 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 8.0
+rect_clip_content = true
 custom_constants/separation = 24
 script = ExtResource( 1 )
 
@@ -18,17 +19,18 @@ A place of Heroes!
 
 A place of horrors...
 
-You used to be a Hero. Before you took a broadaxe to the knee, leaving
+You used to be a Hero. Before you took a battleaxe to the knee, leaving
 you quite mono-pedal.
 
 Perhaps you've learnt a leason about picking fights with minotaurs?
 
-Alas, with your adventuring days over, retirement seems your only option.
+Alas, with your adventuring days over
+a quiet retirement seems your only option.
 
 However it seems that the local rule, The Marquee, heard of
 your plight, and deemed you worthy of a boon.
 
-A deed! To your very own Inn...
+A deed! To your very own Inn.
 
 What possibilities could this opportunity unlock? 
 What riched can yet be gained?
@@ -36,7 +38,6 @@ What riched can yet be gained?
 Only time will tell.
 
 First things first...
-
 What name do you sign on your deed?"
 align = 1
 
@@ -64,7 +65,7 @@ margin_bottom = 650.0
 rect_pivot_offset = Vector2( -469, -473 )
 align = 1
 max_length = 255
-placeholder_text = "Cheap Beer \"R\" Us"
+placeholder_text = "Cheap Drinks \"R\" Us"
 
 [node name="GoToInn" type="Button" parent="."]
 margin_top = 674.0

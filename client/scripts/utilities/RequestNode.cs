@@ -1,26 +1,43 @@
 using Godot;
+using HelteOgHulerClient.Services;
 
 namespace HelteOgHulerClient.Utilities;
 
+public enum ResponseType
+{
+    JSONCallback = 0,
+    StringCallback = 1,
+}
+
 public class RequestNode
 {
-	private Node _parent;
-	public HTTPRequest Request { get; set; }
+    private Node _parent;
+    public string[] Headers = ["HHPlayerName: "];
+    public HTTPRequest Request { get; set; }
+    public ResponseWrapper Response { get; set; }
 
-	public RequestNode(Node parent)
-	{
-		Request = new HTTPRequest();
+    public RequestNode(Node parent, ResponseType type)
+    {
+        Request = new HTTPRequest();
+        Response = new ResponseWrapper();
 
-		_parent = parent;
-		_parent.AddChild(Request);
-	}
+        var callbackName = type == ResponseType.JSONCallback ? "JSONCallback" : "StringCallback";
 
-	public void Clean()
-	{
-		Request?.CancelRequest();
-		_parent?.RemoveChild(Request);
+        Request.Connect("request_completed", Response, callbackName);
 
-		Request = null;
-		_parent = null;
-	}
+        _parent = parent;
+        _parent.AddChild(Request);
+        Request.AddChild(Response);
+    }
+
+    public void Clean()
+    {
+        Request?.CancelRequest();
+        Request?.RemoveChild(Response);
+        _parent?.RemoveChild(Request);
+
+        Request = null;
+        Response = null;
+        _parent = null;
+    }
 }

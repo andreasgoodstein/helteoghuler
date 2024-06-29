@@ -5,8 +5,8 @@ namespace HelteOgHulerServer.Logic;
 
 public class AdventureLogic
 {
-    private Random Random;
-    private GameStateLogic _gameStateLogic;
+    private readonly Random Random;
+    private readonly GameStateLogic _gameStateLogic;
 
     public AdventureLogic(GameStateLogic gameStateLogic)
     {

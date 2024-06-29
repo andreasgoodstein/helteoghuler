@@ -12,6 +12,8 @@ public class Player
     public string Name { get; set; }
 
     public Nullable<DateTime> RestUntil { get; set; }
+
+    public Dictionary<PlayerObjectives, bool> ObjectivesCompleted { get; set; }
 }
 
 public class PlayerPublic
@@ -23,4 +25,9 @@ public class PlayerPublic
     public string InnName { get; set; }
 
     public ulong TotalTribute { get; set; }
+}
+
+public enum PlayerObjectives
+{
+    PlayerNameAndInnSelected = 0,
 }

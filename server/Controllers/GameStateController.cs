@@ -1,4 +1,5 @@
 using HelteOgHulerServer.Logic;
+using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,13 @@ public class GameStateController : ControllerBase
     [HttpGet(Name = "GetGameState")]
     public string Get()
     {
-        return HHJsonSerializer.Serialize(_gameStateLogic.Get());
+        User user = (User)HttpContext.Items["User"]!;
+
+        if (user.IsAdmin == true)
+        {
+            return HHJsonSerializer.Serialize(_gameStateLogic.Get());
+        }
+
+        return HHJsonSerializer.Serialize(_gameStateLogic.Get(user.PlayerId));
     }
 }

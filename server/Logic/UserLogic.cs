@@ -4,12 +4,11 @@ using HelteOgHulerShared.Models;
 
 public class UserLogic
 {
-    private EventService _eventService;
+    private readonly EventService _eventService;
 
-    private GameStateLogic _gameStateLogic;
+    private readonly GameStateLogic _gameStateLogic;
 
-    private UserService _userService;
-
+    private readonly UserService _userService;
 
     private Dictionary<string, User> userDictionary;
 

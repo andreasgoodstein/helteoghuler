@@ -1,6 +1,8 @@
+using System.Text.Json;
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerServer.Logic;
 
@@ -25,11 +27,37 @@ public class GameStateLogic
         _eventService = eventService;
 
         _globalGameState = RegenerateGameState().Result;
+
+        _globalGameState.CurrentTime = DateTime.UtcNow;
     }
 
     public GameState Get()
     {
         _globalGameState.CurrentTime = DateTime.UtcNow;
+
+        return _globalGameState;
+    }
+
+    /// <summary>
+    /// Returns the current GameState, with PrivatePlayerDict only containing the
+    /// given playerId value
+    /// </summary>
+    public GameState Get(Guid playerId)
+    {
+        _globalGameState.CurrentTime = DateTime.UtcNow;
+
+        GameState gameState = JsonSerializer.Deserialize<GameState>(JsonSerializer.Serialize<GameState>(_globalGameState))!;
+
+        if (!gameState.PrivatePlayerDict.ContainsKey(playerId))
+        {
+            gameState.PrivatePlayerDict.Clear();
+            return gameState;
+        }
+
+        var privatePlayer = gameState.PrivatePlayerDict[playerId];
+
+        gameState.PrivatePlayerDict.Clear();
+        gameState.PrivatePlayerDict[playerId] = privatePlayer;
 
         return _globalGameState;
     }

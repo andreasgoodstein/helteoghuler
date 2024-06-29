@@ -57,11 +57,10 @@ app.Use(async (context, next) =>
         context.Response.StatusCode = 401;
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(HHJsonSerializer.Serialize(unauthorizedError));
+        return;
     }
-    else
-    {
-        await next();
-    }
+
+    await next();
 });
 
 app.MapControllers();
