@@ -19,7 +19,7 @@ public class RequestNode
 
     public RequestNode(Node parent, ResponseType type)
     {
-        Headers[0] = Headers[0] + ClientStorage.GetLoginName();
+        Headers[0] = Headers[0] + parent.GetNode<Settings>("/root/Settings").LoginName;
 
         Request = new HTTPRequest();
         Response = new ResponseWrapper();

@@ -16,6 +16,7 @@ config/icon="res://assets/icon.png"
 
 [autoload]
 
+Settings="*res://scripts/autoloads/Settings.cs"
 GlobalGameState="*res://scripts/autoloads/GlobalGameState.cs"
 Server="res://scripts/autoloads/Server.cs"
 
