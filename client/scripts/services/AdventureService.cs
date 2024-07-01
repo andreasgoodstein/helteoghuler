@@ -18,10 +18,16 @@ public class AdventureService
         startAdventureNode?.Clean();
         startAdventureNode = new RequestNode(httpRequestParent, ResponseType.JSONCallback);
 
-        startAdventureNode.Response.JSONCallbackDelegate = (int result, int response_code, string[] headers, byte[] body) =>
+        startAdventureNode.SetResponseHandler((int result, int response_code, string[] headers, byte[] body) =>
         {
+            // Unauthorized
+            if (response_code == 401)
+            {
+                GD.PrintErr("Auth: Unauthorized");
+                httpRequestParent.GetTree().ChangeScene("res://scenes/LoginMenuScene.tscn");
+            }
             // Expected Errors
-            if (response_code == 400)
+            else if (response_code == 400)
             {
                 ResponseHandler.HandleGameStateResponse<HHError>(body, startAdventureNode);
                 taskSource.SetResult(true);
@@ -40,9 +46,9 @@ public class AdventureService
             }
 
             startAdventureNode?.Clean();
-        };
+        });
 
-        startAdventureNode.Request.Request(START_ADVENTURE_URL, startAdventureNode.Headers);
+        startAdventureNode.ExecuteRequest(START_ADVENTURE_URL);
 
         return taskSource.Task;
     }

@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment())
 
 app.Use(async (context, next) =>
 {
-    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHPlayerName"]);
+    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHLoginName"]);
 
     if (context.Items["User"] == null)
     {

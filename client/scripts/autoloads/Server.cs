@@ -1,6 +1,5 @@
 using Godot;
 using HelteOgHulerClient.Services;
-using HelteOgHulerClient.Utilities;
 
 namespace HelteOgHulerClient;
 

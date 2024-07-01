@@ -2,6 +2,8 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerClient.Utilities;
+using System;
 
 public class LoginMenuScript : Control, ISubscriber<GameState>
 {
@@ -14,6 +16,13 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 		GetNode<Button>("StartAdventure").Connect("pressed", this, "StartAdventurePressed");
 
 		GlobalGameState.Register(this);
+
+		var loginName = ClientStorage.GetLoginName();
+
+		if (!String.IsNullOrWhiteSpace(loginName))
+		{
+			LineEdit.Text = loginName;
+		}
 	}
 
 	public override void _ExitTree()
@@ -28,14 +37,25 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
 	private void StartAdventurePressed()
 	{
+		if (String.IsNullOrWhiteSpace(LineEdit.Text))
+		{
+			return;
+		}
 
-		// TODO: Try login and choose scene
-		// GetNode<Server>("/root/Server").RefreshGameState(this);
-		GetTree().ChangeScene("res://scenes/NewPlayerScene.tscn");
+		ClientStorage.SetLoginName(LineEdit.Text);
+
+		GetNode<Server>("/root/Server").RefreshGameState(this);
 	}
 
 	public void Message(GameState message)
 	{
-		throw new System.NotImplementedException();
+		if (message?.PrivatePlayerDict?.Count < 1)
+		{
+			GetTree().ChangeScene("res://scenes/NewPlayerScene.tscn");
+		}
+		else
+		{
+			GetTree().ChangeScene("res://scenes/InnScene.tscn");
+		}
 	}
 }

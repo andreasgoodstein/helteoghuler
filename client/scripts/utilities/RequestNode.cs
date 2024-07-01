@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using HelteOgHulerClient.Services;
 
@@ -12,12 +13,14 @@ public enum ResponseType
 public class RequestNode
 {
     private Node _parent;
-    public string[] Headers = ["HHPlayerName: "];
-    public HTTPRequest Request { get; set; }
-    public ResponseWrapper Response { get; set; }
+    public string[] Headers = ["HHLoginName: "];
+    private HTTPRequest Request { get; set; }
+    private ResponseWrapper Response { get; set; }
 
     public RequestNode(Node parent, ResponseType type)
     {
+        Headers[0] = Headers[0] + ClientStorage.GetLoginName();
+
         Request = new HTTPRequest();
         Response = new ResponseWrapper();
 
@@ -39,5 +42,19 @@ public class RequestNode
         Request = null;
         Response = null;
         _parent = null;
+    }
+
+    public void ExecuteRequest(string url)
+    {
+        Request.Request(url, Headers);
+    }
+
+    public void SetResponseHandler(Action<int, int, string[], byte[]> handler)
+    {
+        Response.JSONCallbackDelegate = handler;
+    }
+    public void SetResponseHandler(Action<int, int, string[], string> handler)
+    {
+        Response.TextCallbackDelegate = handler;
     }
 }
