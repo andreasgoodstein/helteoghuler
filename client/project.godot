@@ -29,6 +29,20 @@ window/size/height=720
 common/drop_mouse_on_gui_input_disabled=true
 theme/custom="res://themes/theme.tres"
 
+[importer_defaults]
+
+csv_translation={
+"compress": false,
+"delimiter": 1
+}
+
+[locale]
+
+translations=PoolStringArray( "res://translations/translations.en.translation" )
+translation_remaps={
+}
+locale_filter=[ 0, [ "da", "en" ] ]
+
 [mono]
 
 project/assembly_name="HelteOgHulerClient"

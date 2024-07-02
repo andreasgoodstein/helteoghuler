@@ -1,0 +1,41 @@
+keys;en;da
+ADVENTURE;Adventure;Eventyr
+BUTTON_OPEN_INN;Might as well start pouring pints!;
+BUTTON_START;Let the Adventure Begin;
+BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
+GOLD;Gold;Guld
+INN;Inn;Kro
+INN_NAME_PLACEHOLDER;"Cheap Drinks ""R"" Us";
+NEW_PLAYER_INTRO_1;"Welcome to East Island
+
+A place of Heroes!
+
+A place of horrors...
+
+You used to be a Hero. Before you took a battleaxe to the knee, leaving
+you quite mono-pedal.
+
+Perhaps you've learned a lesson about picking fights with
+ill-disposed minotaurs?
+
+Alas, with your adventuring days over
+a quiet retirement seems your only option.
+
+However it seems that the local rule, The Marquee, heard of
+your plight, and deemed you worthy of a boon.
+
+A deed! To your very own Inn.
+
+What possibilities could this opportunity unlock? 
+What riches can yet be gained?
+
+Only time will tell.
+
+First things first...
+What name do you sign on your deed?";
+NEW_PLAYER_INTRO_2;"And what name do you paint on the rusty yet charming wrought iron sign, hanging
+above the stout oaken door?";
+PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
+TITLE;Heroes and Hearths;Helte og Huler
+USERNAME_PLACEHOLDER;Username;Brugernavn
+WORLD;World;Verden

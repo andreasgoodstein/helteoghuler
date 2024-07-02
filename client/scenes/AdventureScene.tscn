@@ -17,7 +17,9 @@ grow_horizontal = 2
 
 [node name="TopMenu" parent="Container" instance=ExtResource( 1 )]
 anchor_right = 0.0
+anchor_bottom = 0.0
 margin_right = 1024.0
+margin_bottom = 46.0
 
 [node name="GoldTracker" parent="Container" instance=ExtResource( 4 )]
 anchor_right = 0.0
@@ -28,14 +30,14 @@ margin_bottom = 70.0
 
 [node name="Key" parent="Container/GoldTracker" index="0"]
 margin_top = 0.0
-margin_right = 62.0
+margin_right = 56.0
 margin_bottom = 16.0
-text = "Gold:"
+text = "GOLD"
 
 [node name="Value" parent="Container/GoldTracker" index="1"]
-margin_left = 70.0
+margin_left = 64.0
 margin_top = 0.0
-margin_right = 70.0
+margin_right = 64.0
 margin_bottom = 16.0
 
 [node name="MessageTracker" parent="Container" instance=ExtResource( 4 )]
@@ -62,9 +64,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -106.5
+margin_left = -156.0
 margin_top = -33.0
-margin_right = 106.5
+margin_right = 156.0
 margin_bottom = 0.0
 
 [editable path="Container/GoldTracker"]

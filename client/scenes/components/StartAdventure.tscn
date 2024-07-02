@@ -4,8 +4,10 @@
 [ext_resource path="res://scripts/scenes/components/StartAdventureScript.cs" type="Script" id=2]
 
 [node name="StartAdventureButton" type="Button"]
-margin_right = 12.0
-margin_bottom = 20.0
+anchor_right = 0.305
+anchor_bottom = 0.031
+margin_right = -300.32
+margin_bottom = -2.32
 custom_fonts/font = ExtResource( 1 )
-text = "Start Adventure"
+text = "BUTTON_START_ADVENTURE"
 script = ExtResource( 2 )
