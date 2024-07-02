@@ -1,5 +1,4 @@
 using Godot;
-using HelteOgHulerClient.Utilities;
 using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
@@ -17,28 +16,22 @@ public class GameStateService
         refreshGameStateNode?.Clean();
         refreshGameStateNode = new RequestNode(httpRequestParent, ResponseType.JSONCallback);
 
-        refreshGameStateNode.SetResponseHandler((int result, int response_code, string[] headers, byte[] body) =>
+        refreshGameStateNode.SetErrorHandler(() =>
         {
-            // Unauthorized
-            if (response_code == 401)
-            {
-                GD.PrintErr("Auth: Unauthorized");
-                httpRequestParent.GetTree().ChangeScene("res://scenes/LoginMenuScene.tscn");
-            }
-            // Unexpected Errors
-            else if (response_code < 200 || response_code > 299)
-            {
-                GD.PrintErr("Network: Could not get GameState");
-                taskSource.SetResult(false);
-            }
-            // Success
-            else
-            {
-                ResponseHandler.HandleGameStateResponse(body, refreshGameStateNode);
-                taskSource.SetResult(true);
-            }
+            GD.PrintErr("Network: Could not get GameState");
+            taskSource.SetResult(false);
 
             refreshGameStateNode?.Clean();
+            refreshGameStateNode = null;
+        });
+
+        refreshGameStateNode.SetResponseHandler((byte[] body) =>
+        {
+            ResponseHandler.HandleGameStateResponse(body);
+            taskSource.SetResult(true);
+
+            refreshGameStateNode?.Clean();
+            refreshGameStateNode = null;
         });
 
         refreshGameStateNode.ExecuteRequest(REFRESH_GAMESTATE_URL);

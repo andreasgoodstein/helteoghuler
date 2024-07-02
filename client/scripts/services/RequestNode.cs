@@ -1,8 +1,7 @@
 using System;
 using Godot;
-using HelteOgHulerClient.Services;
 
-namespace HelteOgHulerClient.Utilities;
+namespace HelteOgHulerClient.Services;
 
 public enum ResponseType
 {
@@ -49,11 +48,15 @@ public class RequestNode
         Request.Request(url, Headers);
     }
 
-    public void SetResponseHandler(Action<int, int, string[], byte[]> handler)
+    public void SetErrorHandler(Action handler)
+    {
+        Response.ErrorDelegate = handler;
+    }
+    public void SetResponseHandler(Action<byte[]> handler)
     {
         Response.JSONCallbackDelegate = handler;
     }
-    public void SetResponseHandler(Action<int, int, string[], string> handler)
+    public void SetResponseHandler(Action<string> handler)
     {
         Response.TextCallbackDelegate = handler;
     }

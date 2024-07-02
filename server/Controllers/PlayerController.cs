@@ -21,10 +21,20 @@ public class PlayerController : ControllerBase
         _playerLogic = playerLogic;
     }
 
-    [HttpGet(Name = "NewPlayer")]
-    public async Task<ActionResult<string>> NewPlayer(string playerName, string innName)
+    [HttpGet(Name = "New")]
+    public async Task<ActionResult<string>> New(string playerName, string innName)
     {
         User user = (User)HttpContext.Items["User"]!;
+
+        // Check for existing player
+        if (_gameStateLogic.Get().PrivatePlayerDict.ContainsKey(user.PlayerId))
+        {
+            return new ContentResult
+            {
+                Content = "This deed has already been claimed",
+                StatusCode = 400,
+            };
+        }
 
         await _playerLogic.CreatePlayer(user.PlayerId, playerName, innName);
 

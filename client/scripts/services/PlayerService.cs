@@ -1,16 +1,15 @@
 using Godot;
-using HelteOgHulerShared.Models;
 using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
-public class AdventureService
+public class PlayerService
 {
-    const string START_ADVENTURE_URL = "http://localhost:7111/Adventure/Start";
+    const string NEW_PLAYER_URL = "http://localhost:7111/Player/New";
 
     private RequestNode startAdventureNode;
 
-    public Task StartAdventure(Node httpRequestParent)
+    public Task CreateNewPlayer(Node httpRequestParent, string playerName, string innName)
     {
         var taskSource = new TaskCompletionSource<bool>();
 
@@ -24,19 +23,18 @@ public class AdventureService
 
             startAdventureNode?.Clean();
             startAdventureNode = null;
-
         });
 
         startAdventureNode.SetResponseHandler((byte[] body) =>
         {
-            ResponseHandler.HandleGameStateResponse<Adventure>(body);
+            ResponseHandler.HandleGameStateResponse(body);
             taskSource.SetResult(true);
 
             startAdventureNode?.Clean();
             startAdventureNode = null;
         });
 
-        startAdventureNode.ExecuteRequest(START_ADVENTURE_URL);
+        startAdventureNode.ExecuteRequest(NEW_PLAYER_URL + $"?playerName={playerName}&innName={innName}");
 
         return taskSource.Task;
     }
