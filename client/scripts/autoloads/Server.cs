@@ -16,9 +16,9 @@ public class Server : Node
 		_playerService = new PlayerService();
 	}
 
-	public async void CreateNewPlayer(Node httpRequestParent, string playerName, string innName)
+	public async void CreateNewPlayer(Node httpRequestParent, string innName, string playerName)
 	{
-		await _playerService.CreateNewPlayer(httpRequestParent, playerName, innName);
+		await _playerService.CreateNewPlayer(httpRequestParent, innName, playerName);
 	}
 
 	public async void RefreshGameState(Node httpRequestParent)

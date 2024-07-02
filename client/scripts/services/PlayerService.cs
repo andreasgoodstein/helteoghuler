@@ -9,7 +9,7 @@ public class PlayerService
 
     private RequestNode startAdventureNode;
 
-    public Task CreateNewPlayer(Node httpRequestParent, string playerName, string innName)
+    public Task CreateNewPlayer(Node httpRequestParent, string innName, string playerName)
     {
         var taskSource = new TaskCompletionSource<bool>();
 
@@ -34,7 +34,7 @@ public class PlayerService
             startAdventureNode = null;
         });
 
-        startAdventureNode.ExecuteRequest(NEW_PLAYER_URL + $"?playerName={playerName}&innName={innName}");
+        startAdventureNode.ExecuteRequest(NEW_PLAYER_URL + $"?innName={innName}&playerName={playerName}");
 
         return taskSource.Task;
     }

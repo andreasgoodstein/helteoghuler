@@ -2,7 +2,6 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
-using HelteOgHulerClient.Utilities;
 using System;
 
 public class LoginMenuScript : Control, ISubscriber<GameState>
