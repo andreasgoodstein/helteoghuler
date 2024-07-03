@@ -1,13 +1,24 @@
 using Godot;
+using HelteOgHulerClient;
+using HelteOgHulerClient.Utilities;
+using HelteOgHulerShared.Utilities;
 using System;
 
-public class TopMenuScript : HBoxContainer
+public class TopMenuScript : VBoxContainer
 {
+	private Label PlayerInfo;
+
 	public override void _Ready()
 	{
-		GetNode<Button>("AdventureButton").Connect("pressed", this, "GoToAdventure");
-		GetNode<Button>("InnButton").Connect("pressed", this, "GoToInn");
-		GetNode<Button>("WorldButton").Connect("pressed", this, "GoToWorld");
+		PlayerInfo = GetNode<Label>("PlayerInfoContainer/PlayerInfo");
+
+		GetNode<Button>("SceneButtonContainer/AdventureButton").Connect("pressed", this, "GoToAdventure");
+		GetNode<Button>("SceneButtonContainer/InnButton").Connect("pressed", this, "GoToInn");
+		GetNode<Button>("SceneButtonContainer/WorldButton").Connect("pressed", this, "GoToWorld");
+
+		var player = GameStateHelper.GetPlayer(GlobalGameState.Get());
+
+		PlayerInfo.Text = $"{player?.Name}  {TranslationServer.Translate("INN_OWNER")}  {player?.Inn?.Name}";
 	}
 
 	private void GoToAdventure()

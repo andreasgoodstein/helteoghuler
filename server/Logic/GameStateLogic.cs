@@ -59,7 +59,7 @@ public class GameStateLogic
         gameState.PrivatePlayerDict.Clear();
         gameState.PrivatePlayerDict[playerId] = privatePlayer;
 
-        return _globalGameState;
+        return gameState;
     }
 
     public async Task<GameState> RegenerateGameState()

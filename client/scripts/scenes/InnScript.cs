@@ -2,33 +2,25 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerClient.Utilities;
 
 public class InnScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabel InnKeeper;
-
 	public override void _Ready()
 	{
-		InnKeeper = GetNode<KeyValueLabel>("InnKeeper");
+		// Message(GlobalGameState.Get());
 
-		Message(GlobalGameState.Get());
-
-		GlobalGameState.Register(this);
+		// GlobalGameState.Register(this);
 	}
 
 	public override void _ExitTree()
 	{
-		GlobalGameState.Unregister(this);
+		// GlobalGameState.Unregister(this);
 	}
 
 	public void Message(GameState gameState)
 	{
-		var player = gameState?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
-
-		if (player?.Name != null)
-		{
-			InnKeeper.Set(player.Name);
-		}
+		// var player = GameStateHelper.GetPlayer(gameState);
 	}
 
 	public string GetId()

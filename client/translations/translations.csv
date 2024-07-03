@@ -5,7 +5,9 @@ BUTTON_START;Let the Adventure Begin;
 BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
 GOLD;Gold;Guld
 INN;Inn;Kro
+INN_KEEPER;Innkeeper;Krovært
 INN_NAME_PLACEHOLDER;"Cheap Drinks ""R"" Us";
+INN_OWNER;owner of;ejer af
 NEW_PLAYER_INTRO_1;"Welcome to East Island
 
 A place of Heroes!
