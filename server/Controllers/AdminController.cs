@@ -11,6 +11,9 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class AdminController : ControllerBase
 {
+    private readonly string ERROR_401 = HHJsonSerializer.Serialize(new HHError { Message = "You're not The Marquee! Go away." });
+    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "LoginName missing" });
+
     private readonly UserLogic _userLogic;
 
     public AdminController(UserLogic userLogic)
@@ -27,7 +30,7 @@ public class AdminController : ControllerBase
         {
             return new ContentResult
             {
-                Content = "You're not The Marquee! Go away.",
+                Content = ERROR_401,
                 StatusCode = 401,
             };
         }
@@ -36,7 +39,7 @@ public class AdminController : ControllerBase
         {
             return new ContentResult
             {
-                Content = "LoginName missing",
+                Content = ERROR_400,
                 StatusCode = 400,
             };
         }

@@ -11,6 +11,8 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class AdventureController : ControllerBase
 {
+    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "Your party cannot venture forth yet" });
+
     private readonly AdventureLogic _adventureLogic;
     private readonly GameStateLogic _gameStateLogic;
     private readonly EventService _eventService;
@@ -29,14 +31,9 @@ public class AdventureController : ControllerBase
 
         if (!_adventureLogic.CanPlayerAdventureForth(user.PlayerId))
         {
-            var error = new HHError
-            {
-                Message = "Your party cannot venture forth yet"
-            };
-
             return new ContentResult
             {
-                Content = HHJsonSerializer.Serialize(error),
+                Content = ERROR_400,
                 StatusCode = 400,
             };
         }

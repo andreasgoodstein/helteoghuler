@@ -14,7 +14,7 @@ public class PlayerLogic
         _gameStateLogic = gameStateLogic;
     }
 
-    public async Task CreatePlayer(Guid playerId, string playerName, string innName)
+    public async Task CreatePlayer(Guid playerId, string innName, string playerName)
     {
         var newPlayerEvent = new NewPlayerEvent
         {

@@ -30,14 +30,19 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<DatabaseSettings>(
     builder.Configuration.GetSection("Database"));
 
+// Register services
 builder.Services.AddSingleton<EventService>();
 builder.Services.AddSingleton<UserService>();
+
+// Register logic
 builder.Services.AddSingleton<AdventureLogic>();
 builder.Services.AddSingleton<GameStateLogic>();
+builder.Services.AddSingleton<PlayerLogic>();
 builder.Services.AddSingleton<UserLogic>();
 
 var app = builder.Build();
 
+// Instantiate critical services on startup
 app.Services.GetService<GameStateLogic>();
 var userLogic = app.Services.GetService<UserLogic>();
 

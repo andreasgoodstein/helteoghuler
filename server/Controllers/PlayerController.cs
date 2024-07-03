@@ -1,6 +1,4 @@
 using HelteOgHulerServer.Logic;
-using HelteOgHulerServer.Models;
-using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +9,8 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class PlayerController : ControllerBase
 {
+    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "This deed has already been claimed" });
+
     private readonly GameStateLogic _gameStateLogic;
 
     private readonly PlayerLogic _playerLogic;
@@ -22,7 +22,7 @@ public class PlayerController : ControllerBase
     }
 
     [HttpGet(Name = "New")]
-    public async Task<ActionResult<string>> New(string playerName, string innName)
+    public async Task<ActionResult<string>> New(string innName, string playerName)
     {
         User user = (User)HttpContext.Items["User"]!;
 
@@ -31,12 +31,12 @@ public class PlayerController : ControllerBase
         {
             return new ContentResult
             {
-                Content = "This deed has already been claimed",
+                Content = ERROR_400,
                 StatusCode = 400,
             };
         }
 
-        await _playerLogic.CreatePlayer(user.PlayerId, playerName, innName);
+        await _playerLogic.CreatePlayer(user.PlayerId, innName, playerName);
 
         return HHJsonSerializer.Serialize(_gameStateLogic.Get(user.PlayerId));
     }
