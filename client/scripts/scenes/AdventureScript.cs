@@ -5,13 +5,13 @@ using HelteOgHulerShared.Models;
 
 public class AdventureScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabel GoldTracker;
-	private KeyValueLabel MessageTracker;
+	private KeyValueLabelScript GoldTracker;
+	private KeyValueLabelScript MessageTracker;
 
 	public override void _Ready()
 	{
-		GoldTracker = GetNode<KeyValueLabel>("Container/GoldTracker");
-		MessageTracker = GetNode<KeyValueLabel>("Container/MessageTracker");
+		GoldTracker = GetNode<KeyValueLabelScript>("Container/GoldTracker");
+		MessageTracker = GetNode<KeyValueLabelScript>("Container/MessageTracker");
 
 		Message(GlobalGameState.Get());
 

@@ -1,8 +1,8 @@
 using Godot;
 using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
-using HelteOgHulerClient.Utilities;
 
 public class InnScript : Control, ISubscriber<GameState>
 {
@@ -28,3 +28,7 @@ public class InnScript : Control, ISubscriber<GameState>
 		return Filename + Name;
 	}
 }
+
+//TODO: Implement Hero recruitment interface
+// Two lists with the hero recruits and hero roster
+// Select recruit and click button to trigger recruitment

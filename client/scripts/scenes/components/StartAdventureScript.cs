@@ -68,6 +68,9 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 	{
 		var player = message?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
 
+		// TODO: Implement button disabled if no heros recruited to roster
+
+		// TODO: Extract to own method
 		if (player?.RestUntil != null)
 		{
 			RestUntil = player.RestUntil;

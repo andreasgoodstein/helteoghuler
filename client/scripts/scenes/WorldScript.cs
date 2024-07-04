@@ -5,11 +5,11 @@ using HelteOgHulerShared.Models;
 
 public class WorldScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabel TotalAdventures;
+	private KeyValueLabelScript TotalAdventures;
 
 	public override void _Ready()
 	{
-		TotalAdventures = GetNode<KeyValueLabel>("TotalAdventuresTracker");
+		TotalAdventures = GetNode<KeyValueLabelScript>("TotalAdventuresTracker");
 
 		Message(GlobalGameState.Get());
 
