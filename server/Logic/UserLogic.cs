@@ -31,7 +31,6 @@ public class UserLogic
         });
     }
 
-    // TODO: Refactor to be event driven
     public User AddUser(string loginName)
     {
         var newUser = new User
@@ -49,7 +48,6 @@ public class UserLogic
         return newUser;
     }
 
-    // TODO: Refactor to be event driven
     private void CreateAdminUser()
     {
         var adminUser = new User
@@ -76,9 +74,9 @@ public class UserLogic
                     {
                         Gold = 0,
                     },
-                    Name = "Admin Inn",
+                    Name = "The Castle",
                 },
-                Name = "Admin",
+                Name = "The Marquee",
             },
         };
 

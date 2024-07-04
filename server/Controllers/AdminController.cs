@@ -12,7 +12,7 @@ namespace HelteOgHulerServer.Controllers;
 public class AdminController : ControllerBase
 {
     private readonly string ERROR_401 = HHJsonSerializer.Serialize(new HHError { Message = "You're not The Marquee! Go away." });
-    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "LoginName missing" });
+    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "LoginName missing." });
 
     private readonly UserLogic _userLogic;
 

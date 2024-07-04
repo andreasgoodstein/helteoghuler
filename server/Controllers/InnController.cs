@@ -10,8 +10,6 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class InnController : ControllerBase
 {
-    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "This deed has already been claimed" });
-
     private readonly EventService _eventService;
     private readonly GameStateLogic _gameStateLogic;
     private readonly InnLogic _innLogic;
@@ -28,28 +26,29 @@ public class InnController : ControllerBase
     {
         User user = (User)HttpContext.Items["User"]!;
 
-        // Move command check to logic layer (PlayerLogic.cs)
-        if (_gameStateLogic.Get().PrivatePlayerDict.ContainsKey(user.PlayerId))
+        try
+        {
+            Recruitment recruitment = _innLogic.RecruitHero(user.PlayerId, heroId);
+
+            var recruitmentEvent = new RecruitHeroEvent_V1
+            {
+                CreatedAt = DateTime.UtcNow,
+                Recruitment = recruitment
+            };
+
+            await _eventService.CreateAsync(recruitmentEvent);
+
+            _gameStateLogic.UpdateGameState(recruitmentEvent);
+
+            return HHJsonSerializer.Serialize(recruitment);
+        }
+        catch (InvalidDataException exception)
         {
             return new ContentResult
             {
-                Content = ERROR_400,
-                StatusCode = 400,
+                Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
+                StatusCode = 400
             };
         }
-
-        Recruitment recruitment = _innLogic.RecruitHero(user.PlayerId, heroId);
-
-        var recruitmentEvent = new RecruitHeroEvent_V1
-        {
-            CreatedAt = DateTime.UtcNow,
-            Recruitment = recruitment
-        };
-
-        await _eventService.CreateAsync(recruitmentEvent);
-
-        _gameStateLogic.UpdateGameState(recruitmentEvent);
-
-        return HHJsonSerializer.Serialize(recruitment);
     }
 }

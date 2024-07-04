@@ -11,7 +11,7 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class AdventureController : ControllerBase
 {
-    private readonly string ERROR_400 = HHJsonSerializer.Serialize(new HHError { Message = "Your party cannot venture forth yet" });
+
 
     private readonly AdventureLogic _adventureLogic;
     private readonly GameStateLogic _gameStateLogic;
@@ -29,29 +29,30 @@ public class AdventureController : ControllerBase
     {
         User user = (User)HttpContext.Items["User"]!;
 
-        // TODO: Move command checks to logic layer (AdventureLogic.cs)
-        if (!_adventureLogic.CanPlayerAdventureForth(user.PlayerId))
+        try
+        {
+            Adventure adventure = _adventureLogic.GenerateAdventure(user.PlayerId);
+
+            AdventureEvent_V1 adventureEvent = new AdventureEvent_V1()
+            {
+                Adventure = adventure,
+                CreatedAt = DateTime.UtcNow,
+                PlayerId = user.PlayerId
+            };
+
+            await _eventService.CreateAsync(adventureEvent);
+
+            _gameStateLogic.UpdateGameState(adventureEvent);
+
+            return HHJsonSerializer.Serialize(adventure);
+        }
+        catch (InvalidOperationException exception)
         {
             return new ContentResult
             {
-                Content = ERROR_400,
+                Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
                 StatusCode = 400,
             };
         }
-
-        Adventure adventure = _adventureLogic.GenerateAdventure();
-
-        AdventureEvent_V1 adventureEvent = new AdventureEvent_V1()
-        {
-            Adventure = adventure,
-            CreatedAt = DateTime.UtcNow,
-            PlayerId = user.PlayerId
-        };
-
-        await _eventService.CreateAsync(adventureEvent);
-
-        _gameStateLogic.UpdateGameState(adventureEvent);
-
-        return HHJsonSerializer.Serialize(adventure);
     }
 }

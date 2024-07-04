@@ -4,29 +4,21 @@ using HelteOgHulerShared.Models;
 
 public class PlayerLogic
 {
-    private readonly EventService _eventService;
-    private readonly GameStateLogic _gameStateLogic;
     private readonly InnLogic _innLogic;
 
-    public PlayerLogic(EventService eventService, GameStateLogic gameStateLogic, InnLogic innLogic)
+    public PlayerLogic(InnLogic innLogic)
     {
-        _eventService = eventService;
-        _gameStateLogic = gameStateLogic;
         _innLogic = innLogic;
     }
 
-    public async Task CreatePlayer(Guid playerId, string innName, string playerName)
+    public Player CreatePlayer(GameState gameState, Guid playerId, string innName, string playerName)
     {
-        var newPlayerEvent = new NewPlayerEvent_V1
+        if (gameState.PrivatePlayerDict.ContainsKey(playerId))
         {
-            CreatedAt = DateTime.UtcNow,
-            Player = GeneratePlayer(playerId, innName, playerName),
-        };
+            throw new InvalidDataException("This deed has already been claimed.");
+        }
 
-        // TODO: Move event persist and GameState update to controller layer (PlayerController.cs)
-        await _eventService.CreateAsync(newPlayerEvent);
-
-        _gameStateLogic.UpdateGameState(newPlayerEvent);
+        return GeneratePlayer(playerId, innName, playerName);
     }
 
     private Player GeneratePlayer(Guid playerId, string innName, string playerName)

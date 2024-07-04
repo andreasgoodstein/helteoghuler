@@ -32,11 +32,11 @@ public class InnLogic
     {
         var gameState = _gameStateLogic.Get();
 
-        var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found");
+        var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
 
         if (!inn.HeroRecruits.ContainsKey(heroId))
         {
-            throw new InvalidDataException("That Hero is not available");
+            throw new InvalidDataException("That Hero is not available.");
         }
 
         return new Recruitment { HeroId = heroId, PlayerId = playerId };
