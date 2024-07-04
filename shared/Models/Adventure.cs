@@ -5,8 +5,6 @@ namespace HelteOgHulerShared.Models;
 
 public class Adventure : IApplicable
 {
-    public Guid? Id { get; set; }
-
     public ulong Gold { get; set; }
 
     public string Status { get; set; }
@@ -20,7 +18,7 @@ public class Adventure : IApplicable
             return;
         }
 
-        var playerId = (Guid)id;
+        Guid playerId = (Guid)id;
 
         gameState.World.TotalAdventures += 1;
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
@@ -34,7 +32,7 @@ public class Adventure : IApplicable
             return;
         }
 
-        var playerId = (Guid)id;
+        Guid playerId = (Guid)id;
 
         gameState.World.TotalAdventures -= 1;
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;

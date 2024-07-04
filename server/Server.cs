@@ -15,8 +15,9 @@ var unauthorizedError = new HHError
 // Allow all mongodb serialization
 ObjectSerializer objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
 BsonSerializer.RegisterSerializer(objectSerializer);
-BsonClassMap.RegisterClassMap<AdventureEvent>();
-BsonClassMap.RegisterClassMap<NewPlayerEvent>();
+BsonClassMap.RegisterClassMap<AdventureEvent_V1>();
+BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
+BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
 

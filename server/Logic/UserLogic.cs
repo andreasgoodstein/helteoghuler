@@ -5,9 +5,7 @@ using HelteOgHulerShared.Models;
 public class UserLogic
 {
     private readonly EventService _eventService;
-
     private readonly GameStateLogic _gameStateLogic;
-
     private readonly UserService _userService;
 
     private Dictionary<string, User> userDictionary;
@@ -66,7 +64,7 @@ public class UserLogic
 
         userDictionary[adminUser.LoginName] = adminUser;
 
-        var newPlayerEvent = new NewPlayerEvent
+        var newPlayerEvent = new NewPlayerEvent_V1
         {
             CreatedAt = DateTime.UtcNow,
             Player = new Player
@@ -77,9 +75,7 @@ public class UserLogic
                     Chest = new Chest
                     {
                         Gold = 0,
-                        Id = Guid.NewGuid(),
                     },
-                    Id = Guid.NewGuid(),
                     Name = "Admin Inn",
                 },
                 Name = "Admin",

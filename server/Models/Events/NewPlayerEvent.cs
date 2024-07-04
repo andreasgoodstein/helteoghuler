@@ -1,23 +1,24 @@
 using HelteOgHulerServer.Interfaces;
+using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 
 
-[BsonDiscriminator("NewPlayerEvent")]
-public class NewPlayerEvent : IEvent
+[BsonDiscriminator("NewPlayerEvent_V1")]
+public class NewPlayerEvent_V1 : IEvent, IApplicable
 {
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
-    public string? Id { get; init; }
+    public string? Id { get; }
 
     public DateTime CreatedAt { get; init; }
 
     public EventType Type => EventType.NewPlayer;
 
-    public Player? Player { get; init; }
+    public Player Player { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? playerId)
     {

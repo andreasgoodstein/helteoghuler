@@ -11,7 +11,7 @@ public interface IEvent : IApplicable
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
-    public string? Id { get; init; }
+    public string? Id { get; }
 
     public DateTime CreatedAt { get; init; }
 
@@ -22,4 +22,5 @@ public enum EventType
 {
     Adventure = 0,
     NewPlayer = 1,
+    RecruitHero = 2,
 }

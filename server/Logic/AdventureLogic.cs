@@ -27,7 +27,6 @@ public class AdventureLogic
             return new Adventure
             {
                 Gold = 0,
-                Id = Guid.NewGuid(),
                 RestUntil = DateTime.UtcNow.AddSeconds(10),
                 Status = "Alas... Your party returns empty handed.",
             };
@@ -37,7 +36,6 @@ public class AdventureLogic
         return new Adventure
         {
             Gold = (ulong)Random.NextInt64(1, 10),
-            Id = Guid.NewGuid(),
             RestUntil = DateTime.UtcNow.AddSeconds(10),
             Status = "Forsooth! Your party was victorious."
         };

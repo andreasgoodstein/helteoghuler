@@ -26,7 +26,7 @@ public class PlayerController : ControllerBase
     {
         User user = (User)HttpContext.Items["User"]!;
 
-        // Check for existing player
+        // Move command check to logic layer (PlayerLogic.cs)
         if (_gameStateLogic.Get().PrivatePlayerDict.ContainsKey(user.PlayerId))
         {
             return new ContentResult

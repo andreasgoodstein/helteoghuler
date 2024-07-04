@@ -29,6 +29,7 @@ public class AdventureController : ControllerBase
     {
         User user = (User)HttpContext.Items["User"]!;
 
+        // TODO: Move command checks to logic layer (AdventureLogic.cs)
         if (!_adventureLogic.CanPlayerAdventureForth(user.PlayerId))
         {
             return new ContentResult
@@ -40,7 +41,7 @@ public class AdventureController : ControllerBase
 
         Adventure adventure = _adventureLogic.GenerateAdventure();
 
-        AdventureEvent adventureEvent = new AdventureEvent()
+        AdventureEvent_V1 adventureEvent = new AdventureEvent_V1()
         {
             Adventure = adventure,
             CreatedAt = DateTime.UtcNow,

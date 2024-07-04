@@ -7,16 +7,16 @@ using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Models;
 
-[BsonDiscriminator("AdventureEvent")]
-public class AdventureEvent : IEvent, IApplicable
+[BsonDiscriminator("AdventureEvent_V1")]
+public class AdventureEvent_V1 : IEvent, IApplicable
 {
 
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
-    public string? Id { get; init; }
+    public string? Id { get; }
 
-    public Adventure? Adventure { get; init; }
+    public Adventure Adventure { get; init; }
 
     public DateTime CreatedAt { get; init; }
 

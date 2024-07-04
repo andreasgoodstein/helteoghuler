@@ -17,12 +17,13 @@ public class PlayerLogic
 
     public async Task CreatePlayer(Guid playerId, string innName, string playerName)
     {
-        var newPlayerEvent = new NewPlayerEvent
+        var newPlayerEvent = new NewPlayerEvent_V1
         {
             CreatedAt = DateTime.UtcNow,
             Player = GeneratePlayer(playerId, innName, playerName),
         };
 
+        // TODO: Move event persist and GameState update to controller layer (PlayerController.cs)
         await _eventService.CreateAsync(newPlayerEvent);
 
         _gameStateLogic.UpdateGameState(newPlayerEvent);

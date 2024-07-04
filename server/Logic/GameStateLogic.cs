@@ -1,6 +1,7 @@
 using System.Text.Json;
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerServer.Services;
+using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 
@@ -74,7 +75,7 @@ public class GameStateLogic
         return _globalGameState;
     }
 
-    public GameState UpdateGameState(IEvent gameEvent)
+    public GameState UpdateGameState(IApplicable gameEvent)
     {
         gameEvent.ApplyToGameState(ref _globalGameState, null);
 
