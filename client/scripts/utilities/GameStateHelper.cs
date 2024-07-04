@@ -10,8 +10,6 @@ public static class GameStateHelper
 {
 	public static Player GetPlayer(GameState gameState)
 	{
-		var playerEnumerator = gameState?.PrivatePlayerDict?.Values;
-
-		return playerEnumerator.First();
+		return gameState?.PrivatePlayerDict?.Values?.First();
 	}
 }

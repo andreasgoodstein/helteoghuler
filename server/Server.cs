@@ -5,6 +5,7 @@ using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
+using HelteOgHulerServer.Utilities;
 
 var unauthorizedError = new HHError
 {
@@ -37,8 +38,13 @@ builder.Services.AddSingleton<UserService>();
 // Register logic
 builder.Services.AddSingleton<AdventureLogic>();
 builder.Services.AddSingleton<GameStateLogic>();
+builder.Services.AddSingleton<HeroLogic>();
+builder.Services.AddSingleton<InnLogic>();
 builder.Services.AddSingleton<PlayerLogic>();
 builder.Services.AddSingleton<UserLogic>();
+
+// Register utilities
+builder.Services.AddSingleton<NameUtility>();
 
 var app = builder.Build();
 

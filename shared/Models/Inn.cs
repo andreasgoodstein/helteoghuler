@@ -12,4 +12,6 @@ public class Inn
     public IEnumerable<Hero> HeroRoster { get; set; }
 
     public string Name { get; set; }
+
+    public IEnumerable<Hero> HeroRecruits { get; set; }
 }
