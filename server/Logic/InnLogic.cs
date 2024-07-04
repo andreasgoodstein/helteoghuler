@@ -23,7 +23,8 @@ public class InnLogic
             {
                 Gold = 0,
             },
-            HeroRecruits = new Dictionary<Guid, Hero> { { newHeroRecruit.Id, newHeroRecruit } },
+            HeroRecruits = new Dictionary<string, Hero> { { newHeroRecruit.Id.ToString(), newHeroRecruit } },
+            HeroRoster = [],
             Name = innName,
         };
     }
@@ -34,7 +35,7 @@ public class InnLogic
 
         var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
 
-        if (!inn.HeroRecruits.ContainsKey(heroId))
+        if (!inn.HeroRecruits.ContainsKey(heroId.ToString()))
         {
             throw new InvalidDataException("That Hero is not available.");
         }

@@ -24,7 +24,7 @@ public class PlayerPublic
 
     public string InnName { get; set; }
 
-    public ulong TotalTribute { get; set; }
+    public ulong TotalGoldEarned { get; set; }
 }
 
 // public enum PlayerObjectives

@@ -21,6 +21,9 @@ public class Adventure : IApplicable
         Guid playerId = (Guid)id;
 
         gameState.World.TotalAdventures += 1;
+
+        gameState.PublicPlayerDict[playerId].TotalGoldEarned += Gold;
+
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
         gameState.PrivatePlayerDict[playerId].RestUntil = RestUntil;
     }
@@ -35,6 +38,9 @@ public class Adventure : IApplicable
         Guid playerId = (Guid)id;
 
         gameState.World.TotalAdventures -= 1;
+
+        gameState.PublicPlayerDict[playerId].TotalGoldEarned -= Gold;
+
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;
         gameState.PrivatePlayerDict[playerId].RestUntil = null;
     }

@@ -1,9 +1,9 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson;
 
 
 [BsonDiscriminator("NewPlayerEvent_V1")]
@@ -33,7 +33,7 @@ public class NewPlayerEvent_V1 : IEvent, IApplicable
             Id = Player.Id,
             InnName = Player.Inn.Name,
             Name = Player.Name,
-            TotalTribute = 0,
+            TotalGoldEarned = 0,
         });
     }
 

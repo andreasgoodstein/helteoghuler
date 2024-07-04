@@ -1,4 +1,5 @@
 using HelteOgHulerShared.Interfaces;
+using System.Collections.Generic;
 using System;
 
 namespace HelteOgHulerShared.Models;
@@ -9,21 +10,37 @@ public class Recruitment : IApplicable
 
     public Guid HeroId { get; set; }
 
-    public void ApplyToGameState(ref GameState gameState, Guid? id)
+    public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        var inn = gameState.PrivatePlayerDict[(Guid)id]?.Inn;
-        var hero = inn?.HeroRecruits?[HeroId];
+        var inn = gameState.PrivatePlayerDict[PlayerId]?.Inn;
+        var hero = inn?.HeroRecruits?[HeroId.ToString()];
 
-        inn?.HeroRoster.Add(hero.Id, hero);
-        inn?.HeroRecruits.Remove(hero.Id);
+        if (inn?.HeroRoster != null)
+        {
+            inn.HeroRoster.Add(hero.Id.ToString(), hero);
+        }
+        else
+        {
+            inn.HeroRoster = new Dictionary<string, Hero> { { hero.Id.ToString(), hero } };
+        }
+
+        inn?.HeroRecruits?.Remove(hero.Id.ToString());
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Guid? id)
+    public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        var inn = gameState.PrivatePlayerDict[(Guid)id]?.Inn;
-        var hero = inn?.HeroRoster?[HeroId];
+        var inn = gameState.PrivatePlayerDict[PlayerId]?.Inn;
+        var hero = inn?.HeroRoster?[HeroId.ToString()];
 
-        inn?.HeroRecruits.Add(hero.Id, hero);
-        inn?.HeroRoster.Remove(hero.Id);
+        if (inn?.HeroRecruits != null)
+        {
+            inn.HeroRecruits.Add(hero.Id.ToString(), hero);
+        }
+        else
+        {
+            inn.HeroRecruits = new Dictionary<string, Hero> { { hero.Id.ToString(), hero } };
+        }
+
+        inn?.HeroRoster?.Remove(hero.Id.ToString());
     }
 }

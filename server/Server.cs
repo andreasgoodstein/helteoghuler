@@ -6,22 +6,25 @@ using HelteOgHulerShared.Utilities;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using HelteOgHulerServer.Utilities;
+using MongoDB.Bson;
 
 var unauthorizedError = new HHError
 {
-    Message = "Your Innkeeper license could not be verified"
+    Message = "Your Innkeeper license could not be verified."
 };
 
 // Allow all mongodb serialization
-ObjectSerializer objectSerializer = new ObjectSerializer(ObjectSerializer.AllAllowedTypes);
-BsonSerializer.RegisterSerializer(objectSerializer);
+BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
+BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+
+// Register mongodb event types
+BsonClassMap.RegisterClassMap<Inn>();
 BsonClassMap.RegisterClassMap<AdventureEvent_V1>();
 BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
 BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.WebHost.ConfigureKestrel(options => options.AddServerHeader = false);
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -46,6 +49,10 @@ builder.Services.AddSingleton<UserLogic>();
 
 // Register utilities
 builder.Services.AddSingleton<NameUtility>();
+
+// Configure server
+// builder.Services.AddResponseCompression(options => { options.EnableForHttps = true; });
+builder.WebHost.ConfigureKestrel(options => { options.AddServerHeader = false; });
 
 var app = builder.Build();
 
@@ -76,5 +83,9 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers();
-
+// app.UseResponseCompression();
 app.Run();
+
+
+// TODO: 
+// Evaluate if compression is worth the response delay

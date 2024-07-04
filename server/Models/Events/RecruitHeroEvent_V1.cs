@@ -1,9 +1,9 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Bson;
 
 
 [BsonDiscriminator("RecruitHeroEvent_V1")]
@@ -20,13 +20,13 @@ public class RecruitHeroEvent_V1 : IEvent, IApplicable
 
     public Recruitment Recruitment { get; init; }
 
-    public void ApplyToGameState(ref GameState gameState, Guid? playerId)
+    public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.ApplyToGameState(ref gameState, playerId);
+        Recruitment.ApplyToGameState(ref gameState, null);
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Guid? playerId)
+    public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.RemoveFromGameState(ref gameState, playerId);
+        Recruitment.RemoveFromGameState(ref gameState, null);
     }
 }

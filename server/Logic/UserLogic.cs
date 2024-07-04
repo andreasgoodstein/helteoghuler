@@ -6,14 +6,16 @@ public class UserLogic
 {
     private readonly EventService _eventService;
     private readonly GameStateLogic _gameStateLogic;
+    private readonly PlayerLogic _playerLogic;
     private readonly UserService _userService;
 
     private Dictionary<string, User> userDictionary;
 
-    public UserLogic(GameStateLogic gameStateLogic, EventService eventService, UserService userService)
+    public UserLogic(EventService eventService, GameStateLogic gameStateLogic, PlayerLogic playerLogic, UserService userService)
     {
-        _gameStateLogic = gameStateLogic;
         _eventService = eventService;
+        _gameStateLogic = gameStateLogic;
+        _playerLogic = playerLogic;
         _userService = userService;
 
         userDictionary = new Dictionary<string, User>();
@@ -65,19 +67,7 @@ public class UserLogic
         var newPlayerEvent = new NewPlayerEvent_V1
         {
             CreatedAt = DateTime.UtcNow,
-            Player = new Player
-            {
-                Id = adminUser.PlayerId,
-                Inn = new Inn
-                {
-                    Chest = new Chest
-                    {
-                        Gold = 0,
-                    },
-                    Name = "The Castle",
-                },
-                Name = "The Marquee",
-            },
+            Player = _playerLogic.CreatePlayer(_gameStateLogic.Get(), adminUser.PlayerId, "The Castle", "The Marquee"),
         };
 
         _eventService.CreateAsync(newPlayerEvent);
