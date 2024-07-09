@@ -10,7 +10,7 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		LineEdit = GetNode<LineEdit>("UserNameInput");
+		LineEdit = GetNode<LineEdit>("StartAdventure/UserNameInput");
 
 		GetNode<Button>("StartAdventure").Connect("pressed", this, "StartAdventurePressed");
 

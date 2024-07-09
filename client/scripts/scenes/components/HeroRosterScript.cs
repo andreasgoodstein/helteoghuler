@@ -3,59 +3,53 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
 using System.Collections.Generic;
-using System;
 
 namespace HelteOgHulerClient;
 
-public class HeroRosterScript : VBoxContainer, ISubscriber<GameState>
+public class HeroRosterScript : Control, ISubscriber<GameState>
 {
-    private Dictionary<Guid, Node> HeroRosterItemDict = [];
+	private readonly PackedScene HeroRosterItem = GD.Load<PackedScene>("res://scenes/components/HeroRosterItem.tscn");
+	private VBoxContainer HeroList;
 
-    private readonly PackedScene HeroRosterItemScene = GD.Load<PackedScene>("res://scenes/components/HeroRosterItem.tscn");
+	public override void _Ready()
+	{
+		HeroList = GetNode<VBoxContainer>("Scroll/List");
 
-    public override void _Ready()
-    {
-        Message(GlobalGameState.Get());
+		GD.Print("Loaded");
 
-        GlobalGameState.Register(this);
-    }
+		Message(GlobalGameState.Get());
 
-    public override void _ExitTree()
-    {
-        GlobalGameState.Unregister(this);
-    }
+		GlobalGameState.Register(this);
+	}
 
-    public void Message(GameState gameState)
-    {
-        var heroRoster = GameStateHelper.GetPlayer(gameState)?.Inn?.HeroRoster;
+	public override void _ExitTree()
+	{
+		GlobalGameState.Unregister(this);
+	}
 
-        // Add Heros to HeroRoster container
-        foreach (var hero in heroRoster.Values)
-        {
-            if (!HeroRosterItemDict.ContainsKey(hero.Id))
-            {
-                var item = HeroRosterItemScene.Instance();
-                item.GetNode<Label>("HeroName").Text = hero.Name;
-                item.GetNode<Label>("HeroStatus").Text = "Ready";
+	public string GetId()
+	{
+		return Filename + Name;
+	}
 
-                AddChild(item);
-                HeroRosterItemDict.Add(hero.Id, item);
-            }
-        }
+	public void Message(GameState gameState)
+	{
+		var heroRoster = GameStateHelper.GetPlayer(gameState)?.Inn?.HeroRoster?.Values ?? new Dictionary<string, Hero>().Values;
+		var isResting = GameStateHelper.IsResting(gameState);
 
-        // Remove Heros from HeroRoster container
-        foreach (var heroId in HeroRosterItemDict.Keys)
-        {
-            if (!heroRoster.ContainsKey(heroId.ToString()))
-            {
-                RemoveChild(HeroRosterItemDict[heroId]);
-                HeroRosterItemDict.Remove(heroId);
-            }
-        }
-    }
+		foreach (Node child in HeroList?.GetChildren())
+		{
+			HeroList.RemoveChild(child);
+		}
 
-    public string GetId()
-    {
-        return Filename + Name;
-    }
+		foreach (var hero in heroRoster)
+		{
+			var item = HeroRosterItem.Instance();
+
+			item.GetNode<Label>("HeroName").Text = hero.Name;
+			item.GetNode<Label>("HeroStatus").Text = isResting ? "Resting" : "Ready";
+
+			HeroList.AddChild(item);
+		}
+	}
 }

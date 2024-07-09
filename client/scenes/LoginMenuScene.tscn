@@ -13,10 +13,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -137.0
-margin_top = -8.0
-margin_right = 137.0
-margin_bottom = 8.0
+margin_left = -33.0
+margin_top = -16.0
+margin_right = 33.0
+margin_bottom = 16.0
+grow_horizontal = 2
+size_flags_horizontal = 2
 size_flags_vertical = 1
 theme = ExtResource( 1 )
 text = "TITLE"
@@ -35,25 +37,25 @@ text = "East Island"
 align = 1
 valign = 1
 
-[node name="UserNameInput" type="LineEdit" parent="."]
-anchor_left = 0.5
-anchor_top = 0.885
-anchor_right = 0.5
-anchor_bottom = 0.885
-margin_left = -153.0
-margin_top = -26.2
-margin_right = 154.0
-margin_bottom = 5.79999
-align = 1
-placeholder_text = "USERNAME_PLACEHOLDER"
-
 [node name="StartAdventure" type="Button" parent="."]
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.611
 anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -153.5
-margin_top = -50.0
-margin_right = 153.5
-margin_bottom = -18.0
+anchor_bottom = 0.611
+margin_left = -150.0
+margin_top = 92.04
+margin_right = 150.0
+margin_bottom = 124.04
+grow_horizontal = 2
 text = "BUTTON_START"
+
+[node name="UserNameInput" type="LineEdit" parent="StartAdventure"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -150.0
+margin_top = -48.0
+margin_right = 150.0
+margin_bottom = -16.0
+grow_horizontal = 2
+align = 1
+placeholder_text = "USERNAME_PLACEHOLDER"

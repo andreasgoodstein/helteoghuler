@@ -3,12 +3,14 @@ ADVENTURE;Adventure;Eventyr
 BUTTON_OPEN_INN;Might as well start pouring pints!;
 BUTTON_START;Let the Adventure Begin;
 BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
+CAREER_GOLD;Gold liberated;Guld befriet
 GOLD;Gold;Guld
 HERO_ROSTER;Heros;Helte
 INN;Inn;Kro
-INN_KEEPER;Innkeeper;Krovært
+INNKEEPER;Innkeeper;Krovært
 INN_NAME_PLACEHOLDER;"Cheap Drinks ""R"" Us";
 INN_OWNER;owner of;ejer af
+NAME;Name;Navn
 NEW_PLAYER_INTRO_1;"Welcome to East Island
 
 A place of Heroes!
@@ -39,6 +41,7 @@ What name do you sign on the deed?";
 NEW_PLAYER_INTRO_2;"And what name do you paint on the rusty yet charming wrought-iron sign, hanging
 above the stout oaken door?";
 PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
+STATUS;Status;Status
 TITLE;Heroes and Hearths;Helte og Huler
 USERNAME_PLACEHOLDER;Username;Brugernavn
 WORLD;World;Verden
