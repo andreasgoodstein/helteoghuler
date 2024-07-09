@@ -43,7 +43,7 @@ public class PublicInnkeeperScoreScript : Control, ISubscriber<GameState>
 				return a.Name.CompareTo(b.Name);
 			}
 
-			return b.TotalGoldEarned - a.TotalGoldEarned > 0 ? 1 : -1;
+			return b.TotalGoldEarned - a.TotalGoldEarned > 0 ? -1 : 1;
 		});
 
 		var index = 0;

@@ -33,7 +33,7 @@ public class NewPlayerEvent_V1 : IEvent, IApplicable
             Id = Player.Id,
             InnName = Player.Inn.Name,
             Name = Player.Name,
-            TotalGoldEarned = 0,
+            TotalGoldEarned = Player.Inn.Chest.Gold,
         });
     }
 
