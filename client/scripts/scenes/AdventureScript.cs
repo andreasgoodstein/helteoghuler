@@ -2,6 +2,7 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerClient.Utilities;
 
 public class AdventureScript : Control, ISubscriber<GameState>
 {
@@ -25,7 +26,7 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		var player = gameState?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
+		var player = GameStateHelper.GetPlayer(gameState);
 
 		if (player?.Inn?.Chest?.Gold != null)
 		{

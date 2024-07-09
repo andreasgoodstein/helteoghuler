@@ -40,6 +40,7 @@ First things first...
 What name do you sign on the deed?";
 NEW_PLAYER_INTRO_2;"And what name do you paint on the rusty yet charming wrought-iron sign, hanging
 above the stout oaken door?";
+NO_PARTY_TO_VENTURE_FORTH;You must recruit a Hero first;Du skal rekruttere en helt først
 PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
 STATUS;Status;Status
 TITLE;Heroes and Hearths;Helte og Huler

@@ -3,6 +3,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 using System;
+using HelteOgHulerClient.Utilities;
 
 public class StartAdventureScript : Button, ISubscriber<GameState>
 {
@@ -39,6 +40,27 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 		GetNode<Server>("/root/Server").StartAdventure(this);
 	}
 
+	private void SetupRestedTimer(Player player)
+	{
+		if (player?.RestUntil == null)
+		{
+			return;
+		}
+
+		RestUntil = player.RestUntil;
+
+		WaitUntilRested();
+
+		WaitUntilRestedTimer = new Timer
+		{
+			Autostart = true,
+		};
+
+		WaitUntilRestedTimer.Connect("timeout", this, "WaitUntilRested");
+
+		AddChild(WaitUntilRestedTimer);
+	}
+
 	private void WaitUntilRested()
 	{
 		if (RestUntil != null && RestUntil > DateTime.UtcNow)
@@ -66,25 +88,18 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 	public void Message(GameState message)
 	{
-		var player = message?.PrivatePlayerDict?.Values?.GetEnumerator().Current;
+		var player = GameStateHelper.GetPlayer(message);
 
-		// TODO: Implement button disabled if no heros recruited to roster
-
-		// TODO: Extract to own method
-		if (player?.RestUntil != null)
+		if ((player?.Inn?.HeroRoster?.Count ?? 0) < 1)
 		{
-			RestUntil = player.RestUntil;
-
-			WaitUntilRested();
-
-			WaitUntilRestedTimer = new Timer
-			{
-				Autostart = true,
-			};
-
-			WaitUntilRestedTimer.Connect("timeout", this, "WaitUntilRested");
-
-			AddChild(WaitUntilRestedTimer);
+			StartAdventure.Disabled = true;
+			StartAdventure.Text = "NO_PARTY_TO_VENTURE_FORTH";
+			return;
 		}
+
+		StartAdventure.Disabled = false;
+		StartAdventure.Text = StartAdventureDefaultText;
+
+		SetupRestedTimer(player);
 	}
 }
