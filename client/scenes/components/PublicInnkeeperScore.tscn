@@ -63,7 +63,8 @@ margin_bottom = 560.0
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
-[node name="List" type="VBoxContainer" parent="Wrapper/List/Scroll"]
+[node name="InnkeeperList" type="VBoxContainer" parent="Wrapper/List/Scroll"]
+unique_name_in_owner = true
 margin_right = 1264.0
 margin_bottom = 488.0
 size_flags_horizontal = 3

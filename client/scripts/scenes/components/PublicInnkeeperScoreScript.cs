@@ -14,7 +14,7 @@ public class PublicInnkeeperScoreScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		InnkeeperList = GetNode<VBoxContainer>("Wrapper/List/Scroll/List");
+		InnkeeperList = GetNode<VBoxContainer>("%InnkeeperList");
 
 		Message(GlobalGameState.Get());
 

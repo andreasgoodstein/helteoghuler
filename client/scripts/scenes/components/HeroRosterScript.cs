@@ -13,9 +13,7 @@ public class HeroRosterScript : Control, ISubscriber<GameState>
 
 	public override void _Ready()
 	{
-		HeroList = GetNode<VBoxContainer>("Scroll/List");
-
-		GD.Print("Loaded");
+		HeroList = GetNode<VBoxContainer>("%HeroList");
 
 		Message(GlobalGameState.Get());
 

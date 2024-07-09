@@ -4,29 +4,57 @@ using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 
-public class InnScript : Control, ISubscriber<GameState>
+public class InnScript : Control//, ISubscriber<GameState>
 {
+	private Control HeroRecruitment;
+	private Control HeroRoster;
+
 	public override void _Ready()
 	{
-		// Message(GlobalGameState.Get());
+		GetNode<Button>("%ButtonRecruitHeroes").Connect("pressed", this, "ButtonRecruitHeroesOnClick");
+		GetNode<Button>("%ButtonViewHeroes").Connect("pressed", this, "ButtonViewHeroesOnClick");
 
-		// GlobalGameState.Register(this);
+		HeroRecruitment = GetNode<Control>("%HeroRecruitment");
+		HeroRoster = GetNode<Control>("%HeroRoster");
+
 	}
 
-	public override void _ExitTree()
+	private void ButtonRecruitHeroesOnClick()
 	{
-		// GlobalGameState.Unregister(this);
+		HeroRoster.SetProcess(false);
+		HeroRoster.Hide();
+
+		HeroRecruitment.Show();
+		HeroRecruitment.SetProcess(true);
 	}
 
-	public void Message(GameState gameState)
+	private void ButtonViewHeroesOnClick()
 	{
-		// var player = GameStateHelper.GetPlayer(gameState);
+		HeroRecruitment.SetProcess(false);
+		HeroRecruitment.Hide();
+
+		HeroRoster.Show();
+		HeroRoster.SetProcess(true);
 	}
 
-	public string GetId()
-	{
-		return Filename + Name;
-	}
+	// Message(GlobalGameState.Get());
+
+	// GlobalGameState.Register(this);
+	// }
+
+	// public override void _ExitTree()
+	// {
+	// 	GlobalGameState.Unregister(this);
+	// }
+
+	// public void Message(GameState gameState)
+	// {
+	// }
+
+	// public string GetId()
+	// {
+	// 	return Filename + Name;
+	// }
 }
 
 //TODO: Implement Hero recruitment interface

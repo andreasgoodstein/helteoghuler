@@ -22,6 +22,7 @@ public class Adventure : IApplicable
 
         gameState.World.TotalAdventures += 1;
 
+        gameState.PublicPlayerDict[playerId].TotalAdventures += 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned += Gold;
 
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
@@ -39,6 +40,7 @@ public class Adventure : IApplicable
 
         gameState.World.TotalAdventures -= 1;
 
+        gameState.PublicPlayerDict[playerId].TotalAdventures -= 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned -= Gold;
 
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;

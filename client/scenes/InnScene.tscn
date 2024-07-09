@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/components/TopMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/components/HeroRoster.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/scenes/InnScript.cs" type="Script" id=3]
+[ext_resource path="res://scenes/components/HeroRecruitment.tscn" type="PackedScene" id=4]
 
 [node name="InnSceneRoot" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 3 )
 
 [node name="TopMenu" parent="." instance=ExtResource( 1 )]
 anchor_right = 0.0
@@ -22,9 +25,51 @@ custom_constants/margin_right = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 
-[node name="HeroRoster" parent="MarginContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 8.0
 margin_right = 1272.0
 margin_bottom = 496.0
+
+[node name="LeftMenu" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 314.0
+margin_bottom = 496.0
+size_flags_horizontal = 3
+custom_constants/separation = 8
+
+[node name="ButtonViewHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
+unique_name_in_owner = true
+margin_right = 314.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+text = "BUTTON_VIEW_HEROES"
+icon_align = 1
+
+[node name="ButtonRecruitHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
+unique_name_in_owner = true
+margin_top = 40.0
+margin_right = 314.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 0, 32 )
+text = "BUTTON_RECRUIT_HEROES"
+icon_align = 1
+
+[node name="HeroRoster" parent="MarginContainer/HBoxContainer" instance=ExtResource( 2 )]
+unique_name_in_owner = true
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 322.0
+margin_right = 1264.0
+margin_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="HeroRecruitment" parent="MarginContainer/HBoxContainer" instance=ExtResource( 4 )]
+unique_name_in_owner = true
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 787.0
+margin_right = 1264.0
+margin_bottom = 496.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0

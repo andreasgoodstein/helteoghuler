@@ -1,11 +1,14 @@
 keys;en;da
 ADVENTURE;Adventure;Eventyr
 BUTTON_OPEN_INN;Might as well start pouring pints!;
+BUTTON_RECRUIT_HEROES;Hire a Hero;Hyr en Helt
 BUTTON_START;Let the Adventure Begin;
 BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
+BUTTON_VIEW_HEROES;Your Heroes;Dine Helte
 CAREER_GOLD;Gold liberated;Guld befriet
 GOLD;Gold;Guld
-HERO_ROSTER;Heros;Helte
+HERO_RECRUITMENT;Heroes for Hire;Arbejdsløse Helte
+HERO_ROSTER;Heroes;Helte
 INN;Inn;Kro
 INNKEEPER;Innkeeper;Krovært
 INN_NAME_PLACEHOLDER;"Cheap Drinks ""R"" Us";
@@ -40,7 +43,7 @@ First things first...
 What name do you sign on the deed?";
 NEW_PLAYER_INTRO_2;"And what name do you paint on the rusty yet charming wrought-iron sign, hanging
 above the stout oaken door?";
-NO_PARTY_TO_VENTURE_FORTH;You must recruit a Hero first;Du skal rekruttere en helt først
+NO_PARTY_TO_VENTURE_FORTH;You must recruit a Hero first;Du skal hyre en Helt først
 PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
 STATUS;Status;Status
 TITLE;Heroes and Hearths;Helte og Huler

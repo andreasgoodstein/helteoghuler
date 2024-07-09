@@ -24,6 +24,8 @@ public class PlayerPublic
 
     public string InnName { get; set; }
 
+    public ulong TotalAdventures { get; set; }
+
     public ulong TotalGoldEarned { get; set; }
 }
 
