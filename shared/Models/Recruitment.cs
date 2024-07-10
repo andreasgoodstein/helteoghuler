@@ -24,6 +24,7 @@ public class Recruitment : IApplicable
             inn.HeroRoster = new Dictionary<string, Hero> { { hero.Id.ToString(), hero } };
         }
 
+        inn.Chest.Gold -= hero.Price;
         inn?.HeroRecruits?.Remove(hero.Id.ToString());
     }
 
@@ -41,6 +42,7 @@ public class Recruitment : IApplicable
             inn.HeroRecruits = new Dictionary<string, Hero> { { hero.Id.ToString(), hero } };
         }
 
+        inn.Chest.Gold += hero.Price;
         inn?.HeroRoster?.Remove(hero.Id.ToString());
     }
 }

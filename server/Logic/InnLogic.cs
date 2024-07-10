@@ -42,6 +42,11 @@ public class InnLogic
             throw new InvalidDataException("That Hero is not available.");
         }
 
+        if (inn.Chest.Gold < inn.HeroRecruits[heroId.ToString()].Price)
+        {
+            throw new InvalidDataException("You cannot afford that Hero.");
+        }
+
         return new Recruitment { HeroId = heroId, PlayerId = playerId };
     }
 }

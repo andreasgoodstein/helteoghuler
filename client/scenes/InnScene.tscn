@@ -27,18 +27,19 @@ custom_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 8.0
+margin_top = 8.0
 margin_right = 1272.0
 margin_bottom = 496.0
 
 [node name="LeftMenu" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 314.0
-margin_bottom = 496.0
+margin_right = 294.0
+margin_bottom = 488.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="ButtonViewHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
 unique_name_in_owner = true
-margin_right = 314.0
+margin_right = 294.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_VIEW_HEROES"
@@ -47,29 +48,36 @@ icon_align = 1
 [node name="ButtonRecruitHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
 unique_name_in_owner = true
 margin_top = 40.0
-margin_right = 314.0
+margin_right = 294.0
 margin_bottom = 72.0
 rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_RECRUIT_HEROES"
 icon_align = 1
 
-[node name="HeroRoster" parent="MarginContainer/HBoxContainer" instance=ExtResource( 2 )]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+margin_left = 302.0
+margin_right = 1264.0
+margin_bottom = 488.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="HeroRoster" parent="MarginContainer/HBoxContainer/MarginContainer" instance=ExtResource( 2 )]
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 322.0
-margin_right = 1264.0
-margin_bottom = 496.0
-size_flags_horizontal = 3
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 954.0
+margin_bottom = 480.0
 size_flags_stretch_ratio = 3.0
 
-[node name="HeroRecruitment" parent="MarginContainer/HBoxContainer" instance=ExtResource( 4 )]
+[node name="HeroRecruitment" parent="MarginContainer/HBoxContainer/MarginContainer" instance=ExtResource( 4 )]
 unique_name_in_owner = true
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 787.0
-margin_right = 1264.0
-margin_bottom = 496.0
-size_flags_horizontal = 3
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 954.0
+margin_bottom = 480.0
 size_flags_stretch_ratio = 3.0
