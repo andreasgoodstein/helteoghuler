@@ -1,13 +1,14 @@
 using Godot;
+using HelteOgHulerShared.Models;
 using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
-public class GameStateService : BaseService
+public class InnService : BaseService
 {
-    const string REFRESH_GAMESTATE_URL = "GameState";
+    const string RECRUIT_HERO_URL = "Inn/RecruitHero";
 
-    public Task RefreshGameState(Node httpRequestParent)
+    public Task RecruitHero(Node httpRequestParent, string heroId)
     {
         var taskSource = new TaskCompletionSource<bool>();
 
@@ -15,7 +16,7 @@ public class GameStateService : BaseService
 
         requestNode.SetErrorHandler(() =>
         {
-            GD.PrintErr("Network: Could not get GameState");
+            GD.PrintErr("Network: Could not recruit Hero");
             taskSource.SetResult(false);
 
             Clean();
@@ -23,13 +24,13 @@ public class GameStateService : BaseService
 
         requestNode.SetResponseHandler((byte[] body) =>
         {
-            ResponseHandler.HandleGameStateResponse(body);
+            ResponseHandler.HandleGameStateResponse<Recruitment>(body);
             taskSource.SetResult(true);
 
             Clean();
         });
 
-        requestNode.ExecuteRequest(REFRESH_GAMESTATE_URL);
+        requestNode.ExecuteRequest($"{RECRUIT_HERO_URL}?heroId={heroId}");
 
         return taskSource.Task;
     }

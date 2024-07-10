@@ -4,39 +4,33 @@ using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
-public class AdventureService
+public class AdventureService : BaseService
 {
     const string START_ADVENTURE_URL = "Adventure/Start";
-
-    private RequestNode startAdventureNode;
 
     public Task StartAdventure(Node httpRequestParent)
     {
         var taskSource = new TaskCompletionSource<bool>();
 
-        startAdventureNode?.Clean();
-        startAdventureNode = new RequestNode(httpRequestParent, ResponseType.JSONCallback);
+        Clean(new RequestNode(httpRequestParent, ResponseType.JSONCallback));
 
-        startAdventureNode.SetErrorHandler(() =>
+        requestNode.SetErrorHandler(() =>
         {
             GD.PrintErr("Network: Could not start Adventure");
             taskSource.SetResult(false);
 
-            startAdventureNode?.Clean();
-            startAdventureNode = null;
-
+            Clean();
         });
 
-        startAdventureNode.SetResponseHandler((byte[] body) =>
+        requestNode.SetResponseHandler((byte[] body) =>
         {
             ResponseHandler.HandleGameStateResponse<Adventure>(body);
             taskSource.SetResult(true);
 
-            startAdventureNode?.Clean();
-            startAdventureNode = null;
+            Clean();
         });
 
-        startAdventureNode.ExecuteRequest(START_ADVENTURE_URL);
+        requestNode.ExecuteRequest(START_ADVENTURE_URL);
 
         return taskSource.Task;
     }

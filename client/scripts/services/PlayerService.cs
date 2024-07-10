@@ -3,38 +3,33 @@ using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
-public class PlayerService
+public class PlayerService : BaseService
 {
     const string NEW_PLAYER_URL = "Player/New";
-
-    private RequestNode startAdventureNode;
 
     public Task CreateNewPlayer(Node httpRequestParent, string innName, string playerName)
     {
         var taskSource = new TaskCompletionSource<bool>();
 
-        startAdventureNode?.Clean();
-        startAdventureNode = new RequestNode(httpRequestParent, ResponseType.JSONCallback);
+        Clean(new RequestNode(httpRequestParent, ResponseType.JSONCallback));
 
-        startAdventureNode.SetErrorHandler(() =>
+        requestNode.SetErrorHandler(() =>
         {
             GD.PrintErr("Network: Could not start Adventure");
             taskSource.SetResult(false);
 
-            startAdventureNode?.Clean();
-            startAdventureNode = null;
+            Clean();
         });
 
-        startAdventureNode.SetResponseHandler((byte[] body) =>
+        requestNode.SetResponseHandler((byte[] body) =>
         {
             ResponseHandler.HandleGameStateResponse(body);
             taskSource.SetResult(true);
 
-            startAdventureNode?.Clean();
-            startAdventureNode = null;
+            Clean();
         });
 
-        startAdventureNode.ExecuteRequest(NEW_PLAYER_URL + $"?innName={innName}&playerName={playerName}");
+        requestNode.ExecuteRequest(NEW_PLAYER_URL + $"?innName={innName}&playerName={playerName}");
 
         return taskSource.Task;
     }

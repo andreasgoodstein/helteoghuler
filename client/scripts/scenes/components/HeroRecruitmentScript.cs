@@ -54,9 +54,8 @@ public class HeroRecruitmentScript : Control, ISubscriber<GameState>
 		}
 	}
 
-	private void RecruitHero(string heroId)
+	private async void RecruitHero(string heroId)
 	{
-		GD.Print("Recruiting " + heroId);
-		// TODO: Implement client side RecruitHero request
+		await GetNode<Server>("/root/Server").RecruitHero(this, heroId);
 	}
 }
