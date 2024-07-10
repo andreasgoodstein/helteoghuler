@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build-env
 
 WORKDIR /App
 
@@ -18,7 +18,7 @@ RUN dotnet publish -c Release -o out \
     /p:PublishSingleFile=true
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/runtime-deps:6.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-alpine
 
 RUN adduser --disabled-password \
     --home /App \
