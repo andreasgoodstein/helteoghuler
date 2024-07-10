@@ -5,6 +5,8 @@ namespace HelteOgHulerServer.Logic;
 
 public class AdventureLogic
 {
+    const int REST_TIME_SEC = 10;
+
     private readonly Random Random;
     private readonly GameStateLogic _gameStateLogic;
 
@@ -32,17 +34,19 @@ public class AdventureLogic
             return new Adventure
             {
                 Gold = 0,
-                RestUntil = DateTime.UtcNow.AddSeconds(10),
+                RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC),
                 Status = "Alas... Your party returns empty handed.",
             };
         }
 
         // Success
+        var goldLiberated = (ulong)Random.NextInt64(1, 10);
+
         return new Adventure
         {
-            Gold = (ulong)Random.NextInt64(1, 10),
-            RestUntil = DateTime.UtcNow.AddSeconds(10),
-            Status = "Forsooth! Your party was victorious."
+            Gold = goldLiberated,
+            RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC),
+            Status = $"Forsooth! Your party was victorious and liberated {goldLiberated} gold."
         };
     }
 }

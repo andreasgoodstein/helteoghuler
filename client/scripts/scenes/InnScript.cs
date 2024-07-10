@@ -4,7 +4,7 @@ using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 
-public class InnScript : Control//, ISubscriber<GameState>
+public class InnScript : Control, ISubscriber<GameState>
 {
 	private Control HeroRecruitment;
 	private Control HeroRoster;
@@ -17,6 +17,9 @@ public class InnScript : Control//, ISubscriber<GameState>
 		HeroRecruitment = GetNode<Control>("%HeroRecruitment");
 		HeroRoster = GetNode<Control>("%HeroRoster");
 
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
 	private void ButtonRecruitHeroesOnClick()
@@ -37,26 +40,18 @@ public class InnScript : Control//, ISubscriber<GameState>
 		HeroRoster.SetProcess(true);
 	}
 
-	// Message(GlobalGameState.Get());
+	public override void _ExitTree()
+	{
+		GlobalGameState.Unregister(this);
+	}
 
-	// GlobalGameState.Register(this);
-	// }
+	public void Message(GameState gameState)
+	{
+		GetNode<Label>("%Gold").Text = GameStateHelper.GetPlayer(gameState)?.Inn?.Chest?.Gold.ToString() ?? "0";
+	}
 
-	// public override void _ExitTree()
-	// {
-	// 	GlobalGameState.Unregister(this);
-	// }
-
-	// public void Message(GameState gameState)
-	// {
-	// }
-
-	// public string GetId()
-	// {
-	// 	return Filename + Name;
-	// }
+	public string GetId()
+	{
+		return Filename + Name;
+	}
 }
-
-//TODO: Implement Hero recruitment interface
-// Two lists with the hero recruits and hero roster
-// Select recruit and click button to trigger recruitment

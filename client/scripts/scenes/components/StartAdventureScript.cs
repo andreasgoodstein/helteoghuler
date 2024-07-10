@@ -35,9 +35,13 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 		GlobalGameState.Unregister(this);
 	}
 
-	private void StartAdventurePressed()
+	private async void StartAdventurePressed()
 	{
-		GetNode<Server>("/root/Server").StartAdventure(this);
+		StartAdventure.Disabled = true;
+
+		var adventureStatus = await GetNode<Server>("/root/Server").StartAdventure(this);
+
+		GetNode<Label>("%Message").Text = adventureStatus;
 	}
 
 	private void SetupRestedTimer(Player player)

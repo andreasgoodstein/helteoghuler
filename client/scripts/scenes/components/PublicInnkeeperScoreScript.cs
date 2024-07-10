@@ -34,17 +34,9 @@ public class PublicInnkeeperScoreScript : Control, ISubscriber<GameState>
 	public void Message(GameState message)
 	{
 		var publicPlayerCollection = GlobalGameState.Get()?.PublicPlayerDict?.Values ?? new Dictionary<Guid, PlayerPublic>().Values;
-		var publicPlayerList = publicPlayerCollection.ToList();
-
-		publicPlayerList.Sort((a, b) =>
-		{
-			if (a.TotalGoldEarned == b.TotalGoldEarned)
-			{
-				return a.Name.CompareTo(b.Name);
-			}
-
-			return b.TotalGoldEarned - a.TotalGoldEarned > 0 ? -1 : 1;
-		});
+		var publicPlayerList = publicPlayerCollection.ToList()
+			.OrderBy(player => player.Name)
+			.OrderByDescending(player => player.TotalGoldEarned);
 
 		var index = 0;
 		foreach (Node child in InnkeeperList.GetChildren())

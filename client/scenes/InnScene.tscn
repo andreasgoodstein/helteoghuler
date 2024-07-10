@@ -16,28 +16,53 @@ anchor_bottom = 0.0
 margin_right = 1280.0
 margin_bottom = 64.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Margins" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 72.0
 grow_horizontal = 2
-custom_constants/margin_right = 8
-custom_constants/margin_left = 8
-custom_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Margins"]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 1272.0
 margin_bottom = 496.0
 
-[node name="LeftMenu" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_right = 294.0
+[node name="InnStatsContainer" type="HBoxContainer" parent="Margins/VBoxContainer"]
+margin_right = 1264.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+
+[node name="GoldLabel" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
+margin_right = 56.0
+margin_bottom = 32.0
+size_flags_vertical = 1
+text = "GOLD"
+align = 1
+valign = 1
+
+[node name="Gold" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
+unique_name_in_owner = true
+margin_left = 64.0
+margin_right = 64.0
+margin_bottom = 32.0
+size_flags_vertical = 1
+align = 1
+valign = 1
+
+[node name="SubMenuContainer" type="HBoxContainer" parent="Margins/VBoxContainer"]
+margin_top = 40.0
+margin_right = 1264.0
 margin_bottom = 488.0
+size_flags_vertical = 3
+
+[node name="LeftMenu" type="VBoxContainer" parent="Margins/VBoxContainer/SubMenuContainer"]
+margin_right = 294.0
+margin_bottom = 448.0
 size_flags_horizontal = 3
 custom_constants/separation = 8
 
-[node name="ButtonViewHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
+[node name="ButtonViewHeroes" type="Button" parent="Margins/VBoxContainer/SubMenuContainer/LeftMenu"]
 unique_name_in_owner = true
 margin_right = 294.0
 margin_bottom = 32.0
@@ -45,7 +70,7 @@ rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_VIEW_HEROES"
 icon_align = 1
 
-[node name="ButtonRecruitHeroes" type="Button" parent="MarginContainer/HBoxContainer/LeftMenu"]
+[node name="ButtonRecruitHeroes" type="Button" parent="Margins/VBoxContainer/SubMenuContainer/LeftMenu"]
 unique_name_in_owner = true
 margin_top = 40.0
 margin_right = 294.0
@@ -54,24 +79,24 @@ rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_RECRUIT_HEROES"
 icon_align = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/SubMenuContainer"]
 margin_left = 302.0
 margin_right = 1264.0
-margin_bottom = 488.0
+margin_bottom = 448.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
 
-[node name="HeroRoster" parent="MarginContainer/HBoxContainer/MarginContainer" instance=ExtResource( 2 )]
+[node name="HeroRoster" parent="Margins/VBoxContainer/SubMenuContainer/MarginContainer" instance=ExtResource( 2 )]
 unique_name_in_owner = true
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 954.0
-margin_bottom = 480.0
+margin_bottom = 440.0
 size_flags_stretch_ratio = 3.0
 
-[node name="HeroRecruitment" parent="MarginContainer/HBoxContainer/MarginContainer" instance=ExtResource( 4 )]
+[node name="HeroRecruitment" parent="Margins/VBoxContainer/SubMenuContainer/MarginContainer" instance=ExtResource( 4 )]
 unique_name_in_owner = true
 visible = false
 anchor_right = 0.0
@@ -79,5 +104,5 @@ anchor_bottom = 0.0
 margin_left = 8.0
 margin_top = 8.0
 margin_right = 954.0
-margin_bottom = 480.0
+margin_bottom = 440.0
 size_flags_stretch_ratio = 3.0

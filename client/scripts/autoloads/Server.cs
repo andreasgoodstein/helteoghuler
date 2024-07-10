@@ -34,7 +34,7 @@ public class Server : Node
 		return _gameStateService.RefreshGameState(httpRequestParent);
 	}
 
-	public Task StartAdventure(Node httpRequestParent)
+	public Task<string> StartAdventure(Node httpRequestParent)
 	{
 		return _adventureService.StartAdventure(httpRequestParent);
 	}

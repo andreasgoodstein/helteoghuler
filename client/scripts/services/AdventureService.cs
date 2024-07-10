@@ -8,24 +8,24 @@ public class AdventureService : BaseService
 {
     const string START_ADVENTURE_URL = "Adventure/Start";
 
-    public Task StartAdventure(Node httpRequestParent)
+    public Task<string> StartAdventure(Node httpRequestParent)
     {
-        var taskSource = new TaskCompletionSource<bool>();
+        var taskSource = new TaskCompletionSource<string>();
 
         Clean(new RequestNode(httpRequestParent, ResponseType.JSONCallback));
 
         requestNode.SetErrorHandler(() =>
         {
             GD.PrintErr("Network: Could not start Adventure");
-            taskSource.SetResult(false);
+            taskSource.SetResult("Could not start Adventure.");
 
             Clean();
         });
 
         requestNode.SetResponseHandler((byte[] body) =>
         {
-            ResponseHandler.HandleGameStateResponse<Adventure>(body);
-            taskSource.SetResult(true);
+            var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
+            taskSource.SetResult(adventure.Status);
 
             Clean();
         });

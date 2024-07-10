@@ -20,16 +20,18 @@ public static class ResponseHandler
 		GlobalGameState.Update(newGameState);
 	}
 
-	public static void HandleGameStateResponse<T>(byte[] body) where T : IApplicable
+	public static T HandleGameStateResponse<T>(byte[] body) where T : IApplicable
 	{
 		T responseObject = HHJsonSerializer.Deserialize<T>(body);
 
 		if (responseObject == null)
 		{
-			GD.PrintErr("Network: ErrorResponse empty.");
-			return;
+			GD.PrintErr("Network: Response empty.");
+			return default(T);
 		}
 
 		GlobalGameState.Update(responseObject);
+
+		return responseObject;
 	}
 }
