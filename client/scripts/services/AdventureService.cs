@@ -6,7 +6,7 @@ namespace HelteOgHulerClient.Services;
 
 public class AdventureService
 {
-    const string START_ADVENTURE_URL = "http://localhost:7111/Adventure/Start";
+    const string START_ADVENTURE_URL = "Adventure/Start";
 
     private RequestNode startAdventureNode;
 

@@ -5,7 +5,7 @@ namespace HelteOgHulerClient.Services;
 
 public class GameStateService
 {
-    const string REFRESH_GAMESTATE_URL = "http://localhost:7111/GameState";
+    const string REFRESH_GAMESTATE_URL = "GameState";
 
     private RequestNode refreshGameStateNode;
 

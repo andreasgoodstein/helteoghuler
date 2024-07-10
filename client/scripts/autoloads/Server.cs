@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Godot;
 using HelteOgHulerClient.Services;
 
@@ -16,18 +17,18 @@ public class Server : Node
 		_playerService = new PlayerService();
 	}
 
-	public async void CreateNewPlayer(Node httpRequestParent, string innName, string playerName)
+	public Task CreateNewPlayer(Node httpRequestParent, string innName, string playerName)
 	{
-		await _playerService.CreateNewPlayer(httpRequestParent, innName, playerName);
+		return _playerService.CreateNewPlayer(httpRequestParent, innName, playerName);
 	}
 
-	public async void RefreshGameState(Node httpRequestParent)
+	public Task RefreshGameState(Node httpRequestParent)
 	{
-		await _gameStateService.RefreshGameState(httpRequestParent);
+		return _gameStateService.RefreshGameState(httpRequestParent);
 	}
 
-	public async void StartAdventure(Node httpRequestParent)
+	public Task StartAdventure(Node httpRequestParent)
 	{
-		await _adventureService.StartAdventure(httpRequestParent);
+		return _adventureService.StartAdventure(httpRequestParent);
 	}
 }

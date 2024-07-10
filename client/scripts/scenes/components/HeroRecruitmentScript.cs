@@ -1,22 +1,62 @@
 using Godot;
+using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient.Utilities;
+using HelteOgHulerShared.Models;
 using System;
+using System.Collections.Generic;
 
-// TODO: Implement recruitment controls
-public class HeroRecruitmentScript : Control
+public class HeroRecruitmentScript : Control, ISubscriber<GameState>
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+	private readonly PackedScene HeroRecruitmentItem = GD.Load<PackedScene>("res://scenes/components/HeroRecruitmentItem.tscn");
 
-	// Called when the node enters the scene tree for the first time.
+	private VBoxContainer RecruitList;
+
 	public override void _Ready()
 	{
+		RecruitList = GetNode<VBoxContainer>("%RecruitList");
 
+		Message(GlobalGameState.Get());
+
+		GlobalGameState.Register(this);
 	}
 
-	//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-	//  public override void _Process(float delta)
-	//  {
-	//      
-	//  }
+	public override void _ExitTree()
+	{
+		GlobalGameState.Unregister(this);
+	}
+
+	public string GetId()
+	{
+		return Filename + Name;
+	}
+
+	public void Message(GameState gameState)
+	{
+		var recruitList = GameStateHelper.GetPlayer(gameState)?.Inn?.HeroRecruits?.Values ?? new Dictionary<string, Hero>().Values;
+
+		foreach (Node child in RecruitList?.GetChildren())
+		{
+			RecruitList.RemoveChild(child);
+		}
+
+		foreach (var hero in recruitList)
+		{
+			var item = HeroRecruitmentItem.Instance();
+
+			item.GetNode<Label>("%RecruitName").Text = hero.Name;
+			item.GetNode<Label>("%RecruitClass").Text = TranslationServer.Translate("HERO");
+			item.GetNode<Label>("%RecruitPrice").Text = 200.ToString();
+
+			item.GetNode<Button>("%ButtonRecruit").Connect("pressed", this, "RecruitHero", [hero.Id.ToString()]);
+
+			RecruitList.AddChild(item);
+		}
+	}
+
+	private void RecruitHero(string heroId)
+	{
+		GD.Print("Recruiting " + heroId);
+		// TODO: Implement client side RecruitHero request
+	}
 }

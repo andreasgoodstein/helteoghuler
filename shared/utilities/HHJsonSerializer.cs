@@ -20,6 +20,11 @@ public static class HHJsonSerializer
 
     public static T Deserialize<T>(byte[] jsonBytes)
     {
+        if (jsonBytes.Length == 0)
+        {
+            return default(T);
+        }
+
         using (var ms = new MemoryStream(jsonBytes))
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));

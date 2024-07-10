@@ -8,7 +8,7 @@ public static class GameStateHelper
 {
 	public static Player GetPlayer(GameState gameState)
 	{
-		return gameState?.PrivatePlayerDict?.Values?.First();
+		return gameState?.PrivatePlayerDict?.Values?.FirstOrDefault();
 	}
 
 	public static bool IsResting(GameState gameState)

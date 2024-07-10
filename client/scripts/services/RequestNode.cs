@@ -5,59 +5,62 @@ namespace HelteOgHulerClient.Services;
 
 public enum ResponseType
 {
-    JSONCallback = 0,
-    StringCallback = 1,
+	JSONCallback = 0,
+	StringCallback = 1,
 }
 
 public class RequestNode
 {
-    private Node _parent;
-    public string[] Headers = ["HHLoginName: "];
-    private HTTPRequest Request { get; set; }
-    private ResponseWrapper Response { get; set; }
+	const string SERVER_URL = "http://localhost:7111/";
+	public string[] Headers = ["HHLoginName: "];
 
-    public RequestNode(Node parent, ResponseType type)
-    {
-        Headers[0] = Headers[0] + parent.GetNode<Settings>("/root/Settings").LoginName;
+	private Node _parent;
+	private HTTPRequest Request { get; set; }
+	private ResponseWrapper Response { get; set; }
 
-        Request = new HTTPRequest();
-        Response = new ResponseWrapper();
+	public RequestNode(Node parent, ResponseType type)
+	{
+		Headers[0] = Headers[0] + parent.GetNode<Settings>("/root/Settings").LoginName;
 
-        var callbackName = type == ResponseType.JSONCallback ? "JSONCallback" : "StringCallback";
+		Request = new HTTPRequest();
+		Response = new ResponseWrapper();
 
-        Request.Connect("request_completed", Response, callbackName);
+		var callbackName = type == ResponseType.JSONCallback ? "JSONCallback" : "StringCallback";
 
-        _parent = parent;
-        _parent.AddChild(Request);
-        Request.AddChild(Response);
-    }
+		Request.Connect("request_completed", Response, callbackName);
 
-    public void Clean()
-    {
-        Request?.CancelRequest();
-        Request?.RemoveChild(Response);
-        _parent?.RemoveChild(Request);
+		_parent = parent;
+		_parent.AddChild(Request);
+		Request.AddChild(Response);
+	}
 
-        Request = null;
-        Response = null;
-        _parent = null;
-    }
+	public void Clean()
+	{
+		Request?.CancelRequest();
+		Request?.RemoveChild(Response);
+		_parent?.RemoveChild(Request);
 
-    public void ExecuteRequest(string url)
-    {
-        Request.Request(url, Headers);
-    }
+		Request = null;
+		Response = null;
+		_parent = null;
+	}
 
-    public void SetErrorHandler(Action handler)
-    {
-        Response.ErrorDelegate = handler;
-    }
-    public void SetResponseHandler(Action<byte[]> handler)
-    {
-        Response.JSONCallbackDelegate = handler;
-    }
-    public void SetResponseHandler(Action<string> handler)
-    {
-        Response.TextCallbackDelegate = handler;
-    }
+	public void ExecuteRequest(string path)
+	{
+		var encodedUrl = $"{SERVER_URL}{Uri.EscapeUriString(path)}";
+		Request.Request(encodedUrl, Headers);
+	}
+
+	public void SetErrorHandler(Action handler)
+	{
+		Response.ErrorDelegate = handler;
+	}
+	public void SetResponseHandler(Action<byte[]> handler)
+	{
+		Response.JSONCallbackDelegate = handler;
+	}
+	public void SetResponseHandler(Action<string> handler)
+	{
+		Response.TextCallbackDelegate = handler;
+	}
 }

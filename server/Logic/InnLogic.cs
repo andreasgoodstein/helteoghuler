@@ -4,6 +4,8 @@ namespace HelteOgHulerServer.Logic;
 
 public class InnLogic
 {
+    const ulong STARTING_GOLD = 200;
+
     private readonly GameStateLogic _gameStateLogic;
     private readonly HeroLogic _heroLogic;
 
@@ -21,7 +23,7 @@ public class InnLogic
         {
             Chest = new Chest
             {
-                Gold = 0,
+                Gold = STARTING_GOLD,
             },
             HeroRecruits = new Dictionary<string, Hero> { { newHeroRecruit.Id.ToString(), newHeroRecruit } },
             HeroRoster = [],
