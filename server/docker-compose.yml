@@ -14,7 +14,7 @@ services:
   helteoghuler_server:
     build:
       context: ../
-      dockerfile: server/Dockerfile
+      dockerfile: ./Server.Dockerfile
     depends_on:
       - helteoghuler_database
     image: helteoghulerserver

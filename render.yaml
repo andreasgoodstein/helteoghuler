@@ -1,0 +1,8 @@
+services:
+  - type: web
+    runtime: docker
+    name: helteoghulerserver
+    rootDir: ./
+    scaling: # Autoscaling configuration
+      minInstances: 1
+      maxInstances: 1
