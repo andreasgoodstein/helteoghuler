@@ -15,6 +15,7 @@ services:
       dockerfile: ./Server.Dockerfile
       args:
         - DATABASE__CONNECTIONSTRING=mongodb://root:password@helteoghuler_database:27017
+        - DATABASE__DATABASENAME=HelteOgHulerDatabase
     depends_on:
       - helteoghuler_database
     image: helteoghulerserver
