@@ -8,10 +8,10 @@ using MongoDB.Bson.Serialization;
 using HelteOgHulerServer.Utilities;
 using MongoDB.Bson;
 
-var unauthorizedError = new HHError
+var unauthorizedError = HHJsonSerializer.Serialize(new HHError
 {
     Message = "Your Innkeeper license could not be verified."
-};
+});
 
 // Allow all mongodb serialization
 BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
@@ -25,6 +25,20 @@ BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
 BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add CORS Policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+        });
+}
+);
 
 // builder.Services.AddHttpsRedirection(options =>
 // {
@@ -61,19 +75,23 @@ builder.WebHost.ConfigureKestrel(options => { options.AddServerHeader = false; }
 
 var app = builder.Build();
 
-// Instantiate critical services on startup
-app.Services.GetService<GameStateLogic>();
-var userLogic = app.Services.GetService<UserLogic>();
-
 // app.UseHttpsRedirection();
 
-// Configure the HTTP request pipeline.
+// Enable CORS
+app.UseCors();
+
+// Setup Swagger if Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Instantiate critical services on startup
+app.Services.GetService<GameStateLogic>();
+var userLogic = app.Services.GetService<UserLogic>();
+
+// Setup auth middleware
 app.Use(async (context, next) =>
 {
     context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHLoginName"]);
@@ -82,7 +100,7 @@ app.Use(async (context, next) =>
     {
         context.Response.StatusCode = 401;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(HHJsonSerializer.Serialize(unauthorizedError));
+        await context.Response.WriteAsync(unauthorizedError);
         return;
     }
 
@@ -90,9 +108,10 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers();
-// app.UseResponseCompression();
-app.Run();
 
+// app.UseResponseCompression();
+
+app.Run();
 
 // TODO: 
 // Evaluate if compression is worth the response delay
