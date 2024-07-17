@@ -17,7 +17,8 @@ public class HeroLogic
         return new Hero
         {
             Id = Guid.NewGuid(),
-            Name = _nameUtility.GenerateName()
+            Name = _nameUtility.GenerateName(),
+            Price = 200
         };
     }
 }
