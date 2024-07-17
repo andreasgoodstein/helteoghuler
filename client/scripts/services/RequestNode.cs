@@ -11,7 +11,9 @@ public enum ResponseType
 
 public class RequestNode
 {
+	const bool USE_PROD = false;
 	const string SERVER_URL = "http://localhost:7111/";
+	const string PROD_SERVER_URL = "https://helteoghuler.onrender.com/":
 	public string[] Headers = ["HHLoginName: "];
 
 	private Node _parent;
@@ -47,7 +49,7 @@ public class RequestNode
 
 	public void ExecuteRequest(string path)
 	{
-		var encodedUrl = $"{SERVER_URL}{Uri.EscapeUriString(path)}";
+		var encodedUrl = $"{USE_PROD ? PROD_SERVER_URL : SERVER_URL}{Uri.EscapeUriString(path)}";
 		Request.Request(encodedUrl, Headers);
 	}
 
