@@ -10,16 +10,11 @@ public class UserService
     private readonly IMongoCollection<User> _usersCollection;
 
     public UserService(
-        IOptions<DatabaseSettings> eventStoreDatabaseSettings)
+        IOptions<DatabaseSettings> databaseSettings)
     {
-        var mongoClient = new MongoClient(
-            eventStoreDatabaseSettings.Value.ConnectionString);
-
-        var mongoDatabase = mongoClient.GetDatabase(
-            eventStoreDatabaseSettings.Value.DatabaseName);
-
-        _usersCollection = mongoDatabase.GetCollection<User>(
-            eventStoreDatabaseSettings.Value.UserCollectionName);
+        var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
+        var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
+        _usersCollection = mongoDatabase.GetCollection<User>(databaseSettings.Value.UserCollectionName);
     }
 
     public Task<List<User>> GetAsync() =>

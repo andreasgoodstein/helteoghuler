@@ -11,16 +11,11 @@ public class EventService
     private readonly IMongoCollection<IEvent> _eventsCollection;
 
     public EventService(
-        IOptions<DatabaseSettings> eventStoreDatabaseSettings)
+        IOptions<DatabaseSettings> databaseSettings)
     {
-        var mongoClient = new MongoClient(
-            eventStoreDatabaseSettings.Value.ConnectionString);
-
-        var mongoDatabase = mongoClient.GetDatabase(
-            eventStoreDatabaseSettings.Value.DatabaseName);
-
-        _eventsCollection = mongoDatabase.GetCollection<IEvent>(
-            eventStoreDatabaseSettings.Value.EventCollectionName);
+        var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
+        var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
+        _eventsCollection = mongoDatabase.GetCollection<IEvent>(databaseSettings.Value.EventCollectionName);
     }
 
     public Task<List<IEvent>> GetAsync() =>
