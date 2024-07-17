@@ -26,6 +26,17 @@ BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyHeader();
+            policy.AllowAnyMethod();
+            policy.AllowAnyOrigin();
+        });
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 
@@ -60,11 +71,7 @@ var app = builder.Build();
 app.Services.GetService<GameStateLogic>();
 var userLogic = app.Services.GetService<UserLogic>();
 
-app.UseCors(options => options
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowAnyOrigin()
-);
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
