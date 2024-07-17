@@ -60,6 +60,12 @@ var app = builder.Build();
 app.Services.GetService<GameStateLogic>();
 var userLogic = app.Services.GetService<UserLogic>();
 
+app.UseCors(options => options
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowAnyOrigin()
+);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
