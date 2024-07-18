@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using HelteOgHulerServer.Utilities;
 using MongoDB.Bson;
+using HelteOgHulerServer;
 
 var unauthorizedError = HHJsonSerializer.Serialize(new HHError
 {
@@ -111,6 +112,11 @@ app.MapControllers();
 // app.UseResponseCompression();
 
 app.Run();
+
+if (app.Environment.IsProduction())
+{
+    HHSentry.Initialize(builder.Configuration.GetSection("Sentry"));
+}
 
 // TODO: 
 // Evaluate if compression is worth the response delay
