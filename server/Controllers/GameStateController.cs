@@ -16,7 +16,7 @@ public class GameStateController : ControllerBase
     }
 
     [HttpGet(Name = "GetGameState")]
-    public string Get()
+    public ActionResult<string> Get()
     {
         User user = (User)HttpContext.Items["User"]!;
 

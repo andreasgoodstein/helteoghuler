@@ -6,13 +6,17 @@ using System;
 
 public class LoginMenuScript : Control, ISubscriber<GameState>
 {
-	private LineEdit LineEdit;
+	private Button StartAdventure;
+	private LineEdit UserNameInput;
+	private LoadingSpinnerScript LoadingSpinner;
 
 	public override void _Ready()
 	{
-		LineEdit = GetNode<LineEdit>("StartAdventure/UserNameInput");
+		LoadingSpinner = GetNode<LoadingSpinnerScript>("%Loading");
+		StartAdventure = GetNode<Button>("%StartAdventure");
+		UserNameInput = GetNode<LineEdit>("%StartAdventure/UserNameInput");
 
-		GetNode<Button>("StartAdventure").Connect("pressed", this, "StartAdventurePressed");
+		StartAdventure.Connect("pressed", this, "StartAdventurePressed");
 
 		GlobalGameState.Register(this);
 
@@ -20,7 +24,7 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
 		if (!String.IsNullOrWhiteSpace(loginName))
 		{
-			LineEdit.Text = loginName;
+			UserNameInput.Text = loginName;
 		}
 	}
 
@@ -36,14 +40,17 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
 	private void StartAdventurePressed()
 	{
-		if (String.IsNullOrWhiteSpace(LineEdit.Text))
+		if (String.IsNullOrWhiteSpace(UserNameInput.Text))
 		{
 			return;
 		}
 
-		GetNode<Settings>("/root/Settings").LoginName = LineEdit.Text;
+		GetNode<Settings>("/root/Settings").LoginName = UserNameInput.Text;
 
 		GetNode<Server>("/root/Server").RefreshGameState(this);
+
+		StartAdventure.Hide();
+		LoadingSpinner.Show();
 	}
 
 	public void Message(GameState message)

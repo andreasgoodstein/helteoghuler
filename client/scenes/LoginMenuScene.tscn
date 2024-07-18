@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://themes/theme.tres" type="Theme" id=1]
 [ext_resource path="res://scripts/scenes/LoginMenuScript.cs" type="Script" id=2]
+[ext_resource path="res://scenes/components/LoadingSpinner.tscn" type="PackedScene" id=3]
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -38,6 +39,7 @@ align = 1
 valign = 1
 
 [node name="StartAdventure" type="Button" parent="."]
+unique_name_in_owner = true
 anchor_left = 0.5
 anchor_top = 0.611
 anchor_right = 0.5
@@ -59,3 +61,8 @@ margin_bottom = -16.0
 grow_horizontal = 2
 align = 1
 placeholder_text = "USERNAME_PLACEHOLDER"
+
+[node name="Loading" parent="." instance=ExtResource( 3 )]
+unique_name_in_owner = true
+visible = false
+anchor_top = 1.0

@@ -12,7 +12,7 @@ public enum ResponseType
 public class RequestNode
 {
 	const bool USE_PROD = false;
-	const string SERVER_URL = "http://localhost:7111/";
+	const string SERVER_URL = "http://helteoghuler.test:7111/";
 	const string PROD_SERVER_URL = "https://helteoghulerapi.andreasgoodstein.com/";
 	public string[] Headers = ["HHLoginName: "];
 
