@@ -6,9 +6,9 @@ namespace HelteOgHulerShared.Models;
 public class Adventure : IApplicable
 {
     public ulong Gold { get; set; }
-
     public string Status { get; set; }
-
+    public Encounter[] EncounterList { get; set; }
+    public Hero[] Party { get; set; }
     public DateTime RestUntil { get; set; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? id)

@@ -17,3 +17,7 @@ It contains three projects:
 ## shared
 
 [A shared class library](./shared/readme.md)
+
+## todo
+
+expand AdventureLogic.cs with actual game mechanics and a more comprehensive status message (event list)
