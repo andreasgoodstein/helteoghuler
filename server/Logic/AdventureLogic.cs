@@ -40,7 +40,7 @@ public class AdventureLogic
         }
 
         // Success
-        var goldLiberated = (ulong)Random.NextInt64(1, 10);
+        var goldLiberated = (ulong)Random.Next(1, 10);
 
         return new Adventure
         {
