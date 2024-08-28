@@ -1,7 +1,6 @@
-namespace HelteOgHulerSharedTest;
+namespace HelteOgHulerTest;
 
 using HelteOgHulerShared.Models;
-using HelteOgHulerShared.Interfaces;
 
 public class EncounterTest
 {
