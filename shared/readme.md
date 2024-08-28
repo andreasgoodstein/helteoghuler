@@ -1,6 +1,6 @@
 # Helte og Huler Shared
 
-[<-](../readme.md)
+[<- back](../readme.md)
 
 This is the shared class library for "Helte og Huler".
 

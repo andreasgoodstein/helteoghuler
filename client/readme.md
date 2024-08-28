@@ -1,5 +1,5 @@
 # Helte og Huler Client
 
-[<-](../readme.md)
+[<- back](../readme.md)
 
 The "Helte og Huler" client is a Godot 3 C# project, setup to target HTML5.
