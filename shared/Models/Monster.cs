@@ -12,18 +12,16 @@ public class Monster : IEncounterActor
     public MonsterAbility[] AbilityList { get; set; }
     public MonsterType Type { get; set; }
 
-    public Monster()
+    public Monster(Random random)
     {
-        Random random = new Random();
-
         HP = 2;
         Type = random.NextDouble() < .5 ? MonsterType.Bat : MonsterType.Rat;
         Name = $"The {Enum.GetName(typeof(MonsterType), Type)}";
     }
 
-    public void TakeAction(Encounter encounter)
+    public void TakeAction(Encounter encounter, Random random)
     {
-        ActionList[ActionName.Attack].TakeAction(encounter);
+        ActionList[ActionName.Attack].TakeAction(encounter, random);
 
         // TODO: Implement ability selection
         // Random dice = new Random();

@@ -9,7 +9,7 @@ public class HHAction
     public ActionName Name { get; set; }
     public string Outcome { get; set; }
     public ActionTarget Target { get; set; }
-    public Action<Encounter> TakeAction { get; set; }
+    public Action<Encounter, Random> TakeAction { get; set; }
     public double Probability { get; set; }
 }
 
@@ -22,10 +22,8 @@ public static class Actions
         Name = ActionName.Attack,
         Outcome = "ACTOR takes a swing at TARGET.",
         Target = ActionTarget.Enemy,
-        TakeAction = (Encounter encounter) =>
+        TakeAction = (Encounter encounter, Random random) =>
         {
-            Random random = new Random();
-
             IEncounterActor target;
             if (encounter.CurrentlyActing is Hero)
             {
@@ -73,7 +71,7 @@ public static class Actions
     //     Name = ActionName.Dodge,
     //     Outcome = "ACTOR prepares to dodge the next attack.",
     //     Target = ActionTarget.Self,
-    //     TakeAction = (Encounter encounter) =>
+    //     TakeAction = (Encounter encounter, Random random) =>
     //     {
     //         encounter.ActionLog.Add(Dodge.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name));
 

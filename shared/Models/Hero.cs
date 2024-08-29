@@ -12,9 +12,9 @@ public class Hero : IEncounterActor
     public ulong Price { get; set; }
     public Dictionary<ActionName, HHAction> ActionList { get; set; } = Actions.DefaultActions;
 
-    public void TakeAction(Encounter encounter)
+    public void TakeAction(Encounter encounter, Random random)
     {
-        ActionList[ActionName.Attack].TakeAction(encounter);
+        ActionList[ActionName.Attack].TakeAction(encounter, random);
 
         // TODO: Implement ability selection
         // Random dice = new Random();

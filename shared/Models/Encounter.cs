@@ -1,3 +1,5 @@
+#nullable enable
+
 using HelteOgHulerShared.Interfaces;
 using System.Diagnostics;
 
@@ -7,17 +9,33 @@ public class Encounter
 {
     private const ulong MAX_ENCOUNTER_TURNS = 99;
 
-    public Hero[] Party { get; set; }
-    public Monster Monster { get; set; } = new();
-    public ulong Reward { get; set; } = (ulong)new Random().Next(1, 10);
+    public Hero[] Party { get; set; } = [];
+    public Monster Monster { get; set; }
+    public ulong Reward { get; set; }
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
-    public IEncounterActor CurrentlyActing { get; set; }
+    public IEncounterActor? CurrentlyActing { get; set; }
     public EncounterStatus Status { get; set; } = EncounterStatus.Unresolved;
     public List<string> ActionLog { get; set; } = new List<string>();
 
-    public void ResolveEncounter(Hero[] party)
+    public Encounter(Random? random)
+    {
+        if (random == null)
+        {
+            random = new Random();
+        }
+
+        Monster = new(random);
+        Reward = (ulong)random.Next(1, 10);
+    }
+
+    public void ResolveEncounter(Hero[] party, Random? random)
     {
         Debug.Assert(party.Length > 0);
+
+        if (random == null)
+        {
+            random = new Random();
+        }
 
         Party = party;
 
@@ -34,14 +52,14 @@ public class Encounter
         {
             if (encounterTimer <= 0)
             {
-                ActionLog.Add("Your Party became exhausted and returned to your Inn.");
+                ActionLog.Add("Your Party became exhausted and returned to the Inn.");
                 Status = EncounterStatus.Lost;
                 return;
             }
 
             CurrentlyActing = InitiativeOrder.Dequeue();
 
-            CurrentlyActing.TakeAction(this);
+            CurrentlyActing.TakeAction(this, random);
 
             InitiativeOrder.Enqueue(CurrentlyActing);
 
