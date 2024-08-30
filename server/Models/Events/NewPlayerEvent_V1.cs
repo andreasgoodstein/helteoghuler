@@ -18,7 +18,7 @@ public class NewPlayerEvent_V1 : IEvent, IApplicable
 
     public EventType Type => EventType.NewPlayer;
 
-    public Player Player { get; init; }
+    public required Player Player { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? playerId)
     {

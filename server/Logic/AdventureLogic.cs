@@ -1,20 +1,11 @@
 using HelteOgHulerShared.Models;
-using System;
 
 namespace HelteOgHulerServer.Logic;
 
-public class AdventureLogic
+public class AdventureLogic(GameStateLogic gameStateLogic, InnLogic innLogic)
 {
-    const int REST_TIME_SEC = 10;
-
-    private readonly Random Random;
-    private readonly GameStateLogic _gameStateLogic;
-
-    public AdventureLogic(GameStateLogic gameStateLogic)
-    {
-        Random = new Random();
-        _gameStateLogic = gameStateLogic;
-    }
+    private readonly GameStateLogic _gameStateLogic = gameStateLogic;
+    private readonly InnLogic _innLogic = innLogic;
 
     private bool CanPlayerAdventureForth(Guid playerId)
     {
@@ -28,25 +19,8 @@ public class AdventureLogic
             throw new InvalidOperationException("Your party needs more rest, and cannot venture forth yet.");
         }
 
-        // Failure
-        if (Random.NextSingle() < .5)
-        {
-            return new Adventure
-            {
-                Gold = 0,
-                RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC),
-                Status = "Alas... Your party returns empty handed.",
-            };
-        }
+        var party = _innLogic.GatherParty(playerId);
 
-        // Success
-        var goldLiberated = (ulong)Random.Next(1, 10);
-
-        return new Adventure
-        {
-            Gold = goldLiberated,
-            RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC),
-            Status = $"Forsooth! Your party was victorious and liberated {goldLiberated} gold."
-        };
+        return new Adventure(party);
     }
 }

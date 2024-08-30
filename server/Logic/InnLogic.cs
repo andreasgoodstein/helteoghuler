@@ -2,18 +2,12 @@ using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerServer.Logic;
 
-public class InnLogic
+public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
 {
     const ulong STARTING_GOLD = 200;
 
-    private readonly GameStateLogic _gameStateLogic;
-    private readonly HeroLogic _heroLogic;
-
-    public InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
-    {
-        _gameStateLogic = gameStateLogic;
-        _heroLogic = heroLogic;
-    }
+    private readonly GameStateLogic _gameStateLogic = gameStateLogic;
+    private readonly HeroLogic _heroLogic = heroLogic;
 
     public Inn GenerateInn(string innName)
     {
@@ -48,5 +42,14 @@ public class InnLogic
         }
 
         return new Recruitment { HeroId = heroId, PlayerId = playerId };
+    }
+
+    public Hero[] GatherParty(Guid playerId)
+    {
+        var gameState = _gameStateLogic.Get();
+
+        var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+
+        return [.. inn.HeroRoster.Values];
     }
 }

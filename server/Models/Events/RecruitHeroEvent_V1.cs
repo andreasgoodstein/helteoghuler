@@ -18,7 +18,7 @@ public class RecruitHeroEvent_V1 : IEvent, IApplicable
 
     public EventType Type => EventType.RecruitHero;
 
-    public Recruitment Recruitment { get; init; }
+    public required Recruitment Recruitment { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {

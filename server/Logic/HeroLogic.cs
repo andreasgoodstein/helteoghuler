@@ -3,14 +3,9 @@ using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerServer.Logic;
 
-public class HeroLogic
+public class HeroLogic(NameUtility nameUtility)
 {
-    private NameUtility _nameUtility;
-
-    public HeroLogic(NameUtility nameUtility)
-    {
-        _nameUtility = nameUtility;
-    }
+    private readonly NameUtility _nameUtility = nameUtility;
 
     public Hero GenerateHero()
     {

@@ -16,7 +16,7 @@ public class Encounter
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
     public IEncounterActor? CurrentlyActing { get; set; }
     public EncounterStatus Status { get; set; } = EncounterStatus.Unresolved;
-    public List<string> ActionLog { get; set; } = new List<string>();
+    public List<string> ActionLog { get; set; } = [];
 
     public Encounter(Random? random)
     {

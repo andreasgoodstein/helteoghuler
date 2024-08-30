@@ -11,8 +11,6 @@ namespace HelteOgHulerServer.Controllers;
 [Route("[controller]/[action]")]
 public class AdventureController : ControllerBase
 {
-
-
     private readonly AdventureLogic _adventureLogic;
     private readonly GameStateLogic _gameStateLogic;
     private readonly EventService _eventService;

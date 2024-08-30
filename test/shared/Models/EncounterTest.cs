@@ -5,7 +5,9 @@ using Moq;
 
 public class EncounterTest
 {
-    private readonly Hero[] TestParty = [new() { ActionList = Actions.DefaultActions, HP = 2, Name = "TestHero" }];
+    private readonly Hero[] TestParty = [
+        new() { ActionList = Actions.DefaultActions, HP = 2, Name = "TestHero" }
+    ];
 
     [Fact]
     public void Constructor()
@@ -25,7 +27,6 @@ public class EncounterTest
     [Fact]
     public void ResolvesEncounterByExhaustion()
     {
-
         var RandomMock = new Mock<Random>();
         RandomMock.Setup(random => random.NextDouble()).Returns(.01);
 
@@ -39,7 +40,6 @@ public class EncounterTest
     [Fact]
     public void ResolvesEncounterByDefeat()
     {
-
         var RandomMock = new Mock<Random>();
         RandomMock.SetupSequence(random => random.NextDouble())
             .Returns(.05) // Monster Type = Bat
@@ -57,7 +57,6 @@ public class EncounterTest
     [Fact]
     public void ResolvesEncounterByVictory()
     {
-
         var RandomMock = new Mock<Random>();
         // RandomMock.Setup(random => random.Next()).Returns(0);
         RandomMock.SetupSequence(random => random.NextDouble())

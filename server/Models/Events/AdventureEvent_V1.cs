@@ -16,7 +16,7 @@ public class AdventureEvent_V1 : IEvent, IApplicable
     [BsonIgnoreIfDefault]
     public string? Id { get; }
 
-    public Adventure Adventure { get; init; }
+    public required Adventure Adventure { get; init; }
 
     public DateTime CreatedAt { get; init; }
 
