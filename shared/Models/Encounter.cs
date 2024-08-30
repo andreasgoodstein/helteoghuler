@@ -8,6 +8,7 @@ namespace HelteOgHulerShared.Models;
 public class Encounter
 {
     private const ulong MAX_ENCOUNTER_TURNS = 99;
+    private Random Random;
 
     public Hero[] Party { get; set; } = [];
     public Monster Monster { get; set; }
@@ -19,23 +20,15 @@ public class Encounter
 
     public Encounter(Random? random)
     {
-        if (random == null)
-        {
-            random = new Random();
-        }
+        Random = random ?? new Random();
 
-        Monster = new(random);
-        Reward = (ulong)random.Next(1, 10);
+        Monster = new(Random);
+        Reward = (ulong)Random.Next(1, 10);
     }
 
-    public void ResolveEncounter(Hero[] party, Random? random)
+    public void ResolveEncounter(Hero[] party)
     {
         Debug.Assert(party.Length > 0);
-
-        if (random == null)
-        {
-            random = new Random();
-        }
 
         Party = party;
 
@@ -54,12 +47,12 @@ public class Encounter
             {
                 ActionLog.Add("Your Party became exhausted and returned to the Inn.");
                 Status = EncounterStatus.Lost;
-                return;
+                break;
             }
 
             CurrentlyActing = InitiativeOrder.Dequeue();
 
-            CurrentlyActing.TakeAction(this, random);
+            CurrentlyActing.TakeAction(this, Random);
 
             InitiativeOrder.Enqueue(CurrentlyActing);
 

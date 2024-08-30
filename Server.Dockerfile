@@ -7,12 +7,12 @@ COPY ./server ./
 COPY ./shared ../shared
 
 # Restore as distinct layers
-RUN dotnet restore --runtime alpine-x64
+RUN dotnet restore --runtime linux-musl-x64
 
 # Build and publish a release
 RUN dotnet publish -c Release -o out \
     --no-restore \
-    --runtime alpine-x64 \
+    --runtime linux-musl-x64 \
     --self-contained true \
     /p:PublishTrimmed=true \
     /p:PublishSingleFile=true
