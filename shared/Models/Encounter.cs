@@ -2,6 +2,7 @@
 
 using HelteOgHulerShared.Interfaces;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace HelteOgHulerShared.Models;
 
@@ -10,10 +11,13 @@ public class Encounter
     private const ulong MAX_ENCOUNTER_TURNS = 99;
     private Random Random;
 
+    [IgnoreDataMember]
     public Hero[] Party { get; set; } = [];
     public Monster Monster { get; set; }
     public ulong Reward { get; set; }
+    [IgnoreDataMember]
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
+    [IgnoreDataMember]
     public IEncounterActor? CurrentlyActing { get; set; }
     public EncounterStatus Status { get; set; } = EncounterStatus.Unresolved;
     public List<string> ActionLog { get; set; } = [];

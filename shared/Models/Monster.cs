@@ -1,6 +1,5 @@
 using HelteOgHulerShared.Interfaces;
-using System.Collections.Generic;
-using System;
+using System.Runtime.Serialization;
 
 namespace HelteOgHulerShared.Models;
 
@@ -8,6 +7,7 @@ public class Monster : IEncounterActor
 {
     public ulong HP { get; set; }
     public string Name { get; set; }
+    [IgnoreDataMember]
     public Dictionary<ActionName, HHAction> ActionList { get; set; } = Actions.DefaultActions;
     public MonsterAbility[] AbilityList { get; set; }
     public MonsterType Type { get; set; }

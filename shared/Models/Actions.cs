@@ -1,6 +1,9 @@
 using HelteOgHulerShared.Interfaces;
-using System.Collections.Generic;
-using System;
+using System.Runtime.Serialization;
+
+#if (NET6_0_OR_GREATER)
+using System.Text.Json.Serialization;
+#endif
 
 namespace HelteOgHulerShared.Models;
 
@@ -9,6 +12,10 @@ public class HHAction
     public ActionName Name { get; set; }
     public string Outcome { get; set; }
     public ActionTarget Target { get; set; }
+#if (NET6_0_OR_GREATER)
+    [JsonIgnore]
+#endif
+    [IgnoreDataMember]
     public Action<Encounter, Random> TakeAction { get; set; }
     public double Probability { get; set; }
 }

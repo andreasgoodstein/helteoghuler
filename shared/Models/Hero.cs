@@ -1,6 +1,4 @@
 using HelteOgHulerShared.Interfaces;
-using System.Collections.Generic;
-using System;
 
 namespace HelteOgHulerShared.Models;
 
