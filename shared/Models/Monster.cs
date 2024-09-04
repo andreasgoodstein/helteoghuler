@@ -1,5 +1,4 @@
 using HelteOgHulerShared.Interfaces;
-using System.Runtime.Serialization;
 
 namespace HelteOgHulerShared.Models;
 
@@ -7,21 +6,13 @@ public class Monster : IEncounterActor
 {
     public ulong HP { get; set; }
     public string Name { get; set; }
-    [IgnoreDataMember]
-    public Dictionary<ActionName, HHAction> ActionList { get; set; } = Actions.DefaultActions;
     public MonsterAbility[] AbilityList { get; set; }
     public MonsterType Type { get; set; }
-
-    public Monster(Random random)
-    {
-        HP = 2;
-        Type = random.NextDouble() < .5 ? MonsterType.Bat : MonsterType.Rat;
-        Name = $"The {Enum.GetName(typeof(MonsterType), Type)}";
-    }
+    public List<ActionName> ActionList { get; set; } = [.. Actions.DefaultActions.Keys];
 
     public void TakeAction(Encounter encounter, Random random)
     {
-        ActionList[ActionName.Attack].TakeAction(encounter, random);
+        Actions.DefaultActions[ActionList.First()].TakeAction(encounter, random);
 
         // TODO: Implement ability selection
         // Random dice = new Random();

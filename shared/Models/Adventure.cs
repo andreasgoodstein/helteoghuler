@@ -12,15 +12,20 @@ public class Adventure : IApplicable
     public Hero[] Party { get; set; }
     public DateTime RestUntil { get; set; }
 
-    public Adventure(Hero[] party, int maxEncounters = 1)
+    public void ResolveAdventure(Hero[] party, int maxEncounters = 1)
     {
         Party = party;
         Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Won);
 
+        foreach (Hero hero in Party)
+        {
+            hero.HP = hero.MaxHP;
+        }
+
         for (int n = 0; n < maxEncounters; n += 1)
         {
-            Encounter encounter = new(null);
-            encounter.ResolveEncounter(Party);
+            Encounter encounter = new();
+            encounter.ResolveEncounter(Party, null);
 
             EncounterList.Add(encounter);
 

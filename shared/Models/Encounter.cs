@@ -9,11 +9,10 @@ namespace HelteOgHulerShared.Models;
 public class Encounter
 {
     private const ulong MAX_ENCOUNTER_TURNS = 99;
-    private Random Random;
 
     [IgnoreDataMember]
     public Hero[] Party { get; set; } = [];
-    public Monster Monster { get; set; }
+    public Monster? Monster { get; set; }
     public ulong Reward { get; set; }
     [IgnoreDataMember]
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
@@ -22,19 +21,16 @@ public class Encounter
     public EncounterStatus Status { get; set; } = EncounterStatus.Unresolved;
     public List<string> ActionLog { get; set; } = [];
 
-    public Encounter(Random? random)
+    public void ResolveEncounter(Hero[] party, Random? random)
     {
-        Random = random ?? new Random();
+        Debug.Assert(party.Length > 0, "IllegalState: Cannot adventure without a Party.");
 
-        Monster = new(Random);
-        Reward = (ulong)Random.Next(1, 10);
-    }
-
-    public void ResolveEncounter(Hero[] party)
-    {
-        Debug.Assert(party.Length > 0);
+        random ??= new Random();
 
         Party = party;
+        Reward = (ulong)random.Next(1, 10);
+
+        GenerateMonster(random);
 
         InitiativeOrder.Enqueue(Monster);
 
@@ -56,12 +52,22 @@ public class Encounter
 
             CurrentlyActing = InitiativeOrder.Dequeue();
 
-            CurrentlyActing.TakeAction(this, Random);
+            CurrentlyActing.TakeAction(this, random);
 
             InitiativeOrder.Enqueue(CurrentlyActing);
 
             encounterTimer -= 1;
         }
+    }
+
+    private void GenerateMonster(Random random)
+    {
+        Monster = new()
+        {
+            HP = 2,
+            Type = random.NextDouble() < .5 ? MonsterType.Bat : MonsterType.Rat
+        };
+        Monster.Name = $"The {Enum.GetName(typeof(MonsterType), Monster.Type)}";
     }
 }
 

@@ -21,6 +21,10 @@ public class AdventureLogic(GameStateLogic gameStateLogic, InnLogic innLogic)
 
         var party = _innLogic.GatherParty(playerId);
 
-        return new Adventure(party);
+        Adventure adventure = new();
+
+        adventure.ResolveAdventure(party);
+
+        return adventure;
     }
 }

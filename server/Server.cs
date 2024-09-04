@@ -1,13 +1,13 @@
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
+using HelteOgHulerServer.Utilities;
+using HelteOgHulerServer;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
-using HelteOgHulerServer.Utilities;
 using MongoDB.Bson;
-using HelteOgHulerServer;
 
 var unauthorizedError = HHJsonSerializer.Serialize(new HHError
 {
@@ -17,10 +17,13 @@ var unauthorizedError = HHJsonSerializer.Serialize(new HHError
 // Allow all mongodb serialization
 BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+BsonSerializer.RegisterSerializer(new EnumSerializer<ActionName>(BsonType.String));
 BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
 
 // Register mongodb event types
 BsonClassMap.RegisterClassMap<Inn>();
+BsonClassMap.RegisterClassMap<Hero>();
+BsonClassMap.RegisterClassMap<Monster>();
 BsonClassMap.RegisterClassMap<AdventureEvent_V1>();
 BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
 BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();

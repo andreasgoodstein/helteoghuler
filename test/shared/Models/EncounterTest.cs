@@ -30,8 +30,8 @@ public class EncounterTest
         var RandomMock = new Mock<Random>();
         RandomMock.Setup(random => random.NextDouble()).Returns(.01);
 
-        Encounter encounter = new(RandomMock.Object);
-        encounter.ResolveEncounter(TestParty);
+        Encounter encounter = new();
+        encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
         Assert.Equal(EncounterStatus.Lost, encounter.Status);
         Assert.Equal("Your Party became exhausted and returned to the Inn.", encounter.ActionLog.Last());
@@ -47,8 +47,8 @@ public class EncounterTest
             .Returns(.01) // Hero Attack
             .Returns(.99);
 
-        Encounter encounter = new(RandomMock.Object);
-        encounter.ResolveEncounter(TestParty);
+        Encounter encounter = new();
+        encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
         Assert.Equal(EncounterStatus.Lost, encounter.Status);
         Assert.Equal("TestHero is knocked unconscious.", encounter.ActionLog.Last());
@@ -66,8 +66,8 @@ public class EncounterTest
             .Returns(.49)
             .Returns(.51);
 
-        Encounter encounter = new(RandomMock.Object);
-        encounter.ResolveEncounter(TestParty);
+        Encounter encounter = new();
+        encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
         Assert.Equal(EncounterStatus.Won, encounter.Status);
         Assert.Equal("The Bat is knocked unconscious.", encounter.ActionLog.Last());

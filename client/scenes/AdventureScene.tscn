@@ -13,15 +13,18 @@ script = ExtResource( 2 )
 anchor_bottom = 0.0
 margin_bottom = 64.0
 
-[node name="Message" type="Label" parent="."]
-unique_name_in_owner = true
-anchor_top = 0.111
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_top = 0.139
 anchor_right = 1.0
-anchor_bottom = 0.931
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -8.0
+anchor_bottom = 0.91
+scroll_horizontal_enabled = false
+
+[node name="Message" type="Label" parent="ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 1280.0
+margin_bottom = 444.096
+size_flags_horizontal = 3
+size_flags_vertical = 3
 align = 1
 valign = 1
 

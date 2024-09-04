@@ -2,6 +2,7 @@ using HelteOgHulerShared.Interfaces;
 using System.Runtime.Serialization;
 
 #if (NET6_0_OR_GREATER)
+using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
 #endif
 
@@ -12,22 +13,25 @@ public class HHAction
     public ActionName Name { get; set; }
     public string Outcome { get; set; }
     public ActionTarget Target { get; set; }
+    public double Probability { get; set; }
+
+
 #if (NET6_0_OR_GREATER)
+    [BsonIgnore]
     [JsonIgnore]
 #endif
     [IgnoreDataMember]
     public Action<Encounter, Random> TakeAction { get; set; }
-    public double Probability { get; set; }
 }
 
 
 public static class Actions
 {
-    private static HHAction Attack = new HHAction()
+    private static readonly HHAction Attack = new()
     {
         Probability = .5,
         Name = ActionName.Attack,
-        Outcome = "ACTOR takes a swing at TARGET.",
+        Outcome = "ACTOR takes a swing at TARGET. (Success: 50)",
         Target = ActionTarget.Enemy,
         TakeAction = (Encounter encounter, Random random) =>
         {
@@ -42,7 +46,7 @@ public static class Actions
             }
 
             double roll = random.NextDouble();
-            bool doesAttackHit = roll > Attack.Probability;
+            bool doesAttackHit = roll.CompareTo(Attack.Probability) >= 0;
 
             encounter.ActionLog.Add(Attack.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name).Replace("TARGET", target.Name));
 
@@ -73,7 +77,7 @@ public static class Actions
         }
     };
 
-    // private static HHAction Dodge = new HHAction()
+    // private static readonly HHAction Dodge = new()
     // {
     //     Name = ActionName.Dodge,
     //     Outcome = "ACTOR prepares to dodge the next attack.",
@@ -86,8 +90,7 @@ public static class Actions
     //     }
     // };
 
-
-    public static Dictionary<ActionName, HHAction> DefaultActions = new Dictionary<ActionName, HHAction>()
+    public static readonly Dictionary<ActionName, HHAction> DefaultActions = new()
     {
         {ActionName.Attack, Attack},
         // {ActionName.Dodge, Dodge},
@@ -97,7 +100,7 @@ public static class Actions
 public enum ActionName
 {
     Attack = 0,
-    // Dodge = 1,
+    Dodge = 1,
 }
 
 public enum ActionTarget

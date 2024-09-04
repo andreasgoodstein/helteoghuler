@@ -1,9 +1,9 @@
 using Godot;
 using HelteOgHulerClient.Interfaces;
+using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 using System;
-using HelteOgHulerClient.Utilities;
 
 public class StartAdventureScript : Button, ISubscriber<GameState>
 {
@@ -39,9 +39,26 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 	{
 		StartAdventure.Disabled = true;
 
-		var adventureStatus = await GetNode<Server>("/root/Server").StartAdventure(this);
+		var adventure = await GetNode<Server>("/root/Server").StartAdventure(this);
 
-		GetNode<Label>("%Message").Text = adventureStatus;
+		GetNode<Label>("%Message").Text = GetAdventureText(adventure);
+	}
+
+	private string GetAdventureText(Adventure adventure)
+	{
+		var result = $"The adventure was {adventure.Status}!\n\n";
+
+		result += $"The Party returned with {adventure.Gold} gold.\n\n";
+
+		foreach (var encounter in adventure.EncounterList)
+		{
+			foreach (var action in encounter.ActionLog)
+			{
+				result += $"{action}\n";
+			}
+		}
+
+		return result;
 	}
 
 	private void SetupRestedTimer(Player player)
