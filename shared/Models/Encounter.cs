@@ -49,7 +49,7 @@ public class Encounter
 
         GenerateMonster(random);
 
-        InitiativeOrder.Enqueue(Monster);
+        InitiativeOrder.Enqueue(Monster!);
 
         foreach (Hero hero in Party)
         {
