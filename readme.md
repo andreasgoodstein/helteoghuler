@@ -24,4 +24,4 @@ It contains the following projects:
 
 ## todo
 
-expand AdventureLogic.cs with actual game mechanics and a more comprehensive status message (event list)
+Enable abilities, crits, and dodges.

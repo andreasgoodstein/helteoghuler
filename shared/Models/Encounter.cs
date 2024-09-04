@@ -4,18 +4,35 @@ using HelteOgHulerShared.Interfaces;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
+#if (NET6_0_OR_GREATER)
+using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
+#endif
+
 namespace HelteOgHulerShared.Models;
 
 public class Encounter
 {
     private const ulong MAX_ENCOUNTER_TURNS = 99;
 
+#if (NET6_0_OR_GREATER)
+    [BsonIgnore]
+    [JsonIgnore]
+#endif
     [IgnoreDataMember]
     public Hero[] Party { get; set; } = [];
     public Monster? Monster { get; set; }
     public ulong Reward { get; set; }
+#if (NET6_0_OR_GREATER)
+    [BsonIgnore]
+    [JsonIgnore]
+#endif
     [IgnoreDataMember]
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
+#if (NET6_0_OR_GREATER)
+    [BsonIgnore]
+    [JsonIgnore]
+#endif
     [IgnoreDataMember]
     public IEncounterActor? CurrentlyActing { get; set; }
     public EncounterStatus Status { get; set; } = EncounterStatus.Unresolved;
@@ -53,6 +70,7 @@ public class Encounter
             CurrentlyActing = InitiativeOrder.Dequeue();
 
             CurrentlyActing.TakeAction(this, random);
+            ActionLog.Add("");
 
             InitiativeOrder.Enqueue(CurrentlyActing);
 
