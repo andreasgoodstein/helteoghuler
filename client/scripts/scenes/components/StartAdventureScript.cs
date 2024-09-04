@@ -46,12 +46,14 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 	private string GetAdventureText(Adventure adventure)
 	{
-		var result = $"The adventure was {adventure.Status}!\n\n";
+		var result = $"The adventure was {adventure.Status}!\n";
 
 		result += $"The Party returned with {adventure.Gold} gold.\n\n";
 
 		foreach (var encounter in adventure.EncounterList)
 		{
+			result += $"Your Party encountered {encounter.Monster.Name}\n\n";
+
 			foreach (var action in encounter.ActionLog)
 			{
 				result += $"{action}\n";

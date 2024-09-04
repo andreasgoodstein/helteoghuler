@@ -14,6 +14,7 @@ public class HHAction
     public string Outcome { get; set; }
     public ActionTarget Target { get; set; }
     public double Probability { get; set; }
+    public double CritProbability { get; set; }
 
 
 #if (NET6_0_OR_GREATER)
@@ -30,8 +31,9 @@ public static class Actions
     private static readonly HHAction Attack = new()
     {
         Probability = .5,
+        CritProbability = .95,
         Name = ActionName.Attack,
-        Outcome = "ACTOR takes a swing at TARGET. (Success: 50)",
+        Outcome = "ACTOR takes a swing at TARGET. (Success: 50 | Crit: 95)",
         Target = ActionTarget.Enemy,
         TakeAction = (Encounter encounter, Random random) =>
         {
@@ -45,10 +47,11 @@ public static class Actions
                 target = encounter.Party[random.Next(0, encounter.Party.Length)];
             }
 
+            encounter.ActionLog.Add(Attack.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name).Replace("TARGET", target.Name));
+
             double roll = random.NextDouble();
             bool doesAttackHit = roll.CompareTo(Attack.Probability) >= 0;
-
-            encounter.ActionLog.Add(Attack.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name).Replace("TARGET", target.Name));
+            bool doesAttackCrit = roll.CompareTo(Attack.CritProbability) >= 0;
 
             if (!doesAttackHit)
             {
@@ -56,9 +59,16 @@ public static class Actions
                 return;
             }
 
-            encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and hit! Doing 1 damage.");
-
-            target.HP -= 1;
+            if (doesAttackCrit)
+            {
+                encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and critically hit! Doing 2 damage.");
+                target.HP -= 2;
+            }
+            else
+            {
+                encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and hit! Doing 1 damage.");
+                target.HP -= 1;
+            }
 
             if (target.HP <= 0)
             {
