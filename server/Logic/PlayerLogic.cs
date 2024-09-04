@@ -2,14 +2,9 @@ using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
 
-public class PlayerLogic
+public class PlayerLogic(InnLogic innLogic)
 {
-    private readonly InnLogic _innLogic;
-
-    public PlayerLogic(InnLogic innLogic)
-    {
-        _innLogic = innLogic;
-    }
+    private readonly InnLogic _innLogic = innLogic;
 
     public Player CreatePlayer(GameState gameState, Guid playerId, string innName, string playerName)
     {

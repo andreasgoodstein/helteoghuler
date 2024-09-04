@@ -4,7 +4,7 @@ Helte og Huler is a small hero management video game.
 
 This is primarily a hobby project for me to learn more about video game development and Godot. As well as re-familiarize myself with C# and .NET
 
-It contains three projects:
+It contains the following projects:
 
 ## client
 
@@ -17,3 +17,11 @@ It contains three projects:
 ## shared
 
 [A shared class library](./shared/readme.md)
+
+## test
+
+[The test library for this project](./test/readme.md)
+
+## todo
+
+expand AdventureLogic.cs with actual game mechanics and a more comprehensive status message (event list)

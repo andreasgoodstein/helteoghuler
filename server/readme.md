@@ -1,6 +1,6 @@
 # Helte og Huler Server
 
-[<-](../readme.md)
+[<- back](../readme.md)
 
 The server for "Helte og Huler" is implemented as a simple REST API using ASP.NET MVC.
 

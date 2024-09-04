@@ -1,8 +1,6 @@
-using HelteOgHulerServer.Interfaces;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
-using HelteOgHulerShared.Utilities;
 using System.Text.Json;
 
 namespace HelteOgHulerServer.Logic;
@@ -10,18 +8,18 @@ namespace HelteOgHulerServer.Logic;
 public class GameStateLogic
 {
 
-    private GameState _globalGameState = new GameState
+    private GameState _globalGameState = new()
     {
         CurrentTime = DateTime.UtcNow,
-        PrivatePlayerDict = new Dictionary<Guid, Player>(),
-        PublicPlayerDict = new Dictionary<Guid, PlayerPublic>(),
+        PrivatePlayerDict = [],
+        PublicPlayerDict = [],
         World = new World
         {
             Name = "East Island"
         }
     };
 
-    private EventService _eventService;
+    private readonly EventService _eventService;
 
     public GameStateLogic(EventService eventService)
     {

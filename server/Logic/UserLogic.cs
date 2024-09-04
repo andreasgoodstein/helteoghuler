@@ -1,6 +1,5 @@
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Services;
-using HelteOgHulerShared.Models;
 
 public class UserLogic
 {
@@ -9,7 +8,7 @@ public class UserLogic
     private readonly PlayerLogic _playerLogic;
     private readonly UserService _userService;
 
-    private Dictionary<string, User> userDictionary;
+    private readonly Dictionary<string, User> userDictionary;
 
     public UserLogic(EventService eventService, GameStateLogic gameStateLogic, PlayerLogic playerLogic, UserService userService)
     {

@@ -1,6 +1,7 @@
-using System.Threading.Tasks;
 using Godot;
 using HelteOgHulerClient.Services;
+using HelteOgHulerShared.Models;
+using System.Threading.Tasks;
 
 namespace HelteOgHulerClient;
 
@@ -34,7 +35,7 @@ public class Server : Node
 		return _gameStateService.RefreshGameState(httpRequestParent);
 	}
 
-	public Task<string> StartAdventure(Node httpRequestParent)
+	public Task<Adventure> StartAdventure(Node httpRequestParent)
 	{
 		return _adventureService.StartAdventure(httpRequestParent);
 	}
