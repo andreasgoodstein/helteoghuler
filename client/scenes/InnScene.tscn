@@ -32,6 +32,7 @@ margin_bottom = 496.0
 margin_right = 1264.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 0, 32 )
+custom_constants/separation = 0
 
 [node name="GoldLabel" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
 margin_right = 56.0
@@ -41,10 +42,19 @@ text = "GOLD"
 align = 1
 valign = 1
 
+[node name="Separator" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
+margin_left = 56.0
+margin_right = 66.0
+margin_bottom = 32.0
+size_flags_vertical = 1
+text = ":"
+align = 1
+valign = 1
+
 [node name="Gold" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
 unique_name_in_owner = true
-margin_left = 64.0
-margin_right = 64.0
+margin_left = 66.0
+margin_right = 66.0
 margin_bottom = 32.0
 size_flags_vertical = 1
 align = 1
@@ -59,7 +69,6 @@ size_flags_vertical = 3
 [node name="LeftMenu" type="VBoxContainer" parent="Margins/VBoxContainer/SubMenuContainer"]
 margin_right = 294.0
 margin_bottom = 448.0
-size_flags_horizontal = 3
 custom_constants/separation = 8
 
 [node name="ButtonViewHeroes" type="Button" parent="Margins/VBoxContainer/SubMenuContainer/LeftMenu"]
@@ -79,30 +88,26 @@ rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_RECRUIT_HEROES"
 icon_align = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="Margins/VBoxContainer/SubMenuContainer"]
+[node name="HeroRoster" parent="Margins/VBoxContainer/SubMenuContainer" instance=ExtResource( 2 )]
+unique_name_in_owner = true
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_left = 302.0
 margin_right = 1264.0
 margin_bottom = 448.0
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="HeroRoster" parent="Margins/VBoxContainer/SubMenuContainer/MarginContainer" instance=ExtResource( 2 )]
-unique_name_in_owner = true
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = 954.0
-margin_bottom = 440.0
+size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="HeroRecruitment" parent="Margins/VBoxContainer/SubMenuContainer/MarginContainer" instance=ExtResource( 4 )]
+[node name="HeroRecruitment" parent="Margins/VBoxContainer/SubMenuContainer" instance=ExtResource( 4 )]
 unique_name_in_owner = true
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 8.0
+margin_left = 326.0
 margin_top = 8.0
-margin_right = 954.0
+margin_right = 1256.0
 margin_bottom = 440.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
