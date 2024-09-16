@@ -12,7 +12,7 @@ public class Monster : IEncounterActor
 
     public void TakeAction(Encounter encounter, Random random)
     {
-        Actions.DefaultActions[ActionList.First()].TakeAction(encounter, random);
+        Actions.Attack.TakeAction(encounter, [], random);
 
         // TODO: Implement ability selection
         // Random dice = new Random();

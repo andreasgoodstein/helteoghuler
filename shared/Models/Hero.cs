@@ -22,9 +22,19 @@ public class Hero : IEncounterActor
     public ulong Price { get; set; }
     public List<ActionName> ActionList { get; set; } = [.. Actions.DefaultActions.Keys];
 
+#if (NET6_0_OR_GREATER)
+    [BsonIgnore]
+    [JsonIgnore]
+#endif
+    [IgnoreDataMember]
+    private readonly Dictionary<AttackModifier, int> AttackModifiers = new() {
+            { AttackModifier.ToCrit, -5 },
+            { AttackModifier.ToHit, -5 }
+        };
+
     public void TakeAction(Encounter encounter, Random random)
     {
-        Actions.DefaultActions[ActionList.First()].TakeAction(encounter, random);
+        Actions.Attack.TakeAction(encounter, AttackModifiers, random);
 
         // TODO: Implement ability selection
         // Random dice = new Random();

@@ -38,16 +38,11 @@ public class EncounterTest
     public void ResolvesEncounterByDefeat()
     {
         var RandomMock = new Mock<Random>();
-        RandomMock.SetupSequence(random => random.Next(1, 100))
-            .Returns(50) // Monster Type = Bat
-            .Returns(94) // Monster Attack
-            .Returns(1) // Hero Attack
-            .Returns(94);
+        RandomMock.Setup(random => random.Next(1, 100)).Returns(50);
 
         Encounter encounter = new();
         encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
-        // Assert.Equal((ulong)5, encounter.Reward);
         Assert.Equal(MonsterType.Bat, encounter.Monster!.Type); Assert.Equal(EncounterStatus.Lost, encounter.Status);
         Assert.Equal("TestHero is knocked unconscious.", encounter.ActionLog.Last());
     }
@@ -56,18 +51,14 @@ public class EncounterTest
     public void ResolvesEncounterByVictory()
     {
         var RandomMock = new Mock<Random>();
-        // RandomMock.Setup(random => random.Next()).Returns(0);
         RandomMock.SetupSequence(random => random.Next(1, 100))
             .Returns(51) // Monster Type = Rat
             .Returns(49) // Monster Attack
-            .Returns(51) // Hero Attack
-            .Returns(49)
-            .Returns(51);
+            .Returns(90); // Hero Crit Attack
 
         Encounter encounter = new();
         encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
-        // Assert.Equal((ulong)5, encounter.Reward);
         Assert.Equal(MonsterType.Rat, encounter.Monster!.Type);
         Assert.Equal(EncounterStatus.Won, encounter.Status);
         Assert.Equal("The Rat is knocked unconscious.", encounter.ActionLog.Last());
