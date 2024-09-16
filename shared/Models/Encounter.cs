@@ -70,11 +70,15 @@ public class Encounter
             CurrentlyActing = InitiativeOrder.Dequeue();
 
             CurrentlyActing.TakeAction(this, random);
-            ActionLog.Add("");
 
             InitiativeOrder.Enqueue(CurrentlyActing);
 
             encounterTimer -= 1;
+
+            if (Status == EncounterStatus.Unresolved)
+            {
+                ActionLog.Add("");
+            }
         }
     }
 
@@ -83,7 +87,7 @@ public class Encounter
         Monster = new()
         {
             HP = 2,
-            Type = random.NextDouble() < .5 ? MonsterType.Bat : MonsterType.Rat
+            Type = random.Next(1, 100) <= 50 ? MonsterType.Bat : MonsterType.Rat
         };
         Monster.Name = $"The {Enum.GetName(typeof(MonsterType), Monster.Type)}";
     }

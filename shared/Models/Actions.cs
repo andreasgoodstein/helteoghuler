@@ -13,8 +13,8 @@ public class HHAction
     public ActionName Name { get; set; }
     public string Outcome { get; set; }
     public ActionTarget Target { get; set; }
-    public double Probability { get; set; }
-    public double CritProbability { get; set; }
+    public int Probability { get; set; }
+    public int CritProbability { get; set; }
 
 
 #if (NET6_0_OR_GREATER)
@@ -30,10 +30,10 @@ public static class Actions
 {
     private static readonly HHAction Attack = new()
     {
-        Probability = .5,
-        CritProbability = .95,
+        Probability = 50,
+        CritProbability = 95,
         Name = ActionName.Attack,
-        Outcome = "ACTOR takes a swing at TARGET. (Success: 50 | Crit: 95)",
+        Outcome = "ACTOR takes a swing at TARGET. (Success: SUCCESS | Crit: CRIT)",
         Target = ActionTarget.Enemy,
         TakeAction = (Encounter encounter, Random random) =>
         {
@@ -47,26 +47,31 @@ public static class Actions
                 target = encounter.Party[random.Next(0, encounter.Party.Length)];
             }
 
-            encounter.ActionLog.Add(Attack.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name).Replace("TARGET", target.Name));
+            encounter.ActionLog.Add(Attack.Outcome
+                .Replace("ACTOR", encounter.CurrentlyActing.Name)
+                .Replace("TARGET", target.Name)
+                .Replace("SUCCESS", Attack.Probability.ToString())
+                .Replace("CRIT", Attack.CritProbability.ToString())
+            );
 
-            double roll = random.NextDouble();
-            bool doesAttackHit = roll.CompareTo(Attack.Probability) >= 0;
-            bool doesAttackCrit = roll.CompareTo(Attack.CritProbability) >= 0;
+            int roll = random.Next(1, 100);
+            bool doesAttackCrit = roll >= Attack.CritProbability;
+            bool doesAttackHit = doesAttackCrit || roll >= Attack.Probability;
 
             if (!doesAttackHit)
             {
-                encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and miss!");
+                encounter.ActionLog.Add($"They roll a {roll} and miss!");
                 return;
             }
 
             if (doesAttackCrit)
             {
-                encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and critically hit! Doing 2 damage.");
+                encounter.ActionLog.Add($"They roll a {roll} and critically hit! Doing 2 damage.");
                 target.HP -= 2;
             }
             else
             {
-                encounter.ActionLog.Add($"They roll a {Math.Round(roll * 100)} and hit! Doing 1 damage.");
+                encounter.ActionLog.Add($"They roll a {roll} and hit! Doing 1 damage.");
                 target.HP -= 1;
             }
 

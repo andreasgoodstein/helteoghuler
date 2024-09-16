@@ -6,13 +6,14 @@ using HelteOgHulerShared.Models;
 public class AdventureTest
 {
     private readonly Hero[] TestParty = [
-        new() { ActionList = Actions.DefaultActions, HP = 2, Name = "TestHero" }
+        new() { ActionList = [.. Actions.DefaultActions.Keys], HP = 2, Name = "TestHero" }
     ];
 
     [Fact]
     public void Constructor()
     {
-        Adventure adventure = new(TestParty);
+        Adventure adventure = new();
+        adventure.ResolveAdventure(TestParty);
 
         Assert.Single(adventure.EncounterList);
 
