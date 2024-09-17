@@ -38,8 +38,11 @@ public static partial class Actions
                 target = encounter.Party[random.Next(0, encounter.Party.Length)];
             }
 
-            var toCrit = Math.Clamp(Attack.Probabilities[AttackModifier.ToCrit] + modifiers.GetValueOrDefault(AttackModifier.ToCrit, 0), 1, 100);
-            var toHit = Math.Clamp(Attack.Probabilities[AttackModifier.ToHit] + modifiers.GetValueOrDefault(AttackModifier.ToHit, 0), 1, 100);
+            modifiers.TryGetValue(AttackModifier.ToCrit, out int toCritModifier);
+            modifiers.TryGetValue(AttackModifier.ToHit, out int toHitModifier);
+
+            var toCrit = Math.Min(Math.Max(Attack.Probabilities[AttackModifier.ToCrit] + toCritModifier, 1), 100);
+            var toHit = Math.Min(Math.Max(Attack.Probabilities[AttackModifier.ToHit] + toHitModifier, 1), 100);
 
             encounter.ActionLog.Add(Attack.Outcome
                 .Replace("ACTOR", encounter.CurrentlyActing.Name)
