@@ -1,10 +1,22 @@
 using HelteOgHulerShared.Interfaces;
+using System.Runtime.Serialization;
+
+#if (NET6_0_OR_GREATER)
+using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
+#endif
 
 namespace HelteOgHulerShared.Models;
 
 public class Monster : IEncounterActor
 {
-    public ulong HP { get; set; }
+#if (NET6_0_OR_GREATER)
+    [BsonIgnore]
+    [JsonIgnore]
+#endif
+    [IgnoreDataMember]
+    public Guid Id => new();
+    public int HP { get; set; }
     public string Name { get; set; }
     public MonsterAbility[] AbilityList { get; set; }
     public MonsterType Type { get; set; }

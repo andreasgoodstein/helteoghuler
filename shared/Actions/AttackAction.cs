@@ -2,58 +2,34 @@ using HelteOgHulerShared.Interfaces;
 
 namespace HelteOgHulerShared.Models;
 
-public enum AttackModifier
-{
-    ToHit = 0,
-    ToCrit = 1
-}
-
-public sealed class AttackAction : HHAction
-{
-    public readonly Dictionary<AttackModifier, int> Probabilities = new() {
-        { AttackModifier.ToCrit, 95 } ,
-        { AttackModifier.ToHit, 50 },
-    };
-
-    public Action<Encounter, Dictionary<AttackModifier, int>, Random> TakeAction { get; set; }
-}
+using AttackModifierDict = Dictionary<AttackModifier, int>;
 
 public static partial class Actions
 {
+    private const int MIN_ATTACK_DAMAGE = 1;
+
     public static readonly AttackAction Attack = new()
     {
         Name = ActionName.Attack,
         Target = ActionTarget.Enemy,
         Outcome = "ACTOR takes a swing at TARGET. (Success: SUCCESS | Crit: CRIT)",
 
-        TakeAction = (Encounter encounter, Dictionary<AttackModifier, int> modifiers, Random random) =>
+        TakeAction = (Encounter encounter, AttackModifierDict modifiers, Random random) =>
         {
-            IEncounterActor target;
-            if (encounter.CurrentlyActing is Hero)
-            {
-                target = encounter.Monster;
-            }
-            else
-            {
-                target = encounter.Party[random.Next(0, encounter.Party.Length)];
-            }
+            IEncounterActor target = GetTarget(encounter, Attack.Target, random);
 
-            modifiers.TryGetValue(AttackModifier.ToCrit, out int toCritModifier);
-            modifiers.TryGetValue(AttackModifier.ToHit, out int toHitModifier);
-
-            var toCrit = Math.Min(Math.Max(Attack.Probabilities[AttackModifier.ToCrit] + toCritModifier, 1), 100);
-            var toHit = Math.Min(Math.Max(Attack.Probabilities[AttackModifier.ToHit] + toHitModifier, 1), 100);
+            var appliedModifiers = ApplyAttackModifiers(modifiers);
 
             encounter.ActionLog.Add(Attack.Outcome
                 .Replace("ACTOR", encounter.CurrentlyActing.Name)
                 .Replace("TARGET", target.Name)
-                .Replace("SUCCESS", toHit.ToString())
-                .Replace("CRIT", toCrit.ToString())
+                .Replace("SUCCESS", appliedModifiers[AttackModifier.HitChance].ToString())
+                .Replace("CRIT", appliedModifiers[AttackModifier.CritChance].ToString())
             );
 
             int roll = random.Next(1, 100);
-            bool doesAttackCrit = roll >= toCrit;
-            bool doesAttackHit = doesAttackCrit || roll >= toHit;
+            bool doesAttackCrit = roll >= appliedModifiers[AttackModifier.CritChance];
+            bool doesAttackHit = doesAttackCrit || roll >= appliedModifiers[AttackModifier.HitChance];
 
             if (!doesAttackHit)
             {
@@ -63,15 +39,18 @@ public static partial class Actions
 
             if (doesAttackCrit)
             {
-                encounter.ActionLog.Add($"They roll a {roll} and critically hit! Doing 2 damage.");
-                target.HP -= 2;
+                var damage = appliedModifiers[AttackModifier.CritDamage];
+                encounter.ActionLog.Add($"They roll a {roll} and critically hit! Doing {damage} damage.");
+                target.HP -= damage;
             }
             else
             {
-                encounter.ActionLog.Add($"They roll a {roll} and hit! Doing 1 damage.");
-                target.HP -= 1;
+                var damage = appliedModifiers[AttackModifier.HitDamage];
+                encounter.ActionLog.Add($"They roll a {roll} and hit. Doing {damage} damage.");
+                target.HP -= damage;
             }
 
+            // TODO: Consider moving encounter ending logic to ResolveEncounter() in Encounter.cs
             if (target.HP <= 0)
             {
                 // Encounter over
@@ -88,4 +67,39 @@ public static partial class Actions
             }
         }
     };
+
+    private static AttackModifierDict ApplyAttackModifiers(AttackModifierDict modifiers)
+    {
+        modifiers.TryGetValue(AttackModifier.CritChance, out int toCritModifier);
+        modifiers.TryGetValue(AttackModifier.CritDamage, out int critDamageModifier);
+        modifiers.TryGetValue(AttackModifier.HitChance, out int toHitModifier);
+        modifiers.TryGetValue(AttackModifier.HitDamage, out int hitDamageModifier);
+
+        return new() {
+            { AttackModifier.CritChance, Math.Min(Math.Max(Attack.Probabilities[AttackModifier.CritChance] + toCritModifier, MIN_CHANCE), MAX_CHANCE) } ,
+            { AttackModifier.CritDamage, Math.Max(Attack.Probabilities[AttackModifier.CritDamage] + critDamageModifier, MIN_ATTACK_DAMAGE) },
+            { AttackModifier.HitChance, Math.Min(Math.Max(Attack.Probabilities[AttackModifier.HitChance] + toHitModifier, MIN_CHANCE), MAX_CHANCE) },
+            { AttackModifier.HitDamage, Math.Max(Attack.Probabilities[AttackModifier.HitDamage] + hitDamageModifier, MIN_ATTACK_DAMAGE) },
+        };
+    }
+}
+
+public enum AttackModifier
+{
+    CritChance,
+    CritDamage,
+    HitChance,
+    HitDamage,
+}
+
+public sealed class AttackAction : HHAction
+{
+    public readonly AttackModifierDict Probabilities = new() {
+        { AttackModifier.CritChance, 95 } ,
+        { AttackModifier.CritDamage, 2 },
+        { AttackModifier.HitChance, 50 },
+        { AttackModifier.HitDamage, 1 },
+    };
+
+    public Action<Encounter, AttackModifierDict, Random> TakeAction { get; set; }
 }

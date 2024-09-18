@@ -15,8 +15,8 @@ public class Hero : IEncounterActor
     [JsonIgnore]
 #endif
     [IgnoreDataMember]
-    public ulong HP { get; set; }
-    public ulong MaxHP { get; set; } = 2;
+    public int HP { get; set; }
+    public int MaxHP { get; set; } = 2;
     public Guid Id { get; set; }
     public string Name { get; set; }
     public ulong Price { get; set; }
@@ -28,9 +28,9 @@ public class Hero : IEncounterActor
 #endif
     [IgnoreDataMember]
     private readonly Dictionary<AttackModifier, int> AttackModifiers = new() {
-            { AttackModifier.ToCrit, -5 },
-            { AttackModifier.ToHit, -5 }
-        };
+        { AttackModifier.CritChance, -5 },
+        { AttackModifier.HitChance, -5 }
+    };
 
     public void TakeAction(Encounter encounter, Random random)
     {

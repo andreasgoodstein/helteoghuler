@@ -6,8 +6,9 @@ namespace HelteOgHulerShared.Interfaces;
 
 public interface IEncounterActor
 {
+    public Guid Id { get; }
     public string Name { get; }
-    public ulong HP { get; set; }
+    public int HP { get; set; }
     // public void SetStatus();
     public void TakeAction(Encounter encounter, Random? random);
 }
