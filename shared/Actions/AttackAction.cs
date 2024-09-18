@@ -27,7 +27,7 @@ public static partial class Actions
                 .Replace("CRIT", appliedModifiers[AttackModifier.CritChance].ToString())
             );
 
-            int roll = random.Next(1, 100);
+            int roll = random.Next(MIN_CHANCE, MAX_CHANCE);
             bool doesAttackCrit = roll >= appliedModifiers[AttackModifier.CritChance];
             bool doesAttackHit = doesAttackCrit || roll >= appliedModifiers[AttackModifier.HitChance];
 

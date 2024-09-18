@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System;
-
 namespace HelteOgHulerShared.Models;
 
 public class GameState
 {
-    public Nullable<DateTime> CurrentTime { get; set; }
+    public DateTime? CurrentTime { get; set; }
 
     public string ErrorMessage { get; set; }
 

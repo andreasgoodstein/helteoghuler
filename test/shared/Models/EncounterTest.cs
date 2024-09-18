@@ -6,7 +6,7 @@ using Moq;
 public class EncounterTest
 {
     private readonly Hero[] TestParty = [
-        new() { ActionList = [.. Actions.DefaultActions.Keys], HP = 2, Name = "TestHero" }
+        new() { HP = 2, Name = "TestHero" }
     ];
 
     [Fact]

@@ -47,7 +47,7 @@ public class InnController : ControllerBase
             return new ContentResult
             {
                 Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
-                StatusCode = 400
+                StatusCode = 500
             };
         }
     }

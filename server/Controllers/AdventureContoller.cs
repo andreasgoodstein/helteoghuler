@@ -31,7 +31,7 @@ public class AdventureController : ControllerBase
         {
             Adventure adventure = _adventureLogic.GenerateAdventure(user.PlayerId);
 
-            AdventureEvent_V1 adventureEvent = new AdventureEvent_V1()
+            AdventureEvent_V1 adventureEvent = new()
             {
                 Adventure = adventure,
                 CreatedAt = DateTime.UtcNow,
@@ -49,7 +49,7 @@ public class AdventureController : ControllerBase
             return new ContentResult
             {
                 Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
-                StatusCode = 400,
+                StatusCode = 500,
             };
         }
     }

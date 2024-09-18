@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System;
-
 namespace HelteOgHulerShared.Models;
 
 public class Player
@@ -11,7 +8,9 @@ public class Player
 
     public string Name { get; set; }
 
-    public Nullable<DateTime> RestUntil { get; set; }
+    public DateTime? RestUntil { get; set; }
+
+    public Adventure LatestAdventure { get; set; }
 
     // public Dictionary<PlayerObjectives, bool> ObjectivesCompleted { get; set; }
 }

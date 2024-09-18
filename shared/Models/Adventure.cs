@@ -14,14 +14,16 @@ public class Adventure : IApplicable
 
     public void ResolveAdventure(Hero[] party, int maxEncounters = 1)
     {
+        // Setup
         Party = party;
-        Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Won);
+        Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved);
 
         foreach (Hero hero in Party)
         {
             hero.HP = hero.MaxHP;
         }
 
+        // Resolve
         for (int n = 0; n < maxEncounters; n += 1)
         {
             Encounter encounter = new();
@@ -29,7 +31,7 @@ public class Adventure : IApplicable
 
             EncounterList.Add(encounter);
 
-            if (encounter.Status != EncounterStatus.Won)
+            if (encounter.Status == EncounterStatus.Lost)
             {
                 Status = Enum.GetName(typeof(EncounterStatus), encounter.Status);
                 RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC * 2);
@@ -39,29 +41,33 @@ public class Adventure : IApplicable
             Gold += encounter.Reward;
         }
 
+        // Finalize
         RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC);
     }
 
     public void ApplyToGameState(ref GameState gameState, Guid? id)
     {
+        gameState.World.TotalAdventures += 1;
+
         if (id == null)
         {
             return;
         }
 
         Guid playerId = (Guid)id;
-
-        gameState.World.TotalAdventures += 1;
 
         gameState.PublicPlayerDict[playerId].TotalAdventures += 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned += Gold;
 
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
         gameState.PrivatePlayerDict[playerId].RestUntil = RestUntil;
+        gameState.PrivatePlayerDict[playerId].LatestAdventure = this;
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? id)
     {
+        gameState.World.TotalAdventures -= 1;
+
         if (id == null)
         {
             return;
@@ -69,12 +75,11 @@ public class Adventure : IApplicable
 
         Guid playerId = (Guid)id;
 
-        gameState.World.TotalAdventures -= 1;
-
         gameState.PublicPlayerDict[playerId].TotalAdventures -= 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned -= Gold;
 
         gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;
         gameState.PrivatePlayerDict[playerId].RestUntil = null;
+        gameState.PrivatePlayerDict[playerId].LatestAdventure = null;
     }
 }

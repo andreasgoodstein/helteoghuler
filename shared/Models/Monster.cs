@@ -18,7 +18,7 @@ public class Monster : IEncounterActor
     public Guid Id => new();
     public int HP { get; set; }
     public string Name { get; set; }
-    public MonsterAbility[] AbilityList { get; set; }
+    // public MonsterAbility[] AbilityList { get; set; }
     public MonsterType Type { get; set; }
     public List<ActionName> ActionList { get; set; } = [.. Actions.DefaultActions.Keys];
 
