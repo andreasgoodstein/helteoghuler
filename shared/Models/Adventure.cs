@@ -33,7 +33,7 @@ public class Adventure : IApplicable
 
             if (encounter.Status == EncounterStatus.Lost)
             {
-                Status = Enum.GetName(typeof(EncounterStatus), encounter.Status);
+                Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Lost);
                 RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC * 2);
                 return;
             }
@@ -42,6 +42,7 @@ public class Adventure : IApplicable
         }
 
         // Finalize
+        Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Won);
         RestUntil = DateTime.UtcNow.AddSeconds(REST_TIME_SEC);
     }
 

@@ -41,26 +41,7 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 		var adventure = await GetNode<Server>("/root/Server").StartAdventure(this);
 
-		GetNode<Label>("%Message").Text = GetAdventureText(adventure);
-	}
-
-	private string GetAdventureText(Adventure adventure)
-	{
-		var result = $"The adventure was {adventure.Status}!\n";
-
-		result += $"The Party returned with {adventure.Gold} gold.\n\n";
-
-		foreach (var encounter in adventure.EncounterList)
-		{
-			result += $"Your Party encountered {encounter.Monster.Name}\n\n";
-
-			foreach (var action in encounter.ActionLog)
-			{
-				result += $"{action}\n";
-			}
-		}
-
-		return result;
+		GetNode<Label>("%Message").Text = AdventureHelper.GetAdventureText(adventure);
 	}
 
 	private void SetupRestedTimer(Player player)
