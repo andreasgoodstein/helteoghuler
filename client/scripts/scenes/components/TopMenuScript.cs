@@ -1,8 +1,6 @@
 using Godot;
 using HelteOgHulerClient;
 using HelteOgHulerClient.Utilities;
-using HelteOgHulerShared.Utilities;
-using System;
 
 public class TopMenuScript : VBoxContainer
 {

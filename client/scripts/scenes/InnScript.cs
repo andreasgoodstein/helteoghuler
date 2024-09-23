@@ -8,9 +8,11 @@ public class InnScript : Control, ISubscriber<GameState>
 {
 	private Control HeroRecruitment;
 	private Control HeroRoster;
+	private Control UpgradeInn;
 
 	private Button RecruitHeroButton;
 	private Button ViewHeroButton;
+	private Button UpgradeInnButton;
 
 	public override void _Ready()
 	{
@@ -20,8 +22,12 @@ public class InnScript : Control, ISubscriber<GameState>
 		ViewHeroButton = GetNode<Button>("%ButtonViewHeroes");
 		ViewHeroButton.Connect("pressed", this, "ButtonViewHeroesOnClick");
 
+		UpgradeInnButton = GetNode<Button>("%ButtonUpgradeInn");
+		UpgradeInnButton.Connect("pressed", this, "ButtonUpgradeInnOnClick");
+
 		HeroRecruitment = GetNode<Control>("%HeroRecruitment");
 		HeroRoster = GetNode<Control>("%HeroRoster");
+		UpgradeInn = GetNode<Control>("%UpgradeInn");
 
 		Message(GlobalGameState.Get());
 
@@ -33,6 +39,9 @@ public class InnScript : Control, ISubscriber<GameState>
 		HeroRoster.SetProcess(false);
 		HeroRoster.Hide();
 
+		UpgradeInn.SetProcess(false);
+		UpgradeInn.Hide();
+
 		HeroRecruitment.Show();
 		HeroRecruitment.SetProcess(true);
 	}
@@ -42,8 +51,23 @@ public class InnScript : Control, ISubscriber<GameState>
 		HeroRecruitment.SetProcess(false);
 		HeroRecruitment.Hide();
 
+		UpgradeInn.SetProcess(false);
+		UpgradeInn.Hide();
+
 		HeroRoster.Show();
 		HeroRoster.SetProcess(true);
+	}
+
+	private void ButtonUpgradeInnOnClick()
+	{
+		HeroRecruitment.SetProcess(false);
+		HeroRecruitment.Hide();
+
+		HeroRoster.SetProcess(false);
+		HeroRoster.Hide();
+
+		UpgradeInn.Show();
+		UpgradeInn.SetProcess(true);
 	}
 
 	public override void _ExitTree()

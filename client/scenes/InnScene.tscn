@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/components/TopMenu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/components/HeroRoster.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/scenes/InnScript.cs" type="Script" id=3]
 [ext_resource path="res://scenes/components/HeroRecruitment.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/components/UpgradeInn.tscn" type="PackedScene" id=5]
 
 [node name="InnSceneRoot" type="Control"]
 anchor_right = 1.0
@@ -88,6 +89,15 @@ rect_min_size = Vector2( 0, 32 )
 text = "BUTTON_RECRUIT_HEROES"
 icon_align = 1
 
+[node name="ButtonUpgradeInn" type="Button" parent="Margins/VBoxContainer/SubMenuContainer/LeftMenu"]
+unique_name_in_owner = true
+margin_top = 80.0
+margin_right = 294.0
+margin_bottom = 112.0
+rect_min_size = Vector2( 0, 32 )
+text = "BUTTON_UPGRADE_INN"
+icon_align = 1
+
 [node name="HeroRoster" parent="Margins/VBoxContainer/SubMenuContainer" instance=ExtResource( 2 )]
 unique_name_in_owner = true
 anchor_right = 0.0
@@ -111,3 +121,14 @@ margin_bottom = 440.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
+
+[node name="UpgradeInn" parent="Margins/VBoxContainer/SubMenuContainer" instance=ExtResource( 5 )]
+unique_name_in_owner = true
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 1025.0
+margin_right = 1264.0
+margin_bottom = 448.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

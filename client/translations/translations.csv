@@ -1,10 +1,11 @@
 keys;en;da
 ADVENTURE;Adventure;Eventyr
-BUTTON_OPEN_INN;Might as well start pouring pints!;
+BUTTON_OPEN_INN;Might as well start pouring pints!;Skænk den første øl!
 BUTTON_RECRUIT_HEROES;Hire a Hero;Hyr en Helt
-BUTTON_START;Let the Adventure Begin;
+BUTTON_START;Let the Adventure Begin;Lad eventyret begynde
 BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
 BUTTON_VIEW_HEROES;Your Heros;Dine Helte
+BUTTON_UPGRADE_INN;Workshop;Værksted
 CAREER_GOLD;Gold liberated;Guld befriet
 GOLD;Gold;Guld
 HERO;Hero;Helt
@@ -48,5 +49,12 @@ NO_PARTY_TO_VENTURE_FORTH;You must recruit a Hero first;Du skal hyre en Helt fø
 PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
 STATUS;Status;Status
 TITLE;Heroes and Hearths;Helte og Huler
+UPGRADE_INN_INTRO;"In the back of your Inn, behind an old dusty door...
+
+You find a room with a worn workbench and a bunch of rusty tools.
+Perhaps with a bit of elbow grease - and a trusty pint of ale - you could
+start turning this Inn into something a little bit more impressive.
+
+Time to get to work...";
 USERNAME_PLACEHOLDER;Username;Brugernavn
 WORLD;World;Verden
