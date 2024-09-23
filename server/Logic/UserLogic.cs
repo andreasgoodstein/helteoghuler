@@ -74,7 +74,7 @@ public class UserLogic
         _gameStateLogic.UpdateGameState(newPlayerEvent);
     }
 
-    public User? GetUser(string loginName)
+    public User? GetUser(string? loginName)
     {
         if (String.IsNullOrWhiteSpace(loginName))
         {

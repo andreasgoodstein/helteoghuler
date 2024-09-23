@@ -114,12 +114,12 @@ app.MapControllers();
 
 // app.UseResponseCompression();
 
-app.Run();
-
 if (app.Environment.IsProduction())
 {
     HHSentry.Initialize(builder.Configuration.GetSection("Sentry"));
 }
+
+app.Run();
 
 // TODO: 
 // Evaluate if compression is worth the response delay
