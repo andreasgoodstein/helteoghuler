@@ -1,3 +1,4 @@
+using Sentry.Profiling;
 using Sentry;
 
 namespace HelteOgHulerServer;
@@ -20,6 +21,8 @@ public static class HHSentry
             options.TracesSampleRate = 0.01;
 
             options.ProfilesSampleRate = 0.01;
+
+            options.AddIntegration(new ProfilingIntegration());
         });
     }
 }
