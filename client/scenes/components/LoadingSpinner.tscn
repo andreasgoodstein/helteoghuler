@@ -31,7 +31,7 @@ margin_bottom = 304.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Loading..."
+text = "LOADING_MESSAGE"
 align = 1
 valign = 1
 
@@ -44,7 +44,6 @@ margin_bottom = 321.0
 rect_min_size = Vector2( 0, 32 )
 size_flags_horizontal = 3
 size_flags_vertical = 1
-text = "Wow this is taking a while! The Town must be asleep. Please give it a minute, I'm sure
-it will awaken in juuuuuust a minute..."
+text = "SLOW_LOADING_MESSAGE"
 align = 1
 valign = 1

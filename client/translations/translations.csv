@@ -11,6 +11,7 @@ GOLD;Gold;Guld
 HERO;Hero;Helt
 HERO_RECRUITMENT;Heroes for Hire;Arbejdsløse Helte
 HERO_ROSTER;Your Heros;Dine Helte
+LOADING_MESSAGE;Loading...;Indlæser...
 INN;Inn;Kro
 INNKEEPER;Innkeeper;Krovært
 INN_NAME_PLACEHOLDER;"Cheap Drinks ""R"" Us";
@@ -47,6 +48,9 @@ NEW_PLAYER_INTRO_2;"And what name do you paint on the rusty yet charming wrought
 above the stout oaken door?";
 NO_PARTY_TO_VENTURE_FORTH;You must recruit a Hero first;Du skal hyre en Helt først
 PLAYER_NAME_PLACEHOLDER;Ol' Peg Leg Minotaur Bait;
+SLOW_LOADING_MESSAGE;"Wow this is taking a while! The town must be asleep.
+I'm sure the Inn will be open in juuuuust a minute...";"Wow det her tager godt nok lidt tid! Det er nok fordi byen sover.
+Jeg er sikker på at Kroen nok skal åbne om et minuts tid..."
 STATUS;Status;Status
 TITLE;Heroes and Hearths;Helte og Huler
 UPGRADE_INN_INTRO;"In the back of your Inn, behind an old dusty door...
