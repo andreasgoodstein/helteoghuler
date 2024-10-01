@@ -10,7 +10,7 @@ public class EncounterTest
     ];
 
     [Fact]
-    public void Constructor()
+    public void EncounterConstructor()
     {
         Encounter encounter = new();
 

@@ -10,13 +10,20 @@ public class AdventureTest
     ];
 
     [Fact]
-    public void Constructor()
+    public void AdventureConstructor()
+    {
+        Adventure adventure = new();
+
+        Assert.Equal(Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved), adventure.Status);
+    }
+
+    [Fact]
+    public void ResolvedAdventureHasOneEncounter()
     {
         Adventure adventure = new();
         adventure.ResolveAdventure(TestParty);
 
         Assert.Single(adventure.EncounterList);
-
         Assert.NotEqual(Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved), adventure.Status);
 
         if (Enum.GetName(typeof(EncounterStatus), EncounterStatus.Won) == adventure.Status)

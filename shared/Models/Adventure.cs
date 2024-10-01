@@ -7,7 +7,7 @@ public class Adventure : IApplicable
     const int REST_TIME_SEC = 10;
 
     public ulong Gold { get; set; }
-    public string Status { get; set; }
+    public string Status { get; set; } = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved);
     public List<Encounter> EncounterList { get; set; } = [];
     public Hero[] Party { get; set; }
     public DateTime RestUntil { get; set; }
@@ -16,7 +16,6 @@ public class Adventure : IApplicable
     {
         // Setup
         Party = party;
-        Status = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved);
 
         foreach (Hero hero in Party)
         {
