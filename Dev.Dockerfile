@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 # Install Docker CLI
 RUN apt-get update
-RUN apt-get install ca-certificates curl
+RUN apt-get install ca-certificates curl ssh git -y
 RUN install -m 0755 -d /etc/apt/keyrings
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
 RUN chmod a+r /etc/apt/keyrings/docker.asc
