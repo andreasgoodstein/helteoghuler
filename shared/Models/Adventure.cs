@@ -1,4 +1,5 @@
 using HelteOgHulerShared.Interfaces;
+using System.Diagnostics;
 
 namespace HelteOgHulerShared.Models;
 
@@ -14,6 +15,9 @@ public class Adventure : IApplicable
 
     public void ResolveAdventure(Hero[] party, int maxEncounters = 1)
     {
+        // Assert
+        Debug.Assert(party.Length > 0, "IllegalState: Cannot start Adventure without a Party.");
+
         // Setup
         Party = party;
 

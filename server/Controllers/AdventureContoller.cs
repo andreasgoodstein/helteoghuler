@@ -1,5 +1,5 @@
+using HelteOgHulerServer.Events;
 using HelteOgHulerServer.Logic;
-using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;

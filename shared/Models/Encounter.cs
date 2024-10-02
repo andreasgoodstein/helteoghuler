@@ -40,8 +40,10 @@ public class Encounter
 
     public void ResolveEncounter(Hero[] party, Random? random)
     {
-        Debug.Assert(party.Length > 0, "IllegalState: Cannot adventure without a Party.");
+        // Assert
+        Debug.Assert(party.Length > 0, "IllegalState: Cannot enter Encounter without a Party.");
 
+        //Setup
         random ??= new Random();
 
         Party = party;
@@ -58,6 +60,7 @@ public class Encounter
 
         var encounterTimer = MAX_ENCOUNTER_TURNS;
 
+        // Resolve
         while (Status == EncounterStatus.Unresolved)
         {
             if (encounterTimer <= 0)

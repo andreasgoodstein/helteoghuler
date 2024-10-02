@@ -5,6 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson;
 
+namespace HelteOgHulerServer.Events;
 
 [BsonDiscriminator("NewPlayerEvent_V1")]
 public class NewPlayerEvent_V1 : IEvent, IApplicable

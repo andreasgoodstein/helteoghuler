@@ -5,28 +5,38 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson;
 
+namespace HelteOgHulerServer.Events;
 
-[BsonDiscriminator("RecruitHeroEvent_V1")]
-public class RecruitHeroEvent_V1 : IEvent, IApplicable
+[BsonDiscriminator("AdventureEvent_V1")]
+public class AdventureEvent_V1 : IEvent, IApplicable
 {
+
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
 
+    public required Adventure Adventure { get; init; }
+
     public DateTime CreatedAt { get; init; }
 
-    public EventType Type => EventType.RecruitHero;
+    public Guid? PlayerId { get; init; }
 
-    public required Recruitment Recruitment { get; init; }
+    public EventType Type => EventType.Adventure;
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.ApplyToGameState(ref gameState, null);
+        if (Adventure != null)
+        {
+            Adventure.ApplyToGameState(ref gameState, PlayerId);
+        }
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.RemoveFromGameState(ref gameState, null);
+        if (Adventure != null)
+        {
+            Adventure.RemoveFromGameState(ref gameState, PlayerId);
+        }
     }
 }
