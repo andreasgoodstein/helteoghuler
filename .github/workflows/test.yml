@@ -27,3 +27,7 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --verbosity normal
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
