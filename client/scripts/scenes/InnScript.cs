@@ -3,6 +3,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 public class InnScript : Control, ISubscriber<GameState>
 {
@@ -77,12 +78,13 @@ public class InnScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		var player = GameStateHelper.GetPlayer(gameState);
+		var player = gameState.GetPlayer();
 
 		GetNode<Label>("%Gold").Text = player?.Inn?.Chest?.Gold.ToString() ?? "0";
 
 		RecruitHeroButton.Disabled = false;
 		ViewHeroButton.Disabled = false;
+		UpgradeInnButton.Disabled = false;
 
 		if (player?.Inn?.HeroRecruits?.Count < 1)
 		{
@@ -92,6 +94,11 @@ public class InnScript : Control, ISubscriber<GameState>
 		if (player?.Inn?.HeroRoster?.Count < 1)
 		{
 			ViewHeroButton.Disabled = true;
+		}
+
+		if (player?.Inn?.BuiltUpgrades?.Contains(InnUpgrade.DiscoverWorkshop) == false)
+		{
+			UpgradeInnButton.Disabled = true;
 		}
 	}
 

@@ -1,6 +1,7 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson;
@@ -20,23 +21,51 @@ public class AdventureEvent_V1 : IEvent, IApplicable
 
     public DateTime CreatedAt { get; init; }
 
-    public Guid? PlayerId { get; init; }
+    public Guid PlayerId { get; init; }
 
     public EventType Type => EventType.Adventure;
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        if (Adventure != null)
-        {
-            Adventure.ApplyToGameState(ref gameState, PlayerId);
-        }
+        Adventure?.ApplyToGameState(ref gameState, PlayerId);
+
+        ApplyPendingInnUpgrade(ref gameState);
+    }
+
+    private void ApplyPendingInnUpgrade(ref GameState gameState)
+    {
+        var inn = gameState.GetPlayer(PlayerId).Inn;
+
+        var pendingUpgrade = inn.PendingUpgrade;
+        if (pendingUpgrade == null) { return; }
+
+        inn.AvailableUpgrades.Remove((InnUpgradeName)pendingUpgrade);
+        inn.BuiltUpgrades.Add((InnUpgradeName)pendingUpgrade);
+        inn.AvailableUpgrades.AddRange(InnUpgrades.TechTree[(InnUpgradeName)pendingUpgrade]);
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        if (Adventure != null)
+        Adventure?.RemoveFromGameState(ref gameState, PlayerId);
+
+        RemovePendingInnUpgrade(ref gameState);
+    }
+
+    private void RemovePendingInnUpgrade(ref GameState gameState)
+    {
+        var inn = gameState.GetPlayer(PlayerId).Inn;
+
+        if (inn.BuiltUpgrades.Count < 1) { return; }
+
+        // ATT: This might be a bit brittle. However the events should be applied/removed in sequence.
+        var pendingUpgrade = inn.BuiltUpgrades.Last();
+
+        foreach (var upgrade in InnUpgrades.TechTree[pendingUpgrade])
         {
-            Adventure.RemoveFromGameState(ref gameState, PlayerId);
+            inn.AvailableUpgrades.Remove(upgrade);
         }
+
+        inn.AvailableUpgrades.Add(pendingUpgrade);
+        inn.BuiltUpgrades.Remove(pendingUpgrade);
     }
 }

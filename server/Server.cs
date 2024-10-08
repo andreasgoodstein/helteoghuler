@@ -30,6 +30,7 @@ BsonClassMap.RegisterClassMap<Monster>();
 BsonClassMap.RegisterClassMap<AdventureEvent_V1>();
 BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
 BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
+BsonClassMap.RegisterClassMap<UpgradeInnEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
 

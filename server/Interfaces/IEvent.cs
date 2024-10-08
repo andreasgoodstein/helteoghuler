@@ -23,4 +23,5 @@ public enum EventType
     Adventure = 0,
     NewPlayer = 1,
     RecruitHero = 2,
+    UpgradeInn = 3,
 }

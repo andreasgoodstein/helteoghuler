@@ -6,10 +6,9 @@ namespace HelteOgHulerShared.Models;
 public class Recruitment : IApplicable
 {
     public Guid PlayerId { get; set; }
-
     public Guid HeroId { get; set; }
 
-    public void ApplyToGameState(ref GameState gameState, Guid? _)
+    public void ApplyToGameState(ref GameState gameState, Guid? _ = null)
     {
         var inn = gameState.GetPlayer(PlayerId)?.Inn;
         var hero = inn?.HeroRecruits?[HeroId.ToString()];
@@ -27,7 +26,7 @@ public class Recruitment : IApplicable
         inn?.HeroRecruits?.Remove(hero.Id.ToString());
     }
 
-    public void RemoveFromGameState(ref GameState gameState, Guid? _)
+    public void RemoveFromGameState(ref GameState gameState, Guid? _ = null)
     {
         var inn = gameState.GetPlayer(PlayerId)?.Inn;
         var hero = inn?.HeroRoster?[HeroId.ToString()];

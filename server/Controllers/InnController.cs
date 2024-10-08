@@ -52,4 +52,35 @@ public class InnController : ControllerBase
             };
         }
     }
+
+    [HttpGet(Name = "UpgradeInn")]
+    public async Task<ActionResult<string>> UpgradeInn(InnUpgradeName Upgrade)
+    {
+        User user = (User)HttpContext.Items["User"]!;
+
+        try
+        {
+            InnUpgrade innUpgrade = _innLogic.UpgradeInn(user.PlayerId, Upgrade);
+
+            var upgradeEvent = new UpgradeInnEvent_V1
+            {
+                CreatedAt = DateTime.UtcNow,
+                Upgrade = innUpgrade,
+            };
+
+            await _eventService.CreateAsync(upgradeEvent);
+
+            _gameStateLogic.UpdateGameState(upgradeEvent);
+
+            return HHJsonSerializer.Serialize(innUpgrade);
+        }
+        catch (InvalidDataException exception)
+        {
+            return new ContentResult
+            {
+                Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
+                StatusCode = 500
+            };
+        }
+    }
 }

@@ -7,27 +7,24 @@ using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Events;
 
-[BsonDiscriminator("RecruitHeroEvent_V1")]
-public class RecruitHeroEvent_V1 : IEvent, IApplicable
+[BsonDiscriminator("UpgradeInnEvent_V1")]
+public class UpgradeInnEvent_V1 : IEvent, IApplicable
 {
     [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
-
     public DateTime CreatedAt { get; init; }
-
-    public EventType Type => EventType.RecruitHero;
-
-    public required Recruitment Recruitment { get; init; }
+    public EventType Type => EventType.UpgradeInn;
+    public required InnUpgrade Upgrade { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.ApplyToGameState(ref gameState);
+        Upgrade.ApplyToGameState(ref gameState);
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        Recruitment.RemoveFromGameState(ref gameState);
+        Upgrade.RemoveFromGameState(ref gameState);
     }
 }

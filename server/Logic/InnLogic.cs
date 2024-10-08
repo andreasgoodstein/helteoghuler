@@ -1,4 +1,5 @@
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerServer.Logic;
 
@@ -15,6 +16,8 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
 
         return new Inn
         {
+            AvailableUpgrades = [],
+            PendingUpgrade = InnUpgradeName.DiscoverWorkshop,
             Chest = new Chest
             {
                 Gold = STARTING_GOLD,
@@ -28,8 +31,7 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     public Recruitment RecruitHero(Guid playerId, Guid heroId)
     {
         var gameState = _gameStateLogic.Get();
-
-        var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
 
         if (!inn.HeroRecruits.ContainsKey(heroId.ToString()))
         {
@@ -47,9 +49,32 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     public Hero[] GatherParty(Guid playerId)
     {
         var gameState = _gameStateLogic.Get();
-
-        var inn = gameState.PrivatePlayerDict[playerId]?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
 
         return [.. inn.HeroRoster.Values];
+    }
+
+    public InnUpgrade UpgradeInn(Guid playerId, InnUpgradeName upgrade)
+    {
+        var gameState = _gameStateLogic.Get();
+        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+
+        var playerGold = inn.Chest.Gold;
+        var upgradeCost = InnUpgrades.Cost[upgrade];
+
+        if (inn.BuiltUpgrades.Contains(upgrade))
+        {
+            throw new InvalidDataException("That Upgrade has already been built.");
+        }
+        else if (!inn.AvailableUpgrades.Contains(upgrade))
+        {
+            throw new InvalidDataException("That Upgrade is not currently available.");
+        }
+        else if (playerGold < upgradeCost)
+        {
+            throw new InvalidDataException("You cannot afford that Upgrade.");
+        }
+
+        return new InnUpgrade { PlayerId = playerId, Upgrade = upgrade };
     }
 }
