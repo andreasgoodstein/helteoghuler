@@ -3,6 +3,7 @@ using HelteOgHulerClient;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -33,7 +34,7 @@ public class HeroRecruitmentScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		var recruitList = GameStateHelper.GetPlayer(gameState)?.Inn?.HeroRecruits?.Values ?? new Dictionary<string, Hero>().Values;
+		var recruitList = gameState.GetPlayer()?.Inn?.HeroRecruits?.Values ?? new Dictionary<string, Hero>().Values;
 
 		foreach (Node child in RecruitList?.GetChildren())
 		{

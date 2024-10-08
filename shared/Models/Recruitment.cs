@@ -1,6 +1,5 @@
 using HelteOgHulerShared.Interfaces;
-using System.Collections.Generic;
-using System;
+using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerShared.Models;
 
@@ -12,7 +11,7 @@ public class Recruitment : IApplicable
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
-        var inn = gameState.PrivatePlayerDict[PlayerId]?.Inn;
+        var inn = gameState.GetPlayer(PlayerId)?.Inn;
         var hero = inn?.HeroRecruits?[HeroId.ToString()];
 
         if (inn?.HeroRoster != null)
@@ -30,7 +29,7 @@ public class Recruitment : IApplicable
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
-        var inn = gameState.PrivatePlayerDict[PlayerId]?.Inn;
+        var inn = gameState.GetPlayer(PlayerId)?.Inn;
         var hero = inn?.HeroRoster?[HeroId.ToString()];
 
         if (inn?.HeroRecruits != null)

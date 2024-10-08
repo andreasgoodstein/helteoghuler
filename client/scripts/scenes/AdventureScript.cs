@@ -3,6 +3,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 public class AdventureScript : Control, ISubscriber<GameState>
 {
@@ -20,7 +21,7 @@ public class AdventureScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		var player = GameStateHelper.GetPlayer(gameState);
+		var player = gameState.GetPlayer();
 
 		GetNode<Label>("%Message").Text = AdventureHelper.GetAdventureText(player.LatestAdventure);
 	}

@@ -3,6 +3,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using System;
 
 public class StartAdventureScript : Button, ISubscriber<GameState>
@@ -46,10 +47,7 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
 
 	private void SetupRestedTimer(Player player)
 	{
-		if (player?.RestUntil == null)
-		{
-			return;
-		}
+		if (player?.RestUntil == null) { return; }
 
 		RestUntil = player.RestUntil;
 

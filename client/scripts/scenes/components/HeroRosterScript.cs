@@ -2,6 +2,7 @@ using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using System.Collections.Generic;
 
 namespace HelteOgHulerClient;
@@ -32,7 +33,7 @@ public class HeroRosterScript : Control, ISubscriber<GameState>
 
 	public void Message(GameState gameState)
 	{
-		var heroRoster = GameStateHelper.GetPlayer(gameState)?.Inn?.HeroRoster?.Values ?? new Dictionary<string, Hero>().Values;
+		var heroRoster = gameState.GetPlayer()?.Inn?.HeroRoster?.Values ?? new Dictionary<string, Hero>().Values;
 		var isResting = GameStateHelper.IsResting(gameState);
 
 		foreach (Node child in HeroList?.GetChildren())

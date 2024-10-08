@@ -1,6 +1,7 @@
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 using System.Text.Json;
 
 namespace HelteOgHulerServer.Logic;
@@ -53,7 +54,7 @@ public class GameStateLogic
             return gameState;
         }
 
-        var privatePlayer = gameState.PrivatePlayerDict[playerId];
+        var privatePlayer = gameState.GetPlayer(playerId);
 
         gameState.PrivatePlayerDict.Clear();
         gameState.PrivatePlayerDict[playerId] = privatePlayer;

@@ -40,10 +40,7 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
 	private void StartAdventurePressed()
 	{
-		if (String.IsNullOrWhiteSpace(UserNameInput.Text))
-		{
-			return;
-		}
+		if (String.IsNullOrWhiteSpace(UserNameInput.Text)) { return; }
 
 		GetNode<Settings>("/root/Settings").LoginName = UserNameInput.Text;
 

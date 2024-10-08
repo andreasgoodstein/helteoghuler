@@ -1,4 +1,5 @@
 using HelteOgHulerShared.Interfaces;
+using HelteOgHulerShared.Utilities;
 using System.Diagnostics;
 
 namespace HelteOgHulerShared.Models;
@@ -63,9 +64,11 @@ public class Adventure : IApplicable
         gameState.PublicPlayerDict[playerId].TotalAdventures += 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned += Gold;
 
-        gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold += Gold;
-        gameState.PrivatePlayerDict[playerId].RestUntil = RestUntil;
-        gameState.PrivatePlayerDict[playerId].LatestAdventure = this;
+        var player = gameState.GetPlayer(playerId);
+
+        player.Inn.Chest.Gold += Gold;
+        player.RestUntil = RestUntil;
+        player.LatestAdventure = this;
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? id)
@@ -82,8 +85,10 @@ public class Adventure : IApplicable
         gameState.PublicPlayerDict[playerId].TotalAdventures -= 1;
         gameState.PublicPlayerDict[playerId].TotalGoldEarned -= Gold;
 
-        gameState.PrivatePlayerDict[playerId].Inn.Chest.Gold -= Gold;
-        gameState.PrivatePlayerDict[playerId].RestUntil = null;
-        gameState.PrivatePlayerDict[playerId].LatestAdventure = null;
+        var player = gameState.GetPlayer(playerId);
+
+        player.Inn.Chest.Gold -= Gold;
+        player.RestUntil = null;
+        player.LatestAdventure = null;
     }
 }

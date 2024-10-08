@@ -17,10 +17,7 @@ public class NewPlayerScript : Control
 
 	private async void GoToInnPressed()
 	{
-		if (String.IsNullOrWhiteSpace(InnName.Text) || String.IsNullOrWhiteSpace(PlayerName.Text))
-		{
-			return;
-		}
+		if (String.IsNullOrWhiteSpace(InnName.Text) || String.IsNullOrWhiteSpace(PlayerName.Text)) { return; }
 
 		await GetNode<Server>("/root/Server").CreateNewPlayer(this, InnName.Text, PlayerName.Text);
 
