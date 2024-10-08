@@ -1,9 +1,19 @@
 {
     "build": {
+        "args": {
+            "REMOTE_USER": "${localEnv:USER}",
+            "REMOTE_UID": "${localEnv:REMOTE_UID:1000}",
+            "REMOTE_GID": "${localEnv:REMOTE_GID:1000}"
+        },
         "dockerfile": "Dev.Dockerfile"
     },
+    "containerEnv": {
+        "SHELL": "/bin/bash"
+    },
+    "remoteUser": "${localEnv:USER}",
     "runArgs": [
         "-v",
-        "/var/run/docker.sock:/var/run/docker.sock"
+        "/var/run/docker.sock:/var/run/docker.sock",
+        "--network=helteoghuler_default"
     ]
 }

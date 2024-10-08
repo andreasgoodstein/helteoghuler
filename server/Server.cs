@@ -19,7 +19,9 @@ var unauthorizedError = HHJsonSerializer.Serialize(new HHError
 BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
 BsonSerializer.RegisterSerializer(new EnumSerializer<ActionName>(BsonType.String));
+#pragma warning disable CS0618 // Type or member is obsolete
 BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
+#pragma warning restore CS0618 // Type or member is obsolete
 
 // Register mongodb event types
 BsonClassMap.RegisterClassMap<Inn>();
