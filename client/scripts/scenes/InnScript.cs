@@ -96,7 +96,7 @@ public class InnScript : Control, ISubscriber<GameState>
 			ViewHeroButton.Disabled = true;
 		}
 
-		if (player?.Inn?.BuiltUpgrades?.Contains(InnUpgrade.DiscoverWorkshop) == false)
+		if (player?.Inn?.BuiltUpgrades?.Contains(InnUpgradeName.DiscoverWorkshop) == false)
 		{
 			UpgradeInnButton.Disabled = true;
 		}

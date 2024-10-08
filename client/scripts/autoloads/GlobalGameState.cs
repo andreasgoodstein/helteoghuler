@@ -4,6 +4,7 @@ using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient.Utilities;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using HelteOgHulerShared.Utilities;
 
 namespace HelteOgHulerClient;
 
@@ -48,7 +49,7 @@ public class GlobalGameState : Node
 
 	public static void Update(IApplicable applicable)
 	{
-		var playerId = GameStateHelper.GetPlayer(_gameState)?.Id;
+		var playerId = _gameState.GetPlayer()?.Id;
 
 		applicable.ApplyToGameState(ref _gameState, playerId);
 
