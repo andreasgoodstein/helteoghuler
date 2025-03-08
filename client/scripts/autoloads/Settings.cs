@@ -10,10 +10,7 @@ public class Settings : Node
 
     public string LoginName
     {
-        get
-        {
-            return (string)settings.GetValue("", "loginName", "");
-        }
+        get { return (string)settings.GetValue("", "loginName", ""); }
         set
         {
             settings.SetValue("", "loginName", value);
@@ -23,10 +20,7 @@ public class Settings : Node
 
     public bool ConfirmationEnabled
     {
-        get
-        {
-            return (bool)settings.GetValue("", "confirmationEnabled", true);
-        }
+        get { return (bool)settings.GetValue("", "confirmationEnabled", true); }
         set
         {
             settings.SetValue("", "confirmationEnabled", value);

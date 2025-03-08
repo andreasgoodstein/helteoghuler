@@ -1,6 +1,6 @@
+using System.Diagnostics;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Utilities;
-using System.Diagnostics;
 
 namespace HelteOgHulerShared.Models;
 
@@ -9,7 +9,8 @@ public class Adventure : IApplicable
     const int REST_TIME_SEC = 10;
 
     public ulong Gold { get; set; }
-    public string Status { get; set; } = Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved);
+    public string Status { get; set; } =
+        Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved);
     public List<Encounter> EncounterList { get; set; } = [];
     public Hero[] Party { get; set; }
     public DateTime RestUntil { get; set; }

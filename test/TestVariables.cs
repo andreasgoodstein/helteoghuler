@@ -6,29 +6,30 @@ public static class TestVariables
     public static readonly Guid PlayerId = new("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee000");
     public static readonly string HeroId = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeee001";
 
-
-    public static GameState GetGameState() => new()
-    {
-        CurrentTime = DateTime,
-        PrivatePlayerDict = new() {
+    public static GameState GetGameState() =>
+        new()
+        {
+            CurrentTime = DateTime,
+            PrivatePlayerDict = new()
             {
-                PlayerId, new Player() {
-                    Id = PlayerId,
-                    Inn = new Inn() {
-                        Chest = new() {
-                            Gold = 0,
-                        },
-                        HeroRecruits = new() {
+                {
+                    PlayerId,
+                    new Player()
+                    {
+                        Id = PlayerId,
+                        Inn = new Inn()
+                        {
+                            Chest = new() { Gold = 0 },
+                            HeroRecruits = new()
                             {
-                                HeroId, new() {
-                                    Id = new Guid(HeroId),
-                                    Price = 200,
-                                }
+                                {
+                                    HeroId,
+                                    new() { Id = new Guid(HeroId), Price = 200 }
+                                },
                             },
                         },
-                    },
-                }
+                    }
+                },
             },
-        },
-    };
+        };
 }

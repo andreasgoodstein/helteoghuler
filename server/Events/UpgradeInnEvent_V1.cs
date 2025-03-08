@@ -1,9 +1,9 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Events;
 
@@ -14,8 +14,8 @@ public class UpgradeInnEvent_V1 : IEvent, IApplicable
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
-    public DateTime CreatedAt { get; init; }
     public EventType Type => EventType.UpgradeInn;
+    public required DateTime CreatedAt { get; init; }
     public required InnUpgrade Upgrade { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)

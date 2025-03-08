@@ -1,9 +1,8 @@
 #nullable enable
 
-using HelteOgHulerShared.Interfaces;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-
+using HelteOgHulerShared.Interfaces;
 #if (NET6_0_OR_GREATER)
 using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
@@ -23,12 +22,14 @@ public class Encounter
     public Hero[] Party { get; set; } = [];
     public Monster? Monster { get; set; }
     public ulong Reward { get; set; }
+
 #if (NET6_0_OR_GREATER)
     [BsonIgnore]
     [JsonIgnore]
 #endif
     [IgnoreDataMember]
     public Queue<IEncounterActor> InitiativeOrder { get; set; } = new Queue<IEncounterActor>();
+
 #if (NET6_0_OR_GREATER)
     [BsonIgnore]
     [JsonIgnore]
@@ -90,7 +91,7 @@ public class Encounter
         Monster = new()
         {
             HP = 2,
-            Type = random.Next(1, 100) <= 50 ? MonsterType.Bat : MonsterType.Rat
+            Type = random.Next(1, 100) <= 50 ? MonsterType.Bat : MonsterType.Rat,
         };
         Monster.Name = $"The {Enum.GetName(typeof(MonsterType), Monster.Type)}";
     }

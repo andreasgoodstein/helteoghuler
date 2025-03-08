@@ -13,7 +13,7 @@ public class HeroLogic(NameUtility nameUtility)
         {
             Id = Guid.NewGuid(),
             Name = _nameUtility.GenerateName(),
-            Price = 200
+            Price = 200,
         };
     }
 }

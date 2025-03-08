@@ -15,7 +15,11 @@ public class AdventureController : ControllerBase
     private readonly GameStateLogic _gameStateLogic;
     private readonly EventService _eventService;
 
-    public AdventureController(AdventureLogic adventureLogic, GameStateLogic gameStateLogic, EventService eventService)
+    public AdventureController(
+        AdventureLogic adventureLogic,
+        GameStateLogic gameStateLogic,
+        EventService eventService
+    )
     {
         _adventureLogic = adventureLogic;
         _gameStateLogic = gameStateLogic;
@@ -35,7 +39,7 @@ public class AdventureController : ControllerBase
             {
                 Adventure = adventure,
                 CreatedAt = DateTime.UtcNow,
-                PlayerId = user.PlayerId
+                PlayerId = user.PlayerId,
             };
 
             await _eventService.CreateAsync(adventureEvent);
@@ -49,7 +53,7 @@ public class AdventureController : ControllerBase
             return new ContentResult
             {
                 Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
-                StatusCode = 500,
+                StatusCode = 400,
             };
         }
     }

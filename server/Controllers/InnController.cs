@@ -15,7 +15,11 @@ public class InnController : ControllerBase
     private readonly GameStateLogic _gameStateLogic;
     private readonly InnLogic _innLogic;
 
-    public InnController(EventService eventService, GameStateLogic gameStateLogic, InnLogic innLogic)
+    public InnController(
+        EventService eventService,
+        GameStateLogic gameStateLogic,
+        InnLogic innLogic
+    )
     {
         _eventService = eventService;
         _gameStateLogic = gameStateLogic;
@@ -34,7 +38,7 @@ public class InnController : ControllerBase
             var recruitmentEvent = new RecruitHeroEvent_V1
             {
                 CreatedAt = DateTime.UtcNow,
-                Recruitment = recruitment
+                Recruitment = recruitment,
             };
 
             await _eventService.CreateAsync(recruitmentEvent);
@@ -48,7 +52,7 @@ public class InnController : ControllerBase
             return new ContentResult
             {
                 Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
-                StatusCode = 500
+                StatusCode = 400,
             };
         }
     }
@@ -79,7 +83,7 @@ public class InnController : ControllerBase
             return new ContentResult
             {
                 Content = HHJsonSerializer.Serialize(new HHError { Message = exception.Message }),
-                StatusCode = 500
+                StatusCode = 400,
             };
         }
     }

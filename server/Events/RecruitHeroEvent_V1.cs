@@ -1,9 +1,9 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Events;
 
@@ -14,11 +14,8 @@ public class RecruitHeroEvent_V1 : IEvent, IApplicable
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
-
-    public DateTime CreatedAt { get; init; }
-
     public EventType Type => EventType.RecruitHero;
-
+    public required DateTime CreatedAt { get; init; }
     public required Recruitment Recruitment { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? _)

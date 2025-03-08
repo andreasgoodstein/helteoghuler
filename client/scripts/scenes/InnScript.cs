@@ -1,108 +1,108 @@
 using Godot;
-using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
 
 public class InnScript : Control, ISubscriber<GameState>
 {
-	private Control HeroRecruitment;
-	private Control HeroRoster;
-	private Control UpgradeInn;
+    private Control HeroRecruitment;
+    private Control HeroRoster;
+    private Control UpgradeInn;
 
-	private Button RecruitHeroButton;
-	private Button ViewHeroButton;
-	private Button UpgradeInnButton;
+    private Button RecruitHeroButton;
+    private Button ViewHeroButton;
+    private Button UpgradeInnButton;
 
-	public override void _Ready()
-	{
-		RecruitHeroButton = GetNode<Button>("%ButtonRecruitHeroes");
-		RecruitHeroButton.Connect("pressed", this, "ButtonRecruitHeroesOnClick");
+    public override void _Ready()
+    {
+        RecruitHeroButton = GetNode<Button>("%ButtonRecruitHeroes");
+        RecruitHeroButton.Connect("pressed", this, "ButtonRecruitHeroesOnClick");
 
-		ViewHeroButton = GetNode<Button>("%ButtonViewHeroes");
-		ViewHeroButton.Connect("pressed", this, "ButtonViewHeroesOnClick");
+        ViewHeroButton = GetNode<Button>("%ButtonViewHeroes");
+        ViewHeroButton.Connect("pressed", this, "ButtonViewHeroesOnClick");
 
-		UpgradeInnButton = GetNode<Button>("%ButtonUpgradeInn");
-		UpgradeInnButton.Connect("pressed", this, "ButtonUpgradeInnOnClick");
+        UpgradeInnButton = GetNode<Button>("%ButtonUpgradeInn");
+        UpgradeInnButton.Connect("pressed", this, "ButtonUpgradeInnOnClick");
 
-		HeroRecruitment = GetNode<Control>("%HeroRecruitment");
-		HeroRoster = GetNode<Control>("%HeroRoster");
-		UpgradeInn = GetNode<Control>("%UpgradeInn");
+        HeroRecruitment = GetNode<Control>("%HeroRecruitment");
+        HeroRoster = GetNode<Control>("%HeroRoster");
+        UpgradeInn = GetNode<Control>("%UpgradeInn");
 
-		Message(GlobalGameState.Get());
+        Message(GlobalGameState.Get());
 
-		GlobalGameState.Register(this);
-	}
+        GlobalGameState.Register(this);
+    }
 
-	private void ButtonRecruitHeroesOnClick()
-	{
-		HeroRoster.SetProcess(false);
-		HeroRoster.Hide();
+    private void ButtonRecruitHeroesOnClick()
+    {
+        HeroRoster.SetProcess(false);
+        HeroRoster.Hide();
 
-		UpgradeInn.SetProcess(false);
-		UpgradeInn.Hide();
+        UpgradeInn.SetProcess(false);
+        UpgradeInn.Hide();
 
-		HeroRecruitment.Show();
-		HeroRecruitment.SetProcess(true);
-	}
+        HeroRecruitment.Show();
+        HeroRecruitment.SetProcess(true);
+    }
 
-	private void ButtonViewHeroesOnClick()
-	{
-		HeroRecruitment.SetProcess(false);
-		HeroRecruitment.Hide();
+    private void ButtonViewHeroesOnClick()
+    {
+        HeroRecruitment.SetProcess(false);
+        HeroRecruitment.Hide();
 
-		UpgradeInn.SetProcess(false);
-		UpgradeInn.Hide();
+        UpgradeInn.SetProcess(false);
+        UpgradeInn.Hide();
 
-		HeroRoster.Show();
-		HeroRoster.SetProcess(true);
-	}
+        HeroRoster.Show();
+        HeroRoster.SetProcess(true);
+    }
 
-	private void ButtonUpgradeInnOnClick()
-	{
-		HeroRecruitment.SetProcess(false);
-		HeroRecruitment.Hide();
+    private void ButtonUpgradeInnOnClick()
+    {
+        HeroRecruitment.SetProcess(false);
+        HeroRecruitment.Hide();
 
-		HeroRoster.SetProcess(false);
-		HeroRoster.Hide();
+        HeroRoster.SetProcess(false);
+        HeroRoster.Hide();
 
-		UpgradeInn.Show();
-		UpgradeInn.SetProcess(true);
-	}
+        UpgradeInn.Show();
+        UpgradeInn.SetProcess(true);
+    }
 
-	public override void _ExitTree()
-	{
-		GlobalGameState.Unregister(this);
-	}
+    public override void _ExitTree()
+    {
+        GlobalGameState.Unregister(this);
+    }
 
-	public void Message(GameState gameState)
-	{
-		var player = gameState.GetPlayer();
+    public void Message(GameState gameState)
+    {
+        var player = gameState.GetPlayer();
 
-		GetNode<Label>("%GoldValue").Text = player?.Inn?.Chest?.Gold.ToString() ?? "0";
+        GetNode<Label>("%GoldValue").Text = player?.Inn?.Chest?.Gold.ToString() ?? "0";
 
-		RecruitHeroButton.Disabled = false;
-		ViewHeroButton.Disabled = false;
+        RecruitHeroButton.Disabled = false;
+        ViewHeroButton.Disabled = false;
 
-		if (player?.Inn?.HeroRecruits?.Count < 1)
-		{
-			RecruitHeroButton.Disabled = true;
-		}
+        if (player?.Inn?.HeroRecruits?.Count < 1)
+        {
+            RecruitHeroButton.Disabled = true;
+        }
 
-		if (player?.Inn?.HeroRoster?.Count < 1)
-		{
-			ViewHeroButton.Disabled = true;
-		}
+        if (player?.Inn?.HeroRoster?.Count < 1)
+        {
+            ViewHeroButton.Disabled = true;
+        }
 
-		if (player?.Inn?.BuiltUpgrades?.Contains(InnUpgradeName.DiscoverWorkshop) == true)
-		{
-			UpgradeInnButton.Show();
-			UpgradeInnButton.Disabled = false;
-		}
-	}
+        if (player?.Inn?.BuiltUpgrades?.Contains(InnUpgradeName.DiscoverWorkshop) == true)
+        {
+            UpgradeInnButton.Show();
+            UpgradeInnButton.Disabled = false;
+        }
+    }
 
-	public string GetId()
-	{
-		return Filename + Name;
-	}
+    public string GetId()
+    {
+        return Filename + Name;
+    }
 }

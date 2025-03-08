@@ -1,6 +1,6 @@
-using HelteOgHulerShared.Interfaces;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using HelteOgHulerShared.Interfaces;
 
 namespace HelteOgHulerShared.Models;
 

@@ -5,16 +5,17 @@ using HelteOgHulerShared.Models;
 
 public class AdventureTest
 {
-    private readonly Hero[] TestParty = [
-        new() { HP = 2, Name = "TestHero" }
-    ];
+    private readonly Hero[] TestParty = [new() { HP = 2, Name = "TestHero" }];
 
     [Fact]
     public void AdventureConstructor()
     {
         Adventure adventure = new();
 
-        Assert.Equal(Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved), adventure.Status);
+        Assert.Equal(
+            Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved),
+            adventure.Status
+        );
     }
 
     [Fact]
@@ -24,11 +25,15 @@ public class AdventureTest
         adventure.ResolveAdventure(TestParty);
 
         Assert.Single(adventure.EncounterList);
-        Assert.NotEqual(Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved), adventure.Status);
+        Assert.NotEqual(
+            Enum.GetName(typeof(EncounterStatus), EncounterStatus.Unresolved),
+            adventure.Status
+        );
 
         if (Enum.GetName(typeof(EncounterStatus), EncounterStatus.Won) == adventure.Status)
         {
-            var sumOfEncounterRewards = (ulong)adventure.EncounterList.Sum(encounter => (long)encounter.Reward);
+            var sumOfEncounterRewards = (ulong)
+                adventure.EncounterList.Sum(encounter => (long)encounter.Reward);
 
             Assert.Equal(sumOfEncounterRewards, adventure.Gold);
         }

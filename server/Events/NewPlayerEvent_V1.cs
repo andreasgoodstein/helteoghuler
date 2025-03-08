@@ -1,9 +1,9 @@
 using HelteOgHulerServer.Interfaces;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Events;
 
@@ -14,11 +14,8 @@ public class NewPlayerEvent_V1 : IEvent, IApplicable
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
-
-    public DateTime CreatedAt { get; init; }
-
     public EventType Type => EventType.NewPlayer;
-
+    public required DateTime CreatedAt { get; init; }
     public required Player Player { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? playerId)
@@ -29,13 +26,16 @@ public class NewPlayerEvent_V1 : IEvent, IApplicable
         }
 
         gameState.PrivatePlayerDict.Add(Player.Id, Player);
-        gameState.PublicPlayerDict.Add(Player.Id, new PlayerPublic
-        {
-            Id = Player.Id,
-            InnName = Player.Inn.Name,
-            Name = Player.Name,
-            TotalGoldEarned = 0,
-        });
+        gameState.PublicPlayerDict.Add(
+            Player.Id,
+            new PlayerPublic
+            {
+                Id = Player.Id,
+                InnName = Player.Inn.Name,
+                Name = Player.Name,
+                TotalGoldEarned = 0,
+            }
+        );
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? playerId)

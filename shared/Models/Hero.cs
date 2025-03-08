@@ -1,6 +1,5 @@
-using HelteOgHulerShared.Interfaces;
 using System.Runtime.Serialization;
-
+using HelteOgHulerShared.Interfaces;
 #if (NET6_0_OR_GREATER)
 using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
@@ -27,9 +26,10 @@ public class Hero : IEncounterActor
     [JsonIgnore]
 #endif
     [IgnoreDataMember]
-    private readonly Dictionary<AttackModifier, int> AttackModifiers = new() {
+    private readonly Dictionary<AttackModifier, int> AttackModifiers = new()
+    {
         { AttackModifier.CritChance, -5 },
-        { AttackModifier.HitChance, -5 }
+        { AttackModifier.HitChance, -5 },
     };
 
     public void TakeAction(Encounter encounter, Random random)

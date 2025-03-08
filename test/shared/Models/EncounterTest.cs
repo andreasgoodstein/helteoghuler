@@ -5,9 +5,7 @@ using Moq;
 
 public class EncounterTest
 {
-    private readonly Hero[] TestParty = [
-        new() { HP = 2, Name = "TestHero" }
-    ];
+    private readonly Hero[] TestParty = [new() { HP = 2, Name = "TestHero" }];
 
     [Fact]
     public void EncounterConstructor()
@@ -31,7 +29,10 @@ public class EncounterTest
         encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
         Assert.Equal(EncounterStatus.Lost, encounter.Status);
-        Assert.Equal("Your Party became exhausted and returned to the Inn.", encounter.ActionLog.Last());
+        Assert.Equal(
+            "Your Party became exhausted and returned to the Inn.",
+            encounter.ActionLog.Last()
+        );
     }
 
     [Fact]
@@ -43,7 +44,8 @@ public class EncounterTest
         Encounter encounter = new();
         encounter.ResolveEncounter(TestParty, RandomMock.Object);
 
-        Assert.Equal(MonsterType.Bat, encounter.Monster!.Type); Assert.Equal(EncounterStatus.Lost, encounter.Status);
+        Assert.Equal(MonsterType.Bat, encounter.Monster!.Type);
+        Assert.Equal(EncounterStatus.Lost, encounter.Status);
         Assert.Equal("TestHero is knocked unconscious.", encounter.ActionLog.Last());
     }
 
@@ -51,7 +53,8 @@ public class EncounterTest
     public void ResolvesEncounterByVictory()
     {
         var RandomMock = new Mock<Random>();
-        RandomMock.SetupSequence(random => random.Next(1, 100))
+        RandomMock
+            .SetupSequence(random => random.Next(1, 100))
             .Returns(51) // Monster Type = Rat
             .Returns(49) // Monster Attack
             .Returns(90); // Hero Crit Attack

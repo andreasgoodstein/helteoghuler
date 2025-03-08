@@ -20,16 +20,18 @@ public static partial class Actions
 
             var appliedModifiers = ApplyAttackModifiers(modifiers);
 
-            encounter.ActionLog.Add(Attack.Outcome
-                .Replace("ACTOR", encounter.CurrentlyActing.Name)
-                .Replace("TARGET", target.Name)
-                .Replace("SUCCESS", appliedModifiers[AttackModifier.HitChance].ToString())
-                .Replace("CRIT", appliedModifiers[AttackModifier.CritChance].ToString())
+            encounter.ActionLog.Add(
+                Attack
+                    .Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name)
+                    .Replace("TARGET", target.Name)
+                    .Replace("SUCCESS", appliedModifiers[AttackModifier.HitChance].ToString())
+                    .Replace("CRIT", appliedModifiers[AttackModifier.CritChance].ToString())
             );
 
             int roll = random.Next(MIN_CHANCE, MAX_CHANCE);
             bool doesAttackCrit = roll >= appliedModifiers[AttackModifier.CritChance];
-            bool doesAttackHit = doesAttackCrit || roll >= appliedModifiers[AttackModifier.HitChance];
+            bool doesAttackHit =
+                doesAttackCrit || roll >= appliedModifiers[AttackModifier.HitChance];
 
             if (!doesAttackHit)
             {
@@ -40,7 +42,9 @@ public static partial class Actions
             if (doesAttackCrit)
             {
                 var damage = appliedModifiers[AttackModifier.CritDamage];
-                encounter.ActionLog.Add($"They roll a {roll} and critically hit! Doing {damage} damage.");
+                encounter.ActionLog.Add(
+                    $"They roll a {roll} and critically hit! Doing {damage} damage."
+                );
                 target.HP -= damage;
             }
             else
@@ -65,7 +69,7 @@ public static partial class Actions
                     encounter.Status = EncounterStatus.Won;
                 }
             }
-        }
+        },
     };
 
     private static AttackModifierDict ApplyAttackModifiers(AttackModifierDict modifiers)
@@ -75,11 +79,42 @@ public static partial class Actions
         modifiers.TryGetValue(AttackModifier.HitChance, out int toHitModifier);
         modifiers.TryGetValue(AttackModifier.HitDamage, out int hitDamageModifier);
 
-        return new() {
-            { AttackModifier.CritChance, Math.Min(Math.Max(Attack.Probabilities[AttackModifier.CritChance] + toCritModifier, MIN_CHANCE), MAX_CHANCE) } ,
-            { AttackModifier.CritDamage, Math.Max(Attack.Probabilities[AttackModifier.CritDamage] + critDamageModifier, MIN_ATTACK_DAMAGE) },
-            { AttackModifier.HitChance, Math.Min(Math.Max(Attack.Probabilities[AttackModifier.HitChance] + toHitModifier, MIN_CHANCE), MAX_CHANCE) },
-            { AttackModifier.HitDamage, Math.Max(Attack.Probabilities[AttackModifier.HitDamage] + hitDamageModifier, MIN_ATTACK_DAMAGE) },
+        return new()
+        {
+            {
+                AttackModifier.CritChance,
+                Math.Min(
+                    Math.Max(
+                        Attack.Probabilities[AttackModifier.CritChance] + toCritModifier,
+                        MIN_CHANCE
+                    ),
+                    MAX_CHANCE
+                )
+            },
+            {
+                AttackModifier.CritDamage,
+                Math.Max(
+                    Attack.Probabilities[AttackModifier.CritDamage] + critDamageModifier,
+                    MIN_ATTACK_DAMAGE
+                )
+            },
+            {
+                AttackModifier.HitChance,
+                Math.Min(
+                    Math.Max(
+                        Attack.Probabilities[AttackModifier.HitChance] + toHitModifier,
+                        MIN_CHANCE
+                    ),
+                    MAX_CHANCE
+                )
+            },
+            {
+                AttackModifier.HitDamage,
+                Math.Max(
+                    Attack.Probabilities[AttackModifier.HitDamage] + hitDamageModifier,
+                    MIN_ATTACK_DAMAGE
+                )
+            },
         };
     }
 }
@@ -94,8 +129,9 @@ public enum AttackModifier
 
 public sealed class AttackAction : HHAction
 {
-    public readonly AttackModifierDict Probabilities = new() {
-        { AttackModifier.CritChance, 95 } ,
+    public readonly AttackModifierDict Probabilities = new()
+    {
+        { AttackModifier.CritChance, 95 },
         { AttackModifier.CritDamage, 2 },
         { AttackModifier.HitChance, 50 },
         { AttackModifier.HitDamage, 1 },

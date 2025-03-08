@@ -1,60 +1,65 @@
+using System.Collections.Generic;
 using Godot;
-using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using System.Collections.Generic;
 
 public class HeroRecruitmentScript : Control, ISubscriber<GameState>
 {
-	private readonly PackedScene HeroRecruitmentItem = GD.Load<PackedScene>("res://scenes/components/HeroRecruitmentItem.tscn");
+    private readonly PackedScene HeroRecruitmentItem = GD.Load<PackedScene>(
+        "res://scenes/components/HeroRecruitmentItem.tscn"
+    );
 
-	private VBoxContainer RecruitList;
+    private VBoxContainer RecruitList;
 
-	public override void _Ready()
-	{
-		RecruitList = GetNode<VBoxContainer>("%RecruitList");
+    public override void _Ready()
+    {
+        RecruitList = GetNode<VBoxContainer>("%RecruitList");
 
-		Message(GlobalGameState.Get());
+        Message(GlobalGameState.Get());
 
-		GlobalGameState.Register(this);
-	}
+        GlobalGameState.Register(this);
+    }
 
-	public override void _ExitTree()
-	{
-		GlobalGameState.Unregister(this);
-	}
+    public override void _ExitTree()
+    {
+        GlobalGameState.Unregister(this);
+    }
 
-	public string GetId()
-	{
-		return Filename + Name;
-	}
+    public string GetId()
+    {
+        return Filename + Name;
+    }
 
-	public void Message(GameState gameState)
-	{
-		var recruitList = gameState.GetPlayer()?.Inn?.HeroRecruits?.Values ?? new Dictionary<string, Hero>().Values;
+    public void Message(GameState gameState)
+    {
+        var recruitList =
+            gameState.GetPlayer()?.Inn?.HeroRecruits?.Values
+            ?? new Dictionary<string, Hero>().Values;
 
-		foreach (Node child in RecruitList?.GetChildren())
-		{
-			RecruitList.RemoveChild(child);
-		}
+        foreach (Node child in RecruitList?.GetChildren())
+        {
+            RecruitList.RemoveChild(child);
+        }
 
-		foreach (var hero in recruitList)
-		{
-			var item = HeroRecruitmentItem.Instance();
+        foreach (var hero in recruitList)
+        {
+            var item = HeroRecruitmentItem.Instance();
 
-			item.GetNode<Label>("%RecruitName").Text = hero.Name;
-			item.GetNode<Label>("%RecruitClass").Text = TranslationServer.Translate("HERO");
-			item.GetNode<Label>("%RecruitPrice").Text = 200.ToString();
+            item.GetNode<Label>("%RecruitName").Text = hero.Name;
+            item.GetNode<Label>("%RecruitClass").Text = TranslationServer.Translate("HERO");
+            item.GetNode<Label>("%RecruitPrice").Text = 200.ToString();
 
-			item.GetNode<Button>("%ButtonRecruit").Connect("pressed", this, "RecruitHero", [hero.Id.ToString()]);
+            item.GetNode<Button>("%ButtonRecruit")
+                .Connect("pressed", this, "RecruitHero", [hero.Id.ToString()]);
 
-			RecruitList.AddChild(item);
-		}
-	}
+            RecruitList.AddChild(item);
+        }
+    }
 
-	private async void RecruitHero(string heroId)
-	{
-		await GetNode<Server>("/root/Server").RecruitHero(this, heroId);
-	}
+    private async void RecruitHero(string heroId)
+    {
+        await GetNode<Server>("/root/Server").RecruitHero(this, heroId);
+    }
 }

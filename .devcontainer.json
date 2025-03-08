@@ -31,7 +31,8 @@
                 "GitHub.vscode-github-actions",
                 "ms-vscode.mono-debug",
                 "neikeq.godot-csharp-vscode",
-                "Tyriar.sort-lines"
+                "Tyriar.sort-lines",
+                "csharpier.csharpier-vscode"
             ]
         }
     }

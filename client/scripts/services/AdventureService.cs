@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using Godot;
 using HelteOgHulerShared.Models;
-using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
@@ -20,11 +20,13 @@ public class AdventureService : BaseService
             taskSource.SetResult(null);
         });
 
-        requestNode.SetResponseHandler((byte[] body) =>
-        {
-            var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
-            taskSource.SetResult(adventure);
-        });
+        requestNode.SetResponseHandler(
+            (byte[] body) =>
+            {
+                var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
+                taskSource.SetResult(adventure);
+            }
+        );
 
         requestNode.ExecuteRequest(START_ADVENTURE_URL);
 

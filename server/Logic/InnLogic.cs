@@ -18,11 +18,11 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
         {
             AvailableUpgrades = [],
             PendingUpgrade = InnUpgradeName.DiscoverWorkshop,
-            Chest = new Chest
+            Chest = new Chest { Gold = STARTING_GOLD },
+            HeroRecruits = new Dictionary<string, Hero>
             {
-                Gold = STARTING_GOLD,
+                { newHeroRecruit.Id.ToString(), newHeroRecruit },
             },
-            HeroRecruits = new Dictionary<string, Hero> { { newHeroRecruit.Id.ToString(), newHeroRecruit } },
             HeroRoster = [],
             Name = innName,
         };
@@ -31,7 +31,9 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     public Recruitment RecruitHero(Guid playerId, Guid heroId)
     {
         var gameState = _gameStateLogic.Get();
-        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+        var inn =
+            gameState.GetPlayer(playerId)?.Inn
+            ?? throw new InvalidDataException("Innkeeper not found.");
 
         if (!inn.HeroRecruits.ContainsKey(heroId.ToString()))
         {
@@ -49,7 +51,9 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     public Hero[] GatherParty(Guid playerId)
     {
         var gameState = _gameStateLogic.Get();
-        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+        var inn =
+            gameState.GetPlayer(playerId)?.Inn
+            ?? throw new InvalidDataException("Innkeeper not found.");
 
         return [.. inn.HeroRoster.Values];
     }
@@ -57,7 +61,9 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     public InnUpgrade UpgradeInn(Guid playerId, InnUpgradeName upgrade)
     {
         var gameState = _gameStateLogic.Get();
-        var inn = gameState.GetPlayer(playerId)?.Inn ?? throw new InvalidDataException("Innkeeper not found.");
+        var inn =
+            gameState.GetPlayer(playerId)?.Inn
+            ?? throw new InvalidDataException("Innkeeper not found.");
 
         var playerGold = inn.Chest.Gold;
         var upgradeCost = InnUpgrades.Cost[upgrade];

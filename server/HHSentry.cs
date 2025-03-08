@@ -1,5 +1,5 @@
-using Sentry.Profiling;
 using Sentry;
+using Sentry.Profiling;
 
 namespace HelteOgHulerServer;
 

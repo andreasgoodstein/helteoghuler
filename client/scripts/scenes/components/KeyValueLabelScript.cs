@@ -1,22 +1,22 @@
-using Godot;
 using System;
+using Godot;
 
 public class KeyValueLabelScript : HBoxContainer
 {
-	private Label Value;
+    private Label Value;
 
-	public override void _Ready()
-	{
-		Value = GetNode<Label>("Value");
-	}
+    public override void _Ready()
+    {
+        Value = GetNode<Label>("Value");
+    }
 
-	public void Set(string value)
-	{
-		Value.Text = value;
-	}
+    public void Set(string value)
+    {
+        Value.Text = value;
+    }
 
-	public void Set(ulong? value)
-	{
-		Value.Text = value.ToString();
-	}
+    public void Set(ulong? value)
+    {
+        Value.Text = value.ToString();
+    }
 }

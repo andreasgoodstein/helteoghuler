@@ -1,5 +1,5 @@
-using Godot;
 using System.Threading.Tasks;
+using Godot;
 
 namespace HelteOgHulerClient.Services;
 
@@ -19,11 +19,13 @@ public class GameStateService : BaseService
             taskSource.SetResult(false);
         });
 
-        requestNode.SetResponseHandler((byte[] body) =>
-        {
-            ResponseHandler.HandleGameStateResponse(body);
-            taskSource.SetResult(true);
-        });
+        requestNode.SetResponseHandler(
+            (byte[] body) =>
+            {
+                ResponseHandler.HandleGameStateResponse(body);
+                taskSource.SetResult(true);
+            }
+        );
 
         requestNode.ExecuteRequest(REFRESH_GAMESTATE_URL);
 

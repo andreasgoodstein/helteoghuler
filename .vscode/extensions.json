@@ -13,6 +13,7 @@
         "wayou.vscode-todo-highlight",
         "redhat.vscode-yaml",
         "ms-azuretools.vscode-docker",
-        "github.vscode-github-actions"
+        "github.vscode-github-actions",
+        "csharpier.csharpier-vscode"
     ]
 }

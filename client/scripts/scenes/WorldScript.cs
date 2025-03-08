@@ -1,36 +1,36 @@
 using Godot;
-using HelteOgHulerClient.Interfaces;
 using HelteOgHulerClient;
+using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 
 public class WorldScript : Control, ISubscriber<GameState>
 {
-	private KeyValueLabelScript TotalAdventures;
+    private KeyValueLabelScript TotalAdventures;
 
-	public override void _Ready()
-	{
-		TotalAdventures = GetNode<KeyValueLabelScript>("TotalAdventuresTracker");
+    public override void _Ready()
+    {
+        TotalAdventures = GetNode<KeyValueLabelScript>("TotalAdventuresTracker");
 
-		Message(GlobalGameState.Get());
+        Message(GlobalGameState.Get());
 
-		GlobalGameState.Register(this);
-	}
+        GlobalGameState.Register(this);
+    }
 
-	public override void _ExitTree()
-	{
-		GlobalGameState.Unregister(this);
-	}
+    public override void _ExitTree()
+    {
+        GlobalGameState.Unregister(this);
+    }
 
-	public void Message(GameState gameState)
-	{
-		if (gameState?.World?.TotalAdventures != null)
-		{
-			TotalAdventures.Set(gameState.World.TotalAdventures);
-		}
-	}
+    public void Message(GameState gameState)
+    {
+        if (gameState?.World?.TotalAdventures != null)
+        {
+            TotalAdventures.Set(gameState.World.TotalAdventures);
+        }
+    }
 
-	public string GetId()
-	{
-		return Filename + Name;
-	}
+    public string GetId()
+    {
+        return Filename + Name;
+    }
 }

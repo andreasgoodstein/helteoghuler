@@ -11,7 +11,12 @@ public class UserLogic
 
     private readonly Dictionary<string, User> userDictionary;
 
-    public UserLogic(EventService eventService, GameStateLogic gameStateLogic, PlayerLogic playerLogic, UserService userService)
+    public UserLogic(
+        EventService eventService,
+        GameStateLogic gameStateLogic,
+        PlayerLogic playerLogic,
+        UserService userService
+    )
     {
         _eventService = eventService;
         _gameStateLogic = gameStateLogic;
@@ -67,7 +72,12 @@ public class UserLogic
         var newPlayerEvent = new NewPlayerEvent_V1
         {
             CreatedAt = DateTime.UtcNow,
-            Player = _playerLogic.CreatePlayer(_gameStateLogic.Get(), adminUser.PlayerId, "The Castle", "The Marquee"),
+            Player = _playerLogic.CreatePlayer(
+                _gameStateLogic.Get(),
+                adminUser.PlayerId,
+                "The Castle",
+                "The Marquee"
+            ),
         };
 
         _eventService.CreateAsync(newPlayerEvent);

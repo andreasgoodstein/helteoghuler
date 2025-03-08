@@ -9,7 +9,7 @@ public class RecruitmentTest
     private readonly Recruitment recruitment = new()
     {
         HeroId = new Guid(TestVariables.HeroId),
-        PlayerId = TestVariables.PlayerId
+        PlayerId = TestVariables.PlayerId,
     };
 
     [Fact]

@@ -10,12 +10,13 @@ public class EventService
 {
     private readonly IMongoCollection<IEvent> _eventsCollection;
 
-    public EventService(
-        IOptions<DatabaseSettings> databaseSettings)
+    public EventService(IOptions<DatabaseSettings> databaseSettings)
     {
         var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
         var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
-        _eventsCollection = mongoDatabase.GetCollection<IEvent>(databaseSettings.Value.EventCollectionName);
+        _eventsCollection = mongoDatabase.GetCollection<IEvent>(
+            databaseSettings.Value.EventCollectionName
+        );
     }
 
     // public Task<List<IEvent>> GetAsync() =>
@@ -25,8 +26,10 @@ public class EventService
     //      _eventsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
     public Task<List<IEvent>> GetAsyncAsc() =>
-        _eventsCollection.Find(_ => true).Sort(Builders<IEvent>.Sort.Ascending("CreatedAt")).ToListAsync();
+        _eventsCollection
+            .Find(_ => true)
+            .Sort(Builders<IEvent>.Sort.Ascending("CreatedAt"))
+            .ToListAsync();
 
-    public Task CreateAsync(IEvent newEvent) =>
-         _eventsCollection.InsertOneAsync(newEvent);
+    public Task CreateAsync(IEvent newEvent) => _eventsCollection.InsertOneAsync(newEvent);
 }

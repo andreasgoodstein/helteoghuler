@@ -9,14 +9,17 @@ public class AdventureLogic(GameStateLogic gameStateLogic, InnLogic innLogic)
 
     private bool CanPlayerAdventureForth(Guid playerId)
     {
-        return (_gameStateLogic.Get()?.PrivatePlayerDict[playerId]?.RestUntil ?? DateTime.UtcNow) <= DateTime.UtcNow;
+        return (_gameStateLogic.Get()?.PrivatePlayerDict[playerId]?.RestUntil ?? DateTime.UtcNow)
+            <= DateTime.UtcNow;
     }
 
     public Adventure GenerateAdventure(Guid playerId)
     {
         if (!CanPlayerAdventureForth(playerId))
         {
-            throw new InvalidOperationException("Your party needs more rest, and cannot venture forth yet.");
+            throw new InvalidOperationException(
+                "Your party needs more rest, and cannot venture forth yet."
+            );
         }
 
         var party = _innLogic.GatherParty(playerId);

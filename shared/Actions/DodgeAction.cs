@@ -18,6 +18,6 @@ public static partial class Actions
             encounter.ActionLog.Add(Dodge.Outcome.Replace("ACTOR", encounter.CurrentlyActing.Name));
 
             // TODO: Figure out setting (and clearing) abilities dynamically
-        }
+        },
     };
 }

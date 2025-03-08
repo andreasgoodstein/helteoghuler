@@ -1,6 +1,6 @@
+using System.Threading.Tasks;
 using Godot;
 using HelteOgHulerShared.Models;
-using System.Threading.Tasks;
 
 namespace HelteOgHulerClient.Services;
 
@@ -21,11 +21,13 @@ public class InnService : BaseService
             taskSource.SetResult(false);
         });
 
-        requestNode.SetResponseHandler((byte[] body) =>
-        {
-            ResponseHandler.HandleGameStateResponse<Recruitment>(body);
-            taskSource.SetResult(true);
-        });
+        requestNode.SetResponseHandler(
+            (byte[] body) =>
+            {
+                ResponseHandler.HandleGameStateResponse<Recruitment>(body);
+                taskSource.SetResult(true);
+            }
+        );
 
         requestNode.ExecuteRequest($"{RECRUIT_HERO_URL}?heroId={heroId}");
 
@@ -44,11 +46,13 @@ public class InnService : BaseService
             taskSource.SetResult(null);
         });
 
-        requestNode.SetResponseHandler((byte[] body) =>
-        {
-            var innUpgrade = ResponseHandler.HandleGameStateResponse<InnUpgrade>(body);
-            taskSource.SetResult(innUpgrade);
-        });
+        requestNode.SetResponseHandler(
+            (byte[] body) =>
+            {
+                var innUpgrade = ResponseHandler.HandleGameStateResponse<InnUpgrade>(body);
+                taskSource.SetResult(innUpgrade);
+            }
+        );
 
         requestNode.ExecuteRequest($"{UPGRADE_INN_URL}?upgrade={upgrade}");
 

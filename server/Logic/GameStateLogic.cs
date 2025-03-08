@@ -1,23 +1,19 @@
+using System.Text.Json;
 using HelteOgHulerServer.Services;
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using System.Text.Json;
 
 namespace HelteOgHulerServer.Logic;
 
 public class GameStateLogic
 {
-
     private GameState _globalGameState = new()
     {
         CurrentTime = DateTime.UtcNow,
         PrivatePlayerDict = [],
         PublicPlayerDict = [],
-        World = new World
-        {
-            Name = "East Island"
-        }
+        World = new World { Name = "East Island" },
     };
 
     private readonly EventService _eventService;
@@ -46,7 +42,9 @@ public class GameStateLogic
     {
         _globalGameState.CurrentTime = DateTime.UtcNow;
 
-        GameState gameState = JsonSerializer.Deserialize<GameState>(JsonSerializer.Serialize<GameState>(_globalGameState))!;
+        GameState gameState = JsonSerializer.Deserialize<GameState>(
+            JsonSerializer.Serialize<GameState>(_globalGameState)
+        )!;
 
         if (!gameState.PrivatePlayerDict.ContainsKey(playerId))
         {

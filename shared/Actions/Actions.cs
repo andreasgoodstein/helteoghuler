@@ -9,19 +9,25 @@ public static partial class Actions
 
     public static readonly Dictionary<ActionName, HHAction> DefaultActions = [];
 
-    private static IEncounterActor GetTarget(Encounter encounter, ActionTarget targetType, Random random)
+    private static IEncounterActor GetTarget(
+        Encounter encounter,
+        ActionTarget targetType,
+        Random random
+    )
     {
         return targetType switch
         {
-            ActionTarget.Ally => (encounter.CurrentlyActing is Hero) ?
-                                encounter.Party.Length > 1 ?
-                                    encounter.Party.Where(acting => acting.Id != encounter.CurrentlyActing.Id).ToArray()[random.Next(0, encounter.Party.Length - 1)] :
-                                    encounter.CurrentlyActing :
-                                encounter.Monster,
+            ActionTarget.Ally => (encounter.CurrentlyActing is Hero)
+                ? encounter.Party.Length > 1
+                    ? encounter
+                        .Party.Where(acting => acting.Id != encounter.CurrentlyActing.Id)
+                        .ToArray()[random.Next(0, encounter.Party.Length - 1)]
+                    : encounter.CurrentlyActing
+                : encounter.Monster,
 
-            ActionTarget.Enemy => (encounter.CurrentlyActing is Hero) ?
-                                encounter.Monster :
-                                encounter.Party[random.Next(0, encounter.Party.Length)],
+            ActionTarget.Enemy => (encounter.CurrentlyActing is Hero)
+                ? encounter.Monster
+                : encounter.Party[random.Next(0, encounter.Party.Length)],
 
             // ActionTarget.Self
             _ => encounter.CurrentlyActing,
@@ -39,5 +45,5 @@ public enum ActionTarget
 {
     Self = 0,
     Ally = 1,
-    Enemy = 2
+    Enemy = 2,
 }

@@ -1,53 +1,56 @@
+using System.Collections.Generic;
 using Godot;
 using HelteOgHulerClient.Interfaces;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using System.Collections.Generic;
 
 namespace HelteOgHulerClient;
 
 public class HeroRosterScript : Control, ISubscriber<GameState>
 {
-	private readonly PackedScene HeroRosterItem = GD.Load<PackedScene>("res://scenes/components/HeroRosterItem.tscn");
-	private VBoxContainer HeroList;
+    private readonly PackedScene HeroRosterItem = GD.Load<PackedScene>(
+        "res://scenes/components/HeroRosterItem.tscn"
+    );
+    private VBoxContainer HeroList;
 
-	public override void _Ready()
-	{
-		HeroList = GetNode<VBoxContainer>("%HeroList");
+    public override void _Ready()
+    {
+        HeroList = GetNode<VBoxContainer>("%HeroList");
 
-		Message(GlobalGameState.Get());
+        Message(GlobalGameState.Get());
 
-		GlobalGameState.Register(this);
-	}
+        GlobalGameState.Register(this);
+    }
 
-	public override void _ExitTree()
-	{
-		GlobalGameState.Unregister(this);
-	}
+    public override void _ExitTree()
+    {
+        GlobalGameState.Unregister(this);
+    }
 
-	public string GetId()
-	{
-		return Filename + Name;
-	}
+    public string GetId()
+    {
+        return Filename + Name;
+    }
 
-	public void Message(GameState gameState)
-	{
-		var heroRoster = gameState.GetPlayer()?.Inn?.HeroRoster?.Values ?? new Dictionary<string, Hero>().Values;
-		var isResting = GameStateHelper.IsResting(gameState);
+    public void Message(GameState gameState)
+    {
+        var heroRoster =
+            gameState.GetPlayer()?.Inn?.HeroRoster?.Values ?? new Dictionary<string, Hero>().Values;
+        var isResting = GameStateHelper.IsResting(gameState);
 
-		foreach (Node child in HeroList?.GetChildren())
-		{
-			HeroList.RemoveChild(child);
-		}
+        foreach (Node child in HeroList?.GetChildren())
+        {
+            HeroList.RemoveChild(child);
+        }
 
-		foreach (var hero in heroRoster)
-		{
-			var item = HeroRosterItem.Instance();
+        foreach (var hero in heroRoster)
+        {
+            var item = HeroRosterItem.Instance();
 
-			item.GetNode<Label>("HeroName").Text = hero.Name;
-			item.GetNode<Label>("HeroStatus").Text = isResting ? "Resting" : "Ready";
+            item.GetNode<Label>("HeroName").Text = hero.Name;
+            item.GetNode<Label>("HeroStatus").Text = isResting ? "Resting" : "Ready";
 
-			HeroList.AddChild(item);
-		}
-	}
+            HeroList.AddChild(item);
+        }
+    }
 }

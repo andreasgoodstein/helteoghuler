@@ -1,6 +1,5 @@
-using HelteOgHulerShared.Interfaces;
 using System.Runtime.Serialization;
-
+using HelteOgHulerShared.Interfaces;
 #if (NET6_0_OR_GREATER)
 using MongoDB.Bson.Serialization.Attributes;
 using System.Text.Json.Serialization;
@@ -61,11 +60,11 @@ public class Monster : IEncounterActor
 public enum MonsterAbility
 {
     Dodging = 0,
-    Flying = 1
+    Flying = 1,
 }
 
 public enum MonsterType
 {
     Rat = 0,
-    Bat = 1
+    Bat = 1,
 }

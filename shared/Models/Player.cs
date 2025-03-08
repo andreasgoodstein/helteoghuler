@@ -12,7 +12,7 @@ public class Player
 
     public Adventure LatestAdventure { get; set; }
 
-    public Dictionary<PlayerObjectives, bool> ObjectivesCompleted { get; set; }
+    public Dictionary<PlayerObjective, bool> ObjectivesCompleted { get; set; }
 }
 
 public class PlayerPublic
@@ -28,7 +28,7 @@ public class PlayerPublic
     public ulong TotalGoldEarned { get; set; }
 }
 
-public enum PlayerObjectives
+public enum PlayerObjective
 {
     DiscoverWorkshop = 0,
 }

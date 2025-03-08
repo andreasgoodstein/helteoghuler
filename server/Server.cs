@@ -1,19 +1,18 @@
+using HelteOgHulerServer;
 using HelteOgHulerServer.Events;
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
 using HelteOgHulerServer.Utilities;
-using HelteOgHulerServer;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Bson.Serialization;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
-var unauthorizedError = HHJsonSerializer.Serialize(new HHError
-{
-    Message = "Your Innkeeper license could not be verified."
-});
+var unauthorizedError = HHJsonSerializer.Serialize(
+    new HHError { Message = "Your Innkeeper license could not be verified." }
+);
 
 // Allow all mongodb serialization
 BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
@@ -37,15 +36,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add CORS Policy
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader();
-        });
-}
-);
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 // builder.Services.AddHttpsRedirection(options =>
 // {
@@ -58,8 +53,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<DatabaseSettings>(
-    builder.Configuration.GetSection("Database"));
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("Database"));
 
 // Register services
 builder.Services.AddSingleton<EventService>();
@@ -78,7 +72,10 @@ builder.Services.AddSingleton<NameUtility>();
 
 // Configure server
 // builder.Services.AddResponseCompression(options => { options.EnableForHttps = true; });
-builder.WebHost.ConfigureKestrel(options => { options.AddServerHeader = false; });
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.AddServerHeader = false;
+});
 
 var app = builder.Build();
 
@@ -99,20 +96,22 @@ app.Services.GetService<GameStateLogic>();
 var userLogic = app.Services.GetService<UserLogic>();
 
 // Setup auth middleware
-app.Use(async (context, next) =>
-{
-    context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHLoginName"]);
-
-    if (context.Items["User"] == null)
+app.Use(
+    async (context, next) =>
     {
-        context.Response.StatusCode = 401;
-        context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync(unauthorizedError);
-        return;
-    }
+        context.Items["User"] = userLogic?.GetUser(context.Request.Headers["HHLoginName"]);
 
-    await next();
-});
+        if (context.Items["User"] == null)
+        {
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "application/json";
+            await context.Response.WriteAsync(unauthorizedError);
+            return;
+        }
+
+        await next();
+    }
+);
 
 app.MapControllers();
 
@@ -125,5 +124,5 @@ if (app.Environment.IsProduction())
 
 app.Run();
 
-// TODO: 
+// TODO:
 // Evaluate if compression is worth the response delay

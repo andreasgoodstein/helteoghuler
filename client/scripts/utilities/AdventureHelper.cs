@@ -1,5 +1,5 @@
-using HelteOgHulerShared.Models;
 using System.Linq;
+using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient.Utilities;
 

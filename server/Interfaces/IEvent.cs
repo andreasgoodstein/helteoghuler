@@ -1,8 +1,8 @@
 using HelteOgHulerShared.Interfaces;
 using HelteOgHulerShared.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson;
 
 namespace HelteOgHulerServer.Interfaces;
 
@@ -24,4 +24,5 @@ public enum EventType
     NewPlayer = 1,
     RecruitHero = 2,
     UpgradeInn = 3,
+    CompleteObjective = 4,
 }

@@ -1,5 +1,5 @@
-using HelteOgHulerShared.Interfaces;
 using System;
+using HelteOgHulerShared.Interfaces;
 
 namespace HelteOgHulerShared.Models;
 
