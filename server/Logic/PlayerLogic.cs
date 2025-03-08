@@ -26,7 +26,7 @@ public class PlayerLogic(InnLogic innLogic)
     {
         var player = GameStateHelper.GetPlayer(gameState, playerId);
 
-        if (player.ObjectivesCompleted.ContainsKey(objective))
+        if (player.ObjectivesCompleted?.ContainsKey(objective) ?? false)
         {
             throw new InvalidDataException("You have already done this mighty deed.");
         }
