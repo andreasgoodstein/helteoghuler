@@ -40,7 +40,7 @@ public class StartAdventureScript : Button, ISubscriber<GameState>
     {
         StartAdventure.Disabled = true;
 
-        var adventure = await GetNode<Server>("/root/Server").StartAdventure(this);
+        var adventure = await this.GetServer().StartAdventure(this);
 
         GetNode<Label>("%Message").Text = AdventureHelper.GetAdventureText(adventure);
     }

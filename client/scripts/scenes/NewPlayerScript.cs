@@ -22,7 +22,7 @@ public class NewPlayerScript : Control
             return;
         }
 
-        await GetNode<Server>("/root/Server").CreateNewPlayer(this, InnName.Text, PlayerName.Text);
+        await this.GetServer().CreateNewPlayer(this, InnName.Text, PlayerName.Text);
 
         GetTree().ChangeScene("res://scenes/InnScene.tscn");
     }

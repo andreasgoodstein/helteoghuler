@@ -60,6 +60,6 @@ public class HeroRecruitmentScript : Control, ISubscriber<GameState>
 
     private async void RecruitHero(string heroId)
     {
-        await GetNode<Server>("/root/Server").RecruitHero(this, heroId);
+        await this.GetServer().RecruitHero(this, heroId);
     }
 }

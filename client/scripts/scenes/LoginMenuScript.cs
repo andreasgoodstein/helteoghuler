@@ -20,7 +20,7 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
 
         GlobalGameState.Register(this);
 
-        var loginName = GetNode<Settings>("/root/Settings").LoginName;
+        var loginName = this.GetSettings().LoginName;
 
         if (!String.IsNullOrWhiteSpace(loginName))
         {
@@ -45,9 +45,9 @@ public class LoginMenuScript : Control, ISubscriber<GameState>
             return;
         }
 
-        GetNode<Settings>("/root/Settings").LoginName = UserNameInput.Text;
+        this.GetSettings().LoginName = UserNameInput.Text;
 
-        GetNode<Server>("/root/Server").RefreshGameState(this);
+        this.GetServer().RefreshGameState(this);
 
         StartAdventure.Hide();
         LoadingSpinner.Show();
