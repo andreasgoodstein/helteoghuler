@@ -4,17 +4,23 @@ using HelteOgHulerShared.Models;
 
 namespace HelteOgHulerClient.Services;
 
-public class ResponseWrapper(Action Clean) : Node
+public class ResponseWrapper() : Node
 {
     public Action ErrorDelegate { get; set; }
     public Action<byte[]> JSONCallbackDelegate { get; set; }
     public Action<string> TextCallbackDelegate { get; set; }
-    private readonly Action Clean = Clean;
+    private Action Clean;
 
     private void HandleUnauthorizedError()
     {
         GD.PrintErr("Auth: Unauthorized");
         GetTree().ChangeScene("res://scenes/LoginMenuScene.tscn");
+    }
+
+    // Cannot set with constructor because of Godot
+    public void SetCleaner(Action clean)
+    {
+        Clean = clean;
     }
 
     public void JSONCallback(int result, int response_code, string[] headers, byte[] body)

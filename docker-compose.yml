@@ -1,5 +1,5 @@
 services:
-  helteoghuler_database:
+  database:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -10,14 +10,14 @@ services:
     volumes:
       - helteoghuler:/data/db
 
-  helteoghuler_server:
+  server:
     build:
       dockerfile: ./Server.Dockerfile
       args:
-        - DATABASE__CONNECTIONSTRING=mongodb://root:password@helteoghuler_database:27017
+        - DATABASE__CONNECTIONSTRING=mongodb://root:password@database:27017
         - DATABASE__DATABASENAME=HelteOgHulerDatabase
     depends_on:
-      - helteoghuler_database
+      - database
     image: helteoghulerserver
     ports:
       - 7111:80

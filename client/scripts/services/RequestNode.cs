@@ -26,7 +26,9 @@ public class RequestNode
         Headers[0] = Headers[0] + parent.GetSettings().LoginName;
 
         Request = new HTTPRequest();
-        Response = new ResponseWrapper(Clean);
+        Response = new ResponseWrapper();
+
+        Response.SetCleaner(Clean);
 
         var callbackName = type == ResponseType.JSONCallback ? "JSONCallback" : "StringCallback";
 

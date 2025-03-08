@@ -12,9 +12,11 @@
     },
     "remoteUser": "${localEnv:USER}",
     "runArgs": [
+        "--network=helteoghuler_default",
         "-v",
         "/var/run/docker.sock:/var/run/docker.sock",
-        "--network=helteoghuler_default"
+        "-v",
+        "/home/${localEnv:USER}/Applications/godot:/home/${localEnv:USER}/Applications/godot"
     ],
     "customizations": {
         "vscode": {
