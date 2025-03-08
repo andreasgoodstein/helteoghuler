@@ -98,23 +98,23 @@ public class UpgradeInnScript : Control, ISubscriber<GameState>
 
     private void ShowPopupOnProgress(Player player)
     {
-        if (player.ObjectivesCompleted?.ContainsKey(PlayerObjectives.DiscoverWorkshop) != true)
+        if (player.ObjectivesCompleted?.ContainsKey(PlayerObjective.DiscoverWorkshop) != true)
         {
             var popup = GetNode<Popup>("%UpgradeInnPopup");
             popup.GetNode<Label>("Scroll/Text").Text = "UPGRADE_INN_INTRO";
             popup.Show();
-            popup.Connect("confirmed", this, "ConfirmPopup", [PlayerObjectives.DiscoverWorkshop]);
+            popup.Connect("confirmed", this, "ConfirmPopup", [PlayerObjective.DiscoverWorkshop]);
         }
     }
 
-    private void ConfirmPopup(PlayerObjectives objective)
+    private void ConfirmPopup(PlayerObjective objective)
     {
         var popup = GetNode<Popup>("%UpgradeInnPopup");
 
         switch (objective)
         {
-            case PlayerObjectives.DiscoverWorkshop:
-                // TODO: Register objective completed
+            case PlayerObjective.DiscoverWorkshop:
+                CompleteObjective(PlayerObjective.DiscoverWorkshop);
                 break;
         }
 
@@ -123,6 +123,11 @@ public class UpgradeInnScript : Control, ISubscriber<GameState>
 
     private async void BuildUpgrade(InnUpgradeName upgrade)
     {
-        await GetNode<Server>("/root/Server").UpgradeInn(this, upgrade);
+        await this.GetServer().UpgradeInn(this, upgrade);
+    }
+
+    private async void CompleteObjective(PlayerObjective objective)
+    {
+        await this.GetServer().CompleteObjective(this, objective);
     }
 }

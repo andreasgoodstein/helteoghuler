@@ -19,13 +19,11 @@ public class GameStateService : BaseService
             taskSource.SetResult(false);
         });
 
-        requestNode.SetResponseHandler(
-            (byte[] body) =>
-            {
-                ResponseHandler.HandleGameStateResponse(body);
-                taskSource.SetResult(true);
-            }
-        );
+        requestNode.SetResponseHandler(body =>
+        {
+            ResponseHandler.HandleGameStateResponse(body);
+            taskSource.SetResult(true);
+        });
 
         requestNode.ExecuteRequest(REFRESH_GAMESTATE_URL);
 

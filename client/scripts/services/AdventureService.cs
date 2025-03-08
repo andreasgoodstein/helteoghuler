@@ -20,13 +20,11 @@ public class AdventureService : BaseService
             taskSource.SetResult(null);
         });
 
-        requestNode.SetResponseHandler(
-            (byte[] body) =>
-            {
-                var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
-                taskSource.SetResult(adventure);
-            }
-        );
+        requestNode.SetResponseHandler(body =>
+        {
+            var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
+            taskSource.SetResult(adventure);
+        });
 
         requestNode.ExecuteRequest(START_ADVENTURE_URL);
 

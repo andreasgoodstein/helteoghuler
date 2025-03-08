@@ -15,21 +15,17 @@ public class CompleteObjectiveEvent_V1 : IEvent, IApplicable
     [BsonRepresentation(BsonType.ObjectId)]
     [BsonIgnoreIfDefault]
     public string? Id { get; }
-    public required Guid PlayerId { get; init; }
-    public required DateTime CreatedAt { get; init; }
     public EventType Type => EventType.CompleteObjective;
-
-    public required PlayerObjective Objective { get; init; }
+    public required DateTime CreatedAt { get; init; }
+    public required CompleteObjective CompleteObjective { get; init; }
 
     public void ApplyToGameState(ref GameState gameState, Guid? playerId)
     {
-        var player = GameStateHelper.GetPlayer(gameState, PlayerId);
-        player.ObjectivesCompleted.Add(Objective, true);
+        CompleteObjective.ApplyToGameState(ref gameState, playerId);
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? playerId)
     {
-        var player = GameStateHelper.GetPlayer(gameState, PlayerId);
-        player.ObjectivesCompleted.Remove(Objective);
+        CompleteObjective.RemoveFromGameState(ref gameState, playerId);
     }
 }

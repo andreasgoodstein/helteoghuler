@@ -44,4 +44,9 @@ public class Server : Node
     {
         return _innService.BuildInnUpgrade(httpRequestParent, upgrade);
     }
+
+    public Task CompleteObjective(Node httpRequestParent, PlayerObjective objective)
+    {
+        return _playerService.CompleteObjective(httpRequestParent, objective);
+    }
 }

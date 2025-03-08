@@ -76,7 +76,7 @@ public class InnController : ControllerBase
 
             _gameStateLogic.UpdateGameState(upgradeEvent);
 
-            return HHJsonSerializer.Serialize(innUpgrade);
+            return HHJsonSerializer.Serialize(upgradeEvent.Upgrade);
         }
         catch (InvalidDataException exception)
         {

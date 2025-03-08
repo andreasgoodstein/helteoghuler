@@ -46,7 +46,7 @@ public class AdventureController : ControllerBase
 
             _gameStateLogic.UpdateGameState(adventureEvent);
 
-            return HHJsonSerializer.Serialize(adventure);
+            return HHJsonSerializer.Serialize(adventureEvent.Adventure);
         }
         catch (InvalidOperationException exception)
         {

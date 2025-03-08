@@ -73,15 +73,16 @@ public class PlayerController : ControllerBase
             var completeObjectiveEvent = new CompleteObjectiveEvent_V1
             {
                 CreatedAt = DateTime.UtcNow,
-                Objective = objective,
-                PlayerId = user.PlayerId,
+                CompleteObjective = new() { Objective = objective, PlayerId = user.PlayerId },
             };
 
             await _eventService.CreateAsync(completeObjectiveEvent);
 
             _gameStateLogic.UpdateGameState(completeObjectiveEvent);
 
-            return HHJsonSerializer.Serialize(completeObjectiveEvent);
+            return HHJsonSerializer.Serialize<CompleteObjective>(
+                completeObjectiveEvent.CompleteObjective
+            );
         }
         catch (InvalidDataException exception)
         {
