@@ -7,6 +7,7 @@ namespace HelteOgHulerClient.Services;
 public class InnService : BaseService
 {
     const string RECRUIT_HERO_URL = "Inn/RecruitHero";
+    const string UPGRADE_INN_URL = "Inn/UpgradeInn";
 
     public Task RecruitHero(Node httpRequestParent, string heroId)
     {
@@ -27,6 +28,29 @@ public class InnService : BaseService
         });
 
         requestNode.ExecuteRequest($"{RECRUIT_HERO_URL}?heroId={heroId}");
+
+        return taskSource.Task;
+    }
+
+    public Task<InnUpgrade> BuildInnUpgrade(Node httpRequestParent, InnUpgradeName upgrade)
+    {
+        var taskSource = new TaskCompletionSource<InnUpgrade>();
+
+        Clean(new RequestNode(httpRequestParent, ResponseType.JSONCallback));
+
+        requestNode.SetErrorHandler(() =>
+        {
+            GD.PrintErr("Network: Could not build Upgrade");
+            taskSource.SetResult(null);
+        });
+
+        requestNode.SetResponseHandler((byte[] body) =>
+        {
+            var innUpgrade = ResponseHandler.HandleGameStateResponse<InnUpgrade>(body);
+            taskSource.SetResult(innUpgrade);
+        });
+
+        requestNode.ExecuteRequest($"{UPGRADE_INN_URL}?upgrade={upgrade}");
 
         return taskSource.Task;
     }

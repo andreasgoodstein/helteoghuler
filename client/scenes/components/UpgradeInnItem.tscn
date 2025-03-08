@@ -1,0 +1,84 @@
+[gd_scene format=2]
+
+[node name="UpgradeInnItemRoot" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 0.17
+margin_bottom = 0.0800018
+size_flags_horizontal = 3
+size_flags_vertical = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxItem" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1272.0
+margin_bottom = 90.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxLabels" type="HBoxContainer" parent="MarginContainer/HBoxItem"]
+margin_right = 938.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="UpgradeIcon" type="Label" parent="MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+visible = false
+margin_right = 101.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Icon"
+align = 1
+valign = 1
+
+[node name="UpgradeName" type="Label" parent="MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+margin_right = 307.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+text = "Name"
+valign = 1
+
+[node name="UpgradeDescription" type="Label" parent="MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+margin_left = 315.0
+margin_right = 827.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+text = "Description"
+align = 1
+valign = 1
+
+[node name="UpgradeCost" type="Label" parent="MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+margin_left = 835.0
+margin_right = 938.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Price"
+align = 1
+valign = 1
+
+[node name="UpgradeButton" type="Button" parent="MarginContainer/HBoxItem"]
+unique_name_in_owner = true
+margin_left = 946.0
+margin_right = 1264.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "BUTTON_UPGRADE_INN_ITEM"

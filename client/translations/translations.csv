@@ -6,6 +6,7 @@ BUTTON_START;Let the Adventure Begin;Lad eventyret begynde
 BUTTON_START_ADVENTURE;Venture forth;Gå mod Hulen
 BUTTON_VIEW_HEROES;Your Heros;Dine Helte
 BUTTON_UPGRADE_INN;Workshop;Værksted
+BUTTON_UPGRADE_INN_ITEM;Build;Byg
 CAREER_GOLD;Gold liberated;Guld befriet
 GOLD;Gold;Guld
 HERO;Hero;Helt
@@ -60,5 +61,7 @@ Perhaps with a bit of elbow grease - and a trusty pint of ale - you could
 start turning this Inn into something a little bit more impressive.
 
 Time to get to work...";
+UPGRADE_INN_TITLE;Workshop Projects;Værkstedsprojekter
+UPGRADE_INN_PENDING;Currently Building;Igang med
 USERNAME_PLACEHOLDER;Username;Brugernavn
 WORLD;World;Verden

@@ -39,4 +39,9 @@ public class Server : Node
 	{
 		return _adventureService.StartAdventure(httpRequestParent);
 	}
+
+	public Task<InnUpgrade> UpgradeInn(Node httpRequestParent, InnUpgradeName upgrade)
+	{
+		return _innService.BuildInnUpgrade(httpRequestParent, upgrade);
+	}
 }

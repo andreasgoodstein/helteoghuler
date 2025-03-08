@@ -52,7 +52,7 @@ text = ":"
 align = 1
 valign = 1
 
-[node name="Gold" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
+[node name="GoldValue" type="Label" parent="Margins/VBoxContainer/InnStatsContainer"]
 unique_name_in_owner = true
 margin_left = 66.0
 margin_right = 66.0
@@ -91,6 +91,7 @@ icon_align = 1
 
 [node name="ButtonUpgradeInn" type="Button" parent="Margins/VBoxContainer/SubMenuContainer/LeftMenu"]
 unique_name_in_owner = true
+visible = false
 margin_top = 80.0
 margin_right = 294.0
 margin_bottom = 112.0

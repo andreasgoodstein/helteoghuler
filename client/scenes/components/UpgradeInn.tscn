@@ -1,14 +1,155 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/scenes/components/UpgradeInnScript.cs" type="Script" id=1]
 
 [node name="UpgradeInnRoot" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
 
-[node name="Label" type="Label" parent="."]
+[node name="UpgradeInnPopup" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 8.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+window_title = ""
+
+[node name="Scroll" type="ScrollContainer" parent="UpgradeInnPopup"]
+anchor_top = 0.014
+anchor_right = 1.0
+anchor_bottom = 0.927
+margin_left = 8.0
+margin_top = -0.0640001
+margin_right = -8.0
+margin_bottom = 4.04797
+scroll_horizontal_enabled = false
+
+[node name="Text" type="Label" parent="UpgradeInnPopup/Scroll"]
+margin_right = 1264.0
+margin_bottom = 530.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "UPGRADE_INN_INTRO"
 align = 1
+
+[node name="Content" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="Content"]
+margin_right = 1280.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 0, 32 )
+size_flags_horizontal = 3
+text = "UPGRADE_INN_TITLE"
+align = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Content"]
+margin_top = 40.0
+margin_right = 1280.0
+margin_bottom = 438.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="UpgradeItemList" type="VBoxContainer" parent="Content/ScrollContainer"]
+unique_name_in_owner = true
+margin_right = 1280.0
+margin_bottom = 398.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PendingUpgrade" type="Control" parent="Content"]
+unique_name_in_owner = true
+margin_top = 446.0
+margin_right = 1280.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 0, 130 )
+
+[node name="Label" type="Label" parent="Content/PendingUpgrade"]
+anchor_right = 1.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 32 )
+text = "UPGRADE_INN_PENDING"
+align = 1
+valign = 1
+
+[node name="UpgradeInnItem" type="Control" parent="Content/PendingUpgrade"]
+anchor_top = 0.246
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 0.0199986
+rect_min_size = Vector2( 0, 98 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Content/PendingUpgrade/UpgradeInnItem"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HBoxItem" type="HBoxContainer" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 1272.0
+margin_bottom = 90.0
+
+[node name="HBoxLabels" type="HBoxContainer" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem"]
+margin_right = 1264.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="UpgradeIcon" type="Label" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem/HBoxLabels"]
+visible = false
+margin_right = 137.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Icon"
+align = 1
+valign = 1
+
+[node name="UpgradeName" type="Label" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+margin_right = 358.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+text = "Name"
+valign = 1
+
+[node name="UpgradeDescription" type="Label" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem/HBoxLabels"]
+unique_name_in_owner = true
+margin_left = 366.0
+margin_right = 1264.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+text = "Description"
+align = 1
+valign = 1
+
+[node name="UpgradeCost" type="Label" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem/HBoxLabels"]
+visible = false
+margin_left = 1108.0
+margin_right = 1264.0
+margin_bottom = 82.0
+rect_pivot_offset = Vector2( -350, -120 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Price"
+align = 1
+valign = 1
+
+[node name="UpgradeButton" type="Button" parent="Content/PendingUpgrade/UpgradeInnItem/MarginContainer/HBoxItem"]
+visible = false
+margin_left = 946.0
+margin_right = 1264.0
+margin_bottom = 82.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "BUTTON_UPGRADE_INN_ITEM"

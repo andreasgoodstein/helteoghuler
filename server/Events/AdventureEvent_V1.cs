@@ -42,6 +42,7 @@ public class AdventureEvent_V1 : IEvent, IApplicable
         inn.AvailableUpgrades.Remove((InnUpgradeName)pendingUpgrade);
         inn.BuiltUpgrades.Add((InnUpgradeName)pendingUpgrade);
         inn.AvailableUpgrades.AddRange(InnUpgrades.TechTree[(InnUpgradeName)pendingUpgrade]);
+        inn.PendingUpgrade = null;
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
@@ -67,5 +68,6 @@ public class AdventureEvent_V1 : IEvent, IApplicable
 
         inn.AvailableUpgrades.Add(pendingUpgrade);
         inn.BuiltUpgrades.Remove(pendingUpgrade);
+        inn.PendingUpgrade = pendingUpgrade;
     }
 }

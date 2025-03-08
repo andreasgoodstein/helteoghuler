@@ -54,13 +54,13 @@ public class InnController : ControllerBase
     }
 
     [HttpGet(Name = "UpgradeInn")]
-    public async Task<ActionResult<string>> UpgradeInn(InnUpgradeName Upgrade)
+    public async Task<ActionResult<string>> UpgradeInn(InnUpgradeName upgrade)
     {
         User user = (User)HttpContext.Items["User"]!;
 
         try
         {
-            InnUpgrade innUpgrade = _innLogic.UpgradeInn(user.PlayerId, Upgrade);
+            InnUpgrade innUpgrade = _innLogic.UpgradeInn(user.PlayerId, upgrade);
 
             var upgradeEvent = new UpgradeInnEvent_V1
             {
