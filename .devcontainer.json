@@ -12,7 +12,7 @@
     },
     "remoteUser": "${localEnv:USER}",
     "runArgs": [
-        "--network=helteoghuler_default",
+        "--network=host",
         "-v",
         "/var/run/docker.sock:/var/run/docker.sock",
         "-v",
