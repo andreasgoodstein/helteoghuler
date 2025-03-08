@@ -2,13 +2,13 @@
     "version": "2.0.0",
     "configurations": [
         {
-            "name": "Debug HelteOgHulerServer",
+            "name": "Debug Server",
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/server/HelteOgHulerServer.csproj"
         },
         {
-            "name": "Client",
+            "name": "Debug Client",
             "type": "godot-mono",
             "request": "launch",
             "mode": "executable",

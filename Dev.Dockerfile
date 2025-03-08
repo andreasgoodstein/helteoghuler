@@ -22,11 +22,11 @@ RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/
 
 # Setup non-root user
 ARG REMOTE_USER
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG REMOTE_UID
+ARG REMOTE_GID
 
-RUN groupadd --gid $USER_GID $REMOTE_USER
-RUN useradd --uid $USER_UID --gid $USER_GID -m $REMOTE_USER
+RUN groupadd --gid $REMOTE_GID $REMOTE_USER
+RUN useradd --uid $REMOTE_UID --gid $REMOTE_GID -m $REMOTE_USER
 
 ENV HOME=/home/$REMOTE_USER
 

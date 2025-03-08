@@ -15,5 +15,24 @@
         "-v",
         "/var/run/docker.sock:/var/run/docker.sock",
         "--network=helteoghuler_default"
-    ]
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "ms-dotnettools.csharp",
+                "redhat.vscode-yaml",
+                "streetsidesoftware.code-spell-checker",
+                "mechatroner.rainbow-csv",
+                "ms-dotnettools.csdevkit",
+                "DavidAnson.vscode-markdownlint",
+                "wayou.vscode-todo-highlight",
+                "rangav.vscode-thunder-client",
+                "GitHub.vscode-github-actions",
+                "ms-vscode.mono-debug",
+                "neikeq.godot-csharp-vscode",
+                "Tyriar.sort-lines"
+            ]
+        }
+    }
 }
