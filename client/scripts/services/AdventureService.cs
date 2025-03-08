@@ -18,16 +18,12 @@ public class AdventureService : BaseService
         {
             GD.PrintErr("Network: Could not start Adventure");
             taskSource.SetResult(null);
-
-            Clean();
         });
 
         requestNode.SetResponseHandler((byte[] body) =>
         {
             var adventure = ResponseHandler.HandleGameStateResponse<Adventure>(body);
             taskSource.SetResult(adventure);
-
-            Clean();
         });
 
         requestNode.ExecuteRequest(START_ADVENTURE_URL);

@@ -17,16 +17,12 @@ public class PlayerService : BaseService
         {
             GD.PrintErr("Network: Could not start Adventure");
             taskSource.SetResult(false);
-
-            Clean();
         });
 
         requestNode.SetResponseHandler((byte[] body) =>
         {
             ResponseHandler.HandleGameStateResponse(body);
             taskSource.SetResult(true);
-
-            Clean();
         });
 
         requestNode.ExecuteRequest(NEW_PLAYER_URL + $"?innName={innName}&playerName={playerName}");

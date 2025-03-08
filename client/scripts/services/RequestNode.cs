@@ -26,7 +26,7 @@ public class RequestNode
 		Headers[0] = Headers[0] + parent.GetNode<Settings>("/root/Settings").LoginName;
 
 		Request = new HTTPRequest();
-		Response = new ResponseWrapper();
+		Response = new ResponseWrapper(Clean);
 
 		var callbackName = type == ResponseType.JSONCallback ? "JSONCallback" : "StringCallback";
 

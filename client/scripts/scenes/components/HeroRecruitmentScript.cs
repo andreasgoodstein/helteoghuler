@@ -1,10 +1,8 @@
 using Godot;
-using HelteOgHulerClient;
 using HelteOgHulerClient.Interfaces;
-using HelteOgHulerClient.Utilities;
+using HelteOgHulerClient;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using System;
 using System.Collections.Generic;
 
 public class HeroRecruitmentScript : Control, ISubscriber<GameState>

@@ -17,16 +17,12 @@ public class GameStateService : BaseService
         {
             GD.PrintErr("Network: Could not get GameState");
             taskSource.SetResult(false);
-
-            Clean();
         });
 
         requestNode.SetResponseHandler((byte[] body) =>
         {
             ResponseHandler.HandleGameStateResponse(body);
             taskSource.SetResult(true);
-
-            Clean();
         });
 
         requestNode.ExecuteRequest(REFRESH_GAMESTATE_URL);

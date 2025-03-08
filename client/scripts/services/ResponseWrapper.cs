@@ -4,11 +4,12 @@ using System;
 
 namespace HelteOgHulerClient.Services;
 
-public class ResponseWrapper : Node
+public class ResponseWrapper(Action Clean) : Node
 {
 	public Action ErrorDelegate { get; set; }
 	public Action<byte[]> JSONCallbackDelegate { get; set; }
 	public Action<string> TextCallbackDelegate { get; set; }
+	private readonly Action Clean = Clean;
 
 	private void HandleUnauthorizedError()
 	{
@@ -40,6 +41,8 @@ public class ResponseWrapper : Node
 		{
 			JSONCallbackDelegate?.Invoke(body);
 		}
+
+		Clean();
 	}
 
 	public void TextCallback(int result, int response_code, string[] headers, string body)
@@ -60,6 +63,8 @@ public class ResponseWrapper : Node
 		{
 			TextCallbackDelegate?.Invoke(body);
 		}
+
+		Clean();
 	}
 
 }
