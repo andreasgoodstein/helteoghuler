@@ -46,10 +46,12 @@ public class GameStateLogic
         GameState gameState = new()
         {
             CurrentTime = DateTime.UtcNow,
-            PrivatePlayerDict = { { playerId, _globalGameState.GetPlayer(playerId) } },
+            PrivatePlayerDict = [],
             PublicPlayerDict = _globalGameState.PublicPlayerDict,
             World = _globalGameState.World,
         };
+
+        gameState.PrivatePlayerDict.Add(playerId, _globalGameState.PrivatePlayerDict[playerId]);
 
         return gameState;
     }
