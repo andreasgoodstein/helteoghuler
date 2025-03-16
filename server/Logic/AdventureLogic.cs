@@ -22,9 +22,10 @@ public class AdventureLogic(GameStateLogic gameStateLogic, InnLogic innLogic)
             );
         }
 
+        var inn = _innLogic.GetPlayerInn(playerId);
         var party = _innLogic.GatherParty(playerId);
 
-        Adventure adventure = new();
+        Adventure adventure = new() { PendingInnUpgrade = inn.PendingUpgrade };
 
         adventure.ResolveAdventure(party);
 

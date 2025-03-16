@@ -14,6 +14,7 @@ public class Adventure : IApplicable
     public List<Encounter> EncounterList { get; set; } = [];
     public Hero[] Party { get; set; }
     public DateTime RestUntil { get; set; }
+    public InnUpgradeName? PendingInnUpgrade { get; set; }
 
     public void ResolveAdventure(Hero[] party, int maxEncounters = 1)
     {
@@ -70,6 +71,11 @@ public class Adventure : IApplicable
         player.Inn.Chest.Gold += Gold;
         player.RestUntil = RestUntil;
         player.LatestAdventure = this;
+
+        if (PendingInnUpgrade != null)
+        {
+            ApplyPendingInnUpgrade(ref gameState, playerId);
+        }
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? id)
@@ -91,5 +97,46 @@ public class Adventure : IApplicable
         player.Inn.Chest.Gold -= Gold;
         player.RestUntil = null;
         player.LatestAdventure = null;
+
+        if (PendingInnUpgrade != null)
+        {
+            RemovePendingInnUpgrade(ref gameState, playerId);
+        }
+    }
+
+    private void ApplyPendingInnUpgrade(ref GameState gameState, Guid playerId)
+    {
+        if (PendingInnUpgrade == null)
+        {
+            return;
+        }
+
+        var inn = gameState.GetPlayer(playerId).Inn;
+        var pendingUpgrade = (InnUpgradeName)PendingInnUpgrade;
+
+        inn.AvailableUpgrades.Remove(pendingUpgrade);
+        inn.BuiltUpgrades.Add(pendingUpgrade);
+        inn.AvailableUpgrades.AddRange(InnUpgrades.TechTree[pendingUpgrade]);
+        inn.PendingUpgrade = null;
+    }
+
+    private void RemovePendingInnUpgrade(ref GameState gameState, Guid playerId)
+    {
+        if (PendingInnUpgrade == null)
+        {
+            return;
+        }
+
+        var inn = gameState.GetPlayer(playerId).Inn;
+        var pendingUpgrade = (InnUpgradeName)PendingInnUpgrade;
+
+        foreach (var upgrade in InnUpgrades.TechTree[pendingUpgrade])
+        {
+            inn.AvailableUpgrades.Remove(upgrade);
+        }
+
+        inn.AvailableUpgrades.Add(pendingUpgrade);
+        inn.BuiltUpgrades.Remove(pendingUpgrade);
+        inn.PendingUpgrade = pendingUpgrade;
     }
 }

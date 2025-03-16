@@ -23,7 +23,7 @@ public class UserLogic
         _playerLogic = playerLogic;
         _userService = userService;
 
-        userDictionary = new Dictionary<string, User>();
+        userDictionary = [];
 
         var allUsers = _userService.GetAsync().Result;
 

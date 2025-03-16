@@ -9,4 +9,6 @@ public class DatabaseSettings
     public string EventCollectionName { get; set; } = null!;
 
     public string UserCollectionName { get; set; } = null!;
+
+    public string GameStateCollectionName { get; set; } = null!;
 }

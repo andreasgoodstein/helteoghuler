@@ -19,12 +19,6 @@ public class EventService
         );
     }
 
-    // public Task<List<IEvent>> GetAsync() =>
-    //      _eventsCollection.Find(_ => true).ToListAsync();
-
-    // public Task<IEvent> GetAsync(string id) =>
-    //      _eventsCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
-
     public Task<List<IEvent>> GetAsyncAsc() =>
         _eventsCollection
             .Find(_ => true)

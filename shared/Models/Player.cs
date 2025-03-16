@@ -12,7 +12,7 @@ public class Player
 
     public Adventure LatestAdventure { get; set; }
 
-    public Dictionary<PlayerObjective, bool> ObjectivesCompleted { get; set; } = [];
+    public List<PlayerObjective> ObjectivesCompleted { get; set; } = [];
 }
 
 public class PlayerPublic

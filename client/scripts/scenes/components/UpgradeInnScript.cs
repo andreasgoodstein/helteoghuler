@@ -98,7 +98,7 @@ public class UpgradeInnScript : Control, ISubscriber<GameState>
 
     private void ShowPopupOnProgress(Player player)
     {
-        if (player.ObjectivesCompleted?.ContainsKey(PlayerObjective.DiscoverWorkshop) != true)
+        if (player.ObjectivesCompleted?.Contains(PlayerObjective.DiscoverWorkshop) != true)
         {
             var popup = GetNode<Popup>("%UpgradeInnPopup");
             popup.GetNode<Label>("Scroll/Text").Text = "UPGRADE_INN_INTRO";

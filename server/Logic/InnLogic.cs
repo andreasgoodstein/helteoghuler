@@ -10,6 +10,11 @@ public class InnLogic(GameStateLogic gameStateLogic, HeroLogic heroLogic)
     private readonly GameStateLogic _gameStateLogic = gameStateLogic;
     private readonly HeroLogic _heroLogic = heroLogic;
 
+    public Inn GetPlayerInn(Guid playerId)
+    {
+        return GameStateHelper.GetPlayer(_gameStateLogic.Get(playerId), playerId).Inn;
+    }
+
     public Inn GenerateInn(string innName)
     {
         var newHeroRecruit = _heroLogic.GenerateHero();

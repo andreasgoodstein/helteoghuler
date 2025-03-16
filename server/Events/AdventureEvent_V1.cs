@@ -23,52 +23,10 @@ public class AdventureEvent_V1 : IEvent, IApplicable
     public void ApplyToGameState(ref GameState gameState, Guid? _)
     {
         Adventure?.ApplyToGameState(ref gameState, PlayerId);
-
-        ApplyPendingInnUpgrade(ref gameState);
-    }
-
-    private void ApplyPendingInnUpgrade(ref GameState gameState)
-    {
-        var inn = gameState.GetPlayer(PlayerId).Inn;
-
-        var pendingUpgrade = inn.PendingUpgrade;
-        if (pendingUpgrade == null)
-        {
-            return;
-        }
-
-        inn.AvailableUpgrades.Remove((InnUpgradeName)pendingUpgrade);
-        inn.BuiltUpgrades.Add((InnUpgradeName)pendingUpgrade);
-        inn.AvailableUpgrades.AddRange(InnUpgrades.TechTree[(InnUpgradeName)pendingUpgrade]);
-        inn.PendingUpgrade = null;
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? _)
     {
         Adventure?.RemoveFromGameState(ref gameState, PlayerId);
-
-        RemovePendingInnUpgrade(ref gameState);
-    }
-
-    private void RemovePendingInnUpgrade(ref GameState gameState)
-    {
-        var inn = gameState.GetPlayer(PlayerId).Inn;
-
-        if (inn.BuiltUpgrades.Count < 1)
-        {
-            return;
-        }
-
-        // ATT: This might be a bit brittle. However the events should be applied/removed in sequence.
-        var pendingUpgrade = inn.BuiltUpgrades.Last();
-
-        foreach (var upgrade in InnUpgrades.TechTree[pendingUpgrade])
-        {
-            inn.AvailableUpgrades.Remove(upgrade);
-        }
-
-        inn.AvailableUpgrades.Add(pendingUpgrade);
-        inn.BuiltUpgrades.Remove(pendingUpgrade);
-        inn.PendingUpgrade = pendingUpgrade;
     }
 }

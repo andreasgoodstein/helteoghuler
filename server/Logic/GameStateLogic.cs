@@ -16,11 +16,17 @@ public class GameStateLogic
         World = new World { Name = "East Island" },
     };
 
-    private readonly EventService _eventService;
+    public bool SaveStateToDatabase = true;
 
-    public GameStateLogic(EventService eventService)
+    // Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") != "Production";
+
+    private readonly EventService _eventService;
+    private readonly GameStateService _gameStateService;
+
+    public GameStateLogic(EventService eventService, GameStateService gameStateService)
     {
         _eventService = eventService;
+        _gameStateService = gameStateService;
 
         _globalGameState = RegenerateGameState().Result;
 
@@ -68,6 +74,8 @@ public class GameStateLogic
         });
 
         _globalGameState.CurrentTime = DateTime.UtcNow;
+
+        await _gameStateService.CreateAsync(_globalGameState);
 
         return _globalGameState;
     }

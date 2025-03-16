@@ -1,36 +1,16 @@
 using HelteOgHulerServer;
-using HelteOgHulerServer.Events;
 using HelteOgHulerServer.Logic;
 using HelteOgHulerServer.Models;
 using HelteOgHulerServer.Services;
 using HelteOgHulerServer.Utilities;
 using HelteOgHulerShared.Models;
 using HelteOgHulerShared.Utilities;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
+
+DatabaseSetupUtility.SetupDatabaseSerializers();
 
 var unauthorizedError = HHJsonSerializer.Serialize(
     new HHError { Message = "Your Innkeeper license could not be verified." }
 );
-
-// Allow all mongodb serialization
-BsonSerializer.RegisterSerializer(new ObjectSerializer(ObjectSerializer.AllAllowedTypes));
-BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
-BsonSerializer.RegisterSerializer(new EnumSerializer<ActionName>(BsonType.String));
-#pragma warning disable CS0618 // Type or member is obsolete
-BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
-#pragma warning restore CS0618 // Type or member is obsolete
-
-// Register mongodb event types
-BsonClassMap.RegisterClassMap<Inn>();
-BsonClassMap.RegisterClassMap<Hero>();
-BsonClassMap.RegisterClassMap<Monster>();
-BsonClassMap.RegisterClassMap<AdventureEvent_V1>();
-BsonClassMap.RegisterClassMap<NewPlayerEvent_V1>();
-BsonClassMap.RegisterClassMap<RecruitHeroEvent_V1>();
-BsonClassMap.RegisterClassMap<UpgradeInnEvent_V1>();
-BsonClassMap.RegisterClassMap<CompleteObjectiveEvent_V1>();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +39,7 @@ builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("D
 // Register services
 builder.Services.AddSingleton<EventService>();
 builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<GameStateService>();
 
 // Register logic
 builder.Services.AddSingleton<AdventureLogic>();

@@ -13,7 +13,7 @@ public class CompleteObjective : IApplicable
     {
         var player = GameStateHelper.GetPlayer(gameState, PlayerId);
 
-        (player.ObjectivesCompleted ??= []).Add(Objective, true);
+        (player.ObjectivesCompleted ??= []).Add(Objective);
     }
 
     public void RemoveFromGameState(ref GameState gameState, Guid? playerId)
