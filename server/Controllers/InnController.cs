@@ -9,23 +9,12 @@ namespace HelteOgHulerServer.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class InnController : ControllerBase
+public class InnController(
+    EventService eventService,
+    GameStateLogic gameStateLogic,
+    InnLogic innLogic
+) : ControllerBase
 {
-    private readonly EventService _eventService;
-    private readonly GameStateLogic _gameStateLogic;
-    private readonly InnLogic _innLogic;
-
-    public InnController(
-        EventService eventService,
-        GameStateLogic gameStateLogic,
-        InnLogic innLogic
-    )
-    {
-        _eventService = eventService;
-        _gameStateLogic = gameStateLogic;
-        _innLogic = innLogic;
-    }
-
     [HttpGet(Name = "RecruitHero")]
     public async Task<ActionResult<string>> RecruitHero(Guid heroId)
     {
@@ -33,7 +22,7 @@ public class InnController : ControllerBase
 
         try
         {
-            Recruitment recruitment = _innLogic.RecruitHero(user.PlayerId, heroId);
+            Recruitment recruitment = innLogic.RecruitHero(user.PlayerId, heroId);
 
             var recruitmentEvent = new RecruitHeroEvent_V1
             {
@@ -41,9 +30,9 @@ public class InnController : ControllerBase
                 Recruitment = recruitment,
             };
 
-            await _eventService.CreateAsync(recruitmentEvent);
+            await eventService.CreateAsync(recruitmentEvent);
 
-            _gameStateLogic.UpdateGameState(recruitmentEvent);
+            gameStateLogic.UpdateGameState(recruitmentEvent);
 
             return HHJsonSerializer.Serialize(recruitment);
         }
@@ -64,7 +53,7 @@ public class InnController : ControllerBase
 
         try
         {
-            InnUpgrade innUpgrade = _innLogic.UpgradeInn(user.PlayerId, upgrade);
+            InnUpgrade innUpgrade = innLogic.UpgradeInn(user.PlayerId, upgrade);
 
             var upgradeEvent = new UpgradeInnEvent_V1
             {
@@ -72,9 +61,9 @@ public class InnController : ControllerBase
                 Upgrade = innUpgrade,
             };
 
-            await _eventService.CreateAsync(upgradeEvent);
+            await eventService.CreateAsync(upgradeEvent);
 
-            _gameStateLogic.UpdateGameState(upgradeEvent);
+            gameStateLogic.UpdateGameState(upgradeEvent);
 
             return HHJsonSerializer.Serialize(upgradeEvent.Upgrade);
         }

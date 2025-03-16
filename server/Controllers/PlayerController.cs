@@ -9,23 +9,12 @@ namespace HelteOgHulerServer.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class PlayerController : ControllerBase
+public class PlayerController(
+    EventService eventService,
+    GameStateLogic gameStateLogic,
+    PlayerLogic playerLogic
+) : ControllerBase
 {
-    private readonly EventService _eventService;
-    private readonly GameStateLogic _gameStateLogic;
-    private readonly PlayerLogic _playerLogic;
-
-    public PlayerController(
-        EventService eventService,
-        GameStateLogic gameStateLogic,
-        PlayerLogic playerLogic
-    )
-    {
-        _eventService = eventService;
-        _gameStateLogic = gameStateLogic;
-        _playerLogic = playerLogic;
-    }
-
     [HttpGet(Name = "New")]
     public async Task<ActionResult<string>> New(string innName, string playerName)
     {
@@ -33,8 +22,8 @@ public class PlayerController : ControllerBase
 
         try
         {
-            var newPlayer = _playerLogic.CreatePlayer(
-                _gameStateLogic.Get(),
+            var newPlayer = playerLogic.CreatePlayer(
+                gameStateLogic.Get(),
                 user.PlayerId,
                 innName,
                 playerName
@@ -45,11 +34,11 @@ public class PlayerController : ControllerBase
                 Player = newPlayer,
             };
 
-            await _eventService.CreateAsync(newPlayerEvent);
+            await eventService.CreateAsync(newPlayerEvent);
 
-            _gameStateLogic.UpdateGameState(newPlayerEvent);
+            gameStateLogic.UpdateGameState(newPlayerEvent);
 
-            return HHJsonSerializer.Serialize(_gameStateLogic.Get(user.PlayerId));
+            return HHJsonSerializer.Serialize(gameStateLogic.Get(user.PlayerId));
         }
         catch (InvalidDataException exception)
         {
@@ -68,7 +57,7 @@ public class PlayerController : ControllerBase
 
         try
         {
-            _playerLogic.CanCompleteObjective(_gameStateLogic.Get(), user.PlayerId, objective);
+            playerLogic.CanCompleteObjective(gameStateLogic.Get(), user.PlayerId, objective);
 
             var completeObjectiveEvent = new CompleteObjectiveEvent_V1
             {
@@ -76,9 +65,9 @@ public class PlayerController : ControllerBase
                 CompleteObjective = new() { Objective = objective, PlayerId = user.PlayerId },
             };
 
-            await _eventService.CreateAsync(completeObjectiveEvent);
+            await eventService.CreateAsync(completeObjectiveEvent);
 
-            _gameStateLogic.UpdateGameState(completeObjectiveEvent);
+            gameStateLogic.UpdateGameState(completeObjectiveEvent);
 
             return HHJsonSerializer.Serialize<CompleteObjective>(
                 completeObjectiveEvent.CompleteObjective

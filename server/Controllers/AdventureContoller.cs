@@ -9,23 +9,12 @@ namespace HelteOgHulerServer.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class AdventureController : ControllerBase
+public class AdventureController(
+    AdventureLogic adventureLogic,
+    GameStateLogic gameStateLogic,
+    EventService eventService
+) : ControllerBase
 {
-    private readonly AdventureLogic _adventureLogic;
-    private readonly GameStateLogic _gameStateLogic;
-    private readonly EventService _eventService;
-
-    public AdventureController(
-        AdventureLogic adventureLogic,
-        GameStateLogic gameStateLogic,
-        EventService eventService
-    )
-    {
-        _adventureLogic = adventureLogic;
-        _gameStateLogic = gameStateLogic;
-        _eventService = eventService;
-    }
-
     [HttpGet(Name = "Start")]
     public async Task<ActionResult<string>> Start()
     {
@@ -33,7 +22,7 @@ public class AdventureController : ControllerBase
 
         try
         {
-            Adventure adventure = _adventureLogic.GenerateAdventure(user.PlayerId);
+            Adventure adventure = adventureLogic.GenerateAdventure(user.PlayerId);
 
             AdventureEvent_V1 adventureEvent = new()
             {
@@ -42,9 +31,9 @@ public class AdventureController : ControllerBase
                 PlayerId = user.PlayerId,
             };
 
-            await _eventService.CreateAsync(adventureEvent);
+            await eventService.CreateAsync(adventureEvent);
 
-            _gameStateLogic.UpdateGameState(adventureEvent);
+            gameStateLogic.UpdateGameState(adventureEvent);
 
             return HHJsonSerializer.Serialize(adventureEvent.Adventure);
         }

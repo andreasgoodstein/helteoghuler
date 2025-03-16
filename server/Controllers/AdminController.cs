@@ -9,7 +9,7 @@ namespace HelteOgHulerServer.Controllers;
 
 [ApiController]
 [Route("[controller]/[action]")]
-public class AdminController : ControllerBase
+public class AdminController(UserLogic userLogic) : ControllerBase
 {
     private readonly string ERROR_401 = HHJsonSerializer.Serialize(
         new HHError { Message = "You're not The Marquee! Go away." }
@@ -18,12 +18,7 @@ public class AdminController : ControllerBase
         new HHError { Message = "LoginName missing." }
     );
 
-    private readonly UserLogic _userLogic;
-
-    public AdminController(UserLogic userLogic)
-    {
-        _userLogic = userLogic;
-    }
+    private readonly UserLogic _userLogic = userLogic;
 
     [HttpGet(Name = "NewUser")]
     public ActionResult<string> NewUser(string loginName)

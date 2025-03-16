@@ -18,5 +18,9 @@ public class GameStateService
         );
     }
 
-    public Task CreateAsync(GameState state) => _gameStateCollection.InsertOneAsync(state);
+    public Task CreateAsync(GameState state)
+    {
+        _gameStateCollection.DeleteMany(filter => true);
+        return _gameStateCollection.InsertOneAsync(state);
+    }
 }

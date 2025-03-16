@@ -6,15 +6,8 @@ namespace HelteOgHulerServer.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GameStateController : ControllerBase
+public class GameStateController(GameStateLogic gameStateLogic) : ControllerBase
 {
-    private readonly GameStateLogic _gameStateLogic;
-
-    public GameStateController(GameStateLogic gameStateLogic)
-    {
-        _gameStateLogic = gameStateLogic;
-    }
-
     [HttpGet(Name = "GetGameState")]
     public ActionResult<string> Get()
     {
@@ -22,9 +15,9 @@ public class GameStateController : ControllerBase
 
         if (user.IsAdmin == true)
         {
-            return HHJsonSerializer.Serialize(_gameStateLogic.Get());
+            return HHJsonSerializer.Serialize(gameStateLogic.Get());
         }
 
-        return HHJsonSerializer.Serialize(_gameStateLogic.Get(user.PlayerId));
+        return HHJsonSerializer.Serialize(gameStateLogic.Get(user.PlayerId));
     }
 }
